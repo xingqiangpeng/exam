@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+		<link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" />
+		<script src="js/layui/layui.js"></script>
+		<script src="js/vue/vue.min.js"></script>
+		<style>
+			#app {
+				width: 900px;
+				margin: auto;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<table class="layui-table">
+				<tr>
+					<th>四个小可爱的考试系统</th>
+				</tr>
+				<tr>
+					<td>java1809javase考试</td>
+				</tr>
+				<tr>
+					<td>有效时间2019-12-16 10:29~2019-12-11 12:30</td>
+				</tr>
+				<tr>
+					<td>试卷总分：32分</td>
+				</tr>
+				<tr>
+					<td>大题时间：60分钟</td>
+				</tr>
+				<tr>
+					<td>参加考试，请输入一下信息</td>
+				</tr>
+			</table>
+			<!--//免登录考试-->
+			<div v-if="type.indexOf('0')!=-1">
+				<table class="layui-table">
+					<tr>
+						<td>
+							名字
+						</td>
+						<td>
+							<input type="text" value="名字" />
+						</td
+					</tr>
+				</table>
+			</div>
+			<!--//口令考试-->
+			<div  v-if="type.indexOf('1')!=-1">
+				<table class="layui-table">
+					<tr>
+						<td>考试口令</td>
+						<td><input type="text" /></td>
+					</tr>
+				</table>
+			</div>
+			<!--安排考试-->
+			<div  v-if="type.indexOf('2')!=-1">
+				<table class="layui-table">
+					<tr>
+						<td >用户名</td>
+						<td><input type="text"/></td>
+					</tr>
+					<tr>
+						<td >密码</td>
+						<td><input type="password"/></td>
+					</tr>
+				</table>
+			</div>
+			<div class="btnss">
+				<button class="layui-btn layui-btn-radius layui-btn-normal">确定</button>
+			</div>
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el: "#app",
+			data: {
+				type:GetQueryString("name")
+			}
+		});
+		function GetQueryString(name)
+		{
+			var href=window.location.href;
+			var index=href.indexOf("?");
+			var str=href.substring(index+1,href.length)
+			var arr=str.split("&");
+			for(var i=0;i<arr.length;i++){
+				var arr1=arr[i].split("=");
+				if(name==arr1[0]){
+					return arr1[1].split(",");
+				}
+			}
+		}
+		console.log(GetQueryString("name"))
+	</script>
+
+</html>

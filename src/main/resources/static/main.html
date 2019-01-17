@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>主界面下面的显示</title>
+		<link rel="stylesheet" type="text/css" href="js/layui/css/layui.css"/>
+		<script src="js/layui/layui.js"></script>
+		<script src="js/vue/vue.min.js"></script>
+		<style>
+			div{border: 1px solid #E4E4E4;margin-left:30px ;}
+			.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0} 
+            .clearfloat{zoom:1} 
+            .btns{text-align: center;padding-top: 30px;}
+            .btns button{width: 160px !important;height: 150px !important;}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			
+		<div>
+			<div style="width: 700px;height: 400px;float: left;">
+			一些信息
+			</div>
+			<div style="width: 700px;height: 400px;float: left;" class="btns">
+				<button class="layui-btn layui-btn-normal" v-on:click="changes('kaoshi.html')">创建考试</button>
+				<button class="layui-btn">试题库</button>
+				<button class="layui-btn layui-btn-warm">考试分析</button>
+			</div>
+		</div>
+		<div id="app1" class="clearfloat">
+			<div style="width: 700px;height: 200px;">
+				<h3>考试量</h3>
+				<table class="layui-table">
+					<tr>
+						<th>最近一次参加量</th>
+						<th>最近一周参加量</th>
+						<th>昨日参加量</th>
+					</tr>
+					<tr>
+						<td>0人次</td>
+						<td>0人次</td>
+						<td>0人次</td>
+					</tr>
+				</table>
+			</div>
+			<div style="width: 700px;height: 200px;">
+				
+			</div>
+		</div>
+		
+		</div>
+	</body>
+	<script>
+		new Vue({
+			el:"#app",
+			data:{
+				
+			},
+			methods:{
+				changes:function(str){
+					window.top.vue.change(str);
+				}
+			}
+		})
+		layui.use('element', function(){
+		  var element = layui.element;
+		});
+		
+	</script>
+</html>

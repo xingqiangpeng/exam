@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>试卷管理</title>
+		<link rel="stylesheet" type="text/css" href="js/layui/css/layui.css"/>
+		<script src="js/layui/layui.js"></script>
+		<script src="js/vue/vue.min.js"></script>
+		<script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+		<style>
+			.lefts{
+				width: 600px;
+				float: left;
+			}
+			.rigths{
+				width: 600px;
+				float: right;
+			}
+			.lefts td{
+				text-align: left;
+			}
+			.tops{
+				text-align: top !important;
+			}
+			.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0} 
+            .clearfloat{zoom:1} 
+            .shows{
+            	width: 200px;
+            	position: absolute;
+            	z-index: 100;
+            	background: white;
+            	margin-left: 185px;
+            }
+            .tdhi td{
+            	height: 23px;
+            	text-align: center;
+            }
+            .activeshow{
+            	display: none;
+            }
+            .bottoms{
+            	border-bottom: 1px solid gainsboro;
+            	
+            }
+            .bottomsacrive{
+            	border-left: 5px solid #53A4F4;
+            }
+		</style>
+	</head>
+	<body>
+		<div class="layui-tab-item layui-show" id="app">
+			<div>
+				<table class="layui-table">
+					<tr>
+						<td align="left">考试管理</td>
+						<td align="right"><button class="layui-btn layui-btn-normal" >创建考试</button>
+							<button class="layui-btn layui-btn-normal">考试分析</button>
+							<button class="layui-btn layui-btn-normal">试题分析</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="layui-tab layui-tab-brief clearfloat" lay-even lay-filter="docDemoTabBrief">
+			  <ul class="layui-tab-title">
+			    <li class="layui-this">进行中（）</li>
+			    <li>未开始（）</li>
+			    <li>已结束（）</li>
+			    <li>全部（）</li>
+			  </ul>
+			  <div class="layui-tab-content">
+			  	<div class="clearfloat bottoms">
+			  		
+			  	<div class="lefts">
+			  		<table  class="layui-table">
+			  		<tr>
+			  			<td rowspan="5">二维码</td>
+			  			<td>java1809javase考试</td>
+			  		</tr>
+			  		<tr>
+			  			<td>参加方式：免登录考试</td>
+			  		</tr>
+			  		<tr>
+			  			<td>试卷总分：80分</td>
+			  		</tr>
+			  		<tr>
+			  			<td>答题时间：60分钟</td>
+			  		</tr>
+			  		<tr>
+		  			<td>有效时间：2019-01-16 10:10 ~2019-01-16 11:30</td>
+			  		</tr>
+			  	</table>
+			  	</div>
+			  	<div class="rigths">
+			  		<table  class="layui-table" lay-skin="nob">
+			  			<tr>
+			  				<td rowspan="6">0人参加</td>
+			  				<td>
+			  					<button class="layui-btn genduo">更多操作</button>
+			  					<div class="shows activeshow">
+									<table class="tdhi">
+										<tr><td><a href="#">编辑考试</a></td></tr>
+										<tr><td><a href="#">打开考试链接</a></td></tr>
+										<tr><td><a href="#">复制考试链接</a></td></tr>
+										<tr><td><a href="#">发送考试通知</a></td></tr>
+										<tr><td><a href="#">查看发布信息</a></td></tr>
+										<tr><td><a href="#">导出试卷</a></td></tr>
+										<tr><td><a href="#">人工评分</a></td></tr>
+										<tr><td><a href="#">删除考试</a></td></tr>
+										<tr><td><a href="#">查看缺考人员</a></td></tr>
+										<tr><td><a href="#">成绩统计</a></td></tr>
+										<tr><td><a href="#">答案统计</a></td></tr>
+										<tr><td><a href="#">查看考试反馈</a></td></tr>
+									</table>
+								</div>
+			  				</td>
+			  			</tr>
+			  			<tr><td></td></tr>
+			  			<tr><td></td></tr>
+			  			<tr><td></td></tr>
+			  			<tr><td></td></tr>
+			  			<tr>
+			  				<td>
+			  					<button class="layui-btn">查看成绩</button>
+			  					<button class="layui-btn">查看成绩</button>
+			  					<button class="layui-btn">查看成绩</button>
+			  				</td>
+			  			</tr>
+			  		</table>
+			  	</div>
+			  </div>
+			  
+			  <div class="clearfloat bottoms">
+			  		
+			  	<div class="lefts">
+			  		<table  class="layui-table">
+			  		<tr>
+			  			<td rowspan="5">二维码</td>
+			  			<td>java1809javase考试</td>
+			  		</tr>
+			  		<tr>
+			  			<td>参加方式：免登录考试</td>
+			  		</tr>
+			  		<tr>
+			  			<td>试卷总分：80分</td>
+			  		</tr>
+			  		<tr>
+			  			<td>答题时间：60分钟</td>
+			  		</tr>
+			  		<tr>
+		  			<td>有效时间：2019-01-16 10:10 ~2019-01-16 11:30</td>
+			  		</tr>
+			  	</table>
+			  	</div>
+			  	<div class="rigths">
+			  		<table  class="layui-table" lay-skin="nob">
+			  			<tr>
+			  				<td rowspan="6">0人参加</td>
+			  				<td>
+			  					<button class="layui-btn genduo">更多操作</button>
+			  					<div class="shows activeshow">
+									<table class="tdhi">
+										<tr><td><a href="#">编辑考试</a></td></tr>
+										<tr><td><a href="#">打开考试链接</a></td></tr>
+										<tr><td><a href="#">复制考试链接</a></td></tr>
+										<tr><td><a href="#">发送考试通知</a></td></tr>
+										<tr><td><a href="#">查看发布信息</a></td></tr>
+										<tr><td><a href="#">导出试卷</a></td></tr>
+										<tr><td><a href="#">人工评分</a></td></tr>
+										<tr><td><a href="#">删除考试</a></td></tr>
+										<tr><td><a href="#">查看缺考人员</a></td></tr>
+										<tr><td><a href="#">成绩统计</a></td></tr>
+										<tr><td><a href="#">答案统计</a></td></tr>
+										<tr><td><a href="#">查看考试反馈</a></td></tr>
+									</table>
+								</div>
+			  				</td>
+			  			</tr>
+			  			<tr><td></td></tr>
+			  			<tr><td></td></tr>
+			  			<tr><td></td></tr>
+			  			<tr><td></td></tr>
+			  			<tr>
+			  				<td>
+			  					<button class="layui-btn">查看成绩</button>
+			  					<button class="layui-btn">查看成绩</button>
+			  					<button class="layui-btn">查看成绩</button>
+			  				</td>
+			  			</tr>
+			  		</table>
+			  	</div>
+			  </div>
+			  
+			  	</div>
+			  
+			  
+			  
+			  
+			  	</div>
+			</div>     
+		</div>
+		
+	</body>
+	<script>
+		
+		new Vue({
+			el:"#app",
+			data:{
+				
+			},
+			methods:{
+				
+			}
+		});
+		$("body").click(function(){
+			console.log("fdf")
+			$(".shows").addClass("activeshow");
+		})
+		$(".rigths").on('click','.genduo',function(e){
+			$(this).parent().find(".shows").removeClass("activeshow");
+			return false;
+		 });
+		$(".layui-tab-content").on('mouseover','.bottoms',function(e){
+			$(this).css('background-color',"whitesmoke");
+			$(this).addClass("bottomsacrive");
+			return false;
+		 });
+		 $(".layui-tab-content").on('mouseout','.bottoms',function(e){
+			$(this).css('background-color',"white")
+			$(this).removeClass("bottomsacrive")
+			return false;
+		 });
+		layui.use('element', function(){
+		  var element = layui.element;
+		});
+	</script>
+</html>

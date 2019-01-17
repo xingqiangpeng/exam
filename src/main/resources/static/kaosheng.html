@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+		<link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" />
+		<script src="js/layui/layui.js"></script>
+		<script src="js/vue/vue.min.js"></script>
+		<style>
+			#navul {
+				float: left;
+			}
+			
+			#center {
+				float: left;
+				width: 70%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app">
+			<ul class="layui-nav layui-nav-tree" lay-filter="test" id="navul">
+				<li>
+					<li class="layui-nav-item">
+						<a href="">全部</a>
+					</li>
+				</li>
+				<li class="layui-nav-item layui-nav-itemed" v-for="items in data">
+					<a href="javascript:;">{{items.name}}</a>
+					<dl class="layui-nav-child">
+						<dd v-for="item in items.list" v-on:click="add(items.name+'/'+item)">
+							<a href="javascript:;">{{item}}</a>
+						</dd>
+					</dl>
+				</li>
+			</ul>
+			<div id="center">
+				<table class="layui-table">
+					<tr>
+						<td>考生管理</td>
+						<td>
+							<button class="layui-btn layui-btn-primary" id="chaxun">查询</button>
+							<button class="layui-btn layui-btn-primary">新增</button>
+							<button class="layui-btn layui-btn-primary">批量导入</button>
+							<button class="layui-btn layui-btn-primary">批量删除</button>
+							<button class="layui-btn layui-btn-primary">导出</button>
+						</td>
+					</tr>
+				</table>
+				<table class="layui-table" id="chaxuns" style="display: none;">
+					<tr>
+						<td>
+							姓名
+						</td>
+						<td>
+							<input type="text" />
+						</td>
+						<td>
+							创建时间
+						</td>
+						<td>
+							<input type="text" />
+						</td>
+						<td>
+							<input type="text" />
+						</td>
+						<td>
+							<button class="layui-btn layui-btn-primary">查询</button>
+							<button class="layui-btn layui-btn-primary">重置</button>
+						</td>
+					</tr>
+				</table>
+				<table class="layui-table">
+					<tr>
+						<th><input type="checkbox" v-model="selectall" v-on:click="checkall" />全选</th>
+						<th>姓名</th>
+						<th>账号</th>
+						<th>所属部门</th>
+						<th>手机号码</th>
+						<th>性别</th>
+						<th>创建时间</th>
+						<th>操作</th>
+					</tr>
+					<tr v-for="item,index in pseons">
+						<td><input type="checkbox" v-model="item.check" /></td>
+						<td>{{item.pname}}</td>
+						<td>151116441625</td>
+						<td>{{item.dep}}</td>
+						<td>{{item.tel}}</td>
+						<td>男</td>
+						<td>2019-12-11 10:30</td>
+						<td>
+							<button class="layui-btn layui-btn-warm" v-on:click="banji(index)">编辑</button>
+							<button class="layui-btn layui-btn-danger">删除</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="bainjishow" style="width: 500px;display: none;">
+			<table  class="layui-table" id="chaxuns" >
+				<tr>
+					<td>账号</td>
+					<td>
+						<input type="text" />
+					</td>
+				</tr>
+				<tr>
+					<td>姓名</td>
+					<td>
+						<input type="text" />
+					</td>
+				</tr>
+				<tr>
+					<td>密码</td>
+					<td>
+						<input type="text"/>
+					</td>
+				</tr>
+				<tr>
+					<td>所属部门</td>
+					<td>
+						<input type="text"/>
+					</td>
+				</tr>
+				<tr>
+					<td>手机号码</td>
+					<td>
+						<input type="text"/>
+					</td>
+				</tr>
+				<tr>
+					<td>性别</td>
+					<td>
+						<input type="radio" name="radios" value="男"/>男
+						<input type="radio" name="radios" value="女"/>女
+					</td>
+				</tr>
+				<tr>
+					<td>账号</td>
+					<td>
+						<input type="text"/>
+					</td>
+				</tr>
+			</table>
+			<table  class="layui-table" id="chaxuns">
+				<tr>
+					<button class="layui-btn">保存</button>
+					<button class="layui-btn layui-btn-primary">保存并关闭</button>
+					<button class="layui-btn layui-btn-primary">保存并新增</button>
+					<button class="layui-btn layui-btn-primary">关闭</button>
+				</tr>
+			</table>
+		</div>
+	</body>
+	<script>
+		var data = [{
+			name: "java",
+			list: ["java面向对象", "javase"]
+		}, {
+			name: "ui",
+			list: ["meiti", "pt"]
+		}];
+		var pseon = [{
+			pname: "邓欢",
+			tel: "15116441625",
+			dep: "java/se"
+		}, {
+			pname: "邓欢",
+			tel: "15116441625",
+			dep: "java/se"
+		}, {
+			pname: "邓欢",
+			tel: "15116441625",
+			dep: "java/se"
+		}]
+		pseon.forEach(item => item.check = false)
+		var vueapp = new Vue({
+			el: "#app",
+			data: {
+				data: data,
+				pseons: pseon,
+				selectall: false
+			},
+			methods: {
+				//留着
+				changes: function(str) {
+					window.top.vue.change(str);
+				},
+				//触发查询
+				add: function(str) {
+					console.log(str)
+				},
+				//全选
+				checkall: function() {
+					if(this.selectall) {
+						this.pseons.forEach(item => item.check = false);
+					} else {
+						this.pseons.forEach(item => item.check = true);
+					}
+				},
+				//编辑
+				banji: function(i) {
+					vueshow.bainjishows=this.pseons[i];
+					console.log(this.pseons[i])
+					layer.open({
+						area: ['600px', '500px'],
+						title:"用户编辑",
+						type: 1,
+			  			content: $('#bainjishow')
+					})
+				}
+			},
+			watch: {
+				pseons: {
+					handler(val, oldVal) {
+						if(this.pseons.filter(item => item.check == true).length == this.pseons.length) {
+							this.selectall = true;
+						} else {
+							this.selectall = false;
+						}
+					},
+					deep: true
+				}
+			}
+		});
+		var vueshow=new Vue({
+			el:"#bainjishow",
+			data:{
+				bainjishows:[]
+			}
+		})
+		var indexchaxun = true;
+		$("#chaxun").click(function() {
+			if(indexchaxun) {
+				$("#chaxuns").css("display", "block");
+				indexchaxun = false;
+			} else {
+				$("#chaxuns").css("display", "none");
+				indexchaxun = true;
+			}
+		})
+		var index=layui.use(['element','layer'], function() {
+			var element = layui.element;
+			var layer = layui.layer;
+		});
+	</script>
+
+</html>

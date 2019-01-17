@@ -1,0 +1,1510 @@
+<?xml version="1.0" encoding="GB2312"?>
+<CTOXML>
+
+<DataModels>
+  <TableCount>8</TableCount>
+  <Count>1</Count>
+</DataModels>
+
+
+<DataModels_item1>
+  <CTVER>43543230</CTVER>
+  <ID>1</ID>
+  <Name>在线考试系统</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <DefDbEngine>MYSQL</DefDbEngine>
+  <DbConnectStr>TCtMetaMysqlDb</DbConnectStr>
+</DataModels_item1>
+
+
+<DataModels_item1_item0>
+  <Count>8</Count>
+</DataModels_item1_item0>
+
+
+<DataModels_item1_item0_item1>
+  <CTVER>43543230</CTVER>
+  <ID>2</ID>
+  <Name>TestPaper</Name>
+  <Caption>试卷表</Caption>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <GraphDesc>Left=555.00
+Top=251.00</GraphDesc>
+</DataModels_item1_item0_item1>
+
+
+<DataModels_item1_item0_item1_item0>
+  <Count>13</Count>
+</DataModels_item1_item0_item1_item0>
+
+
+<DataModels_item1_item0_item1_item0_item1>
+  <CTVER>43543230</CTVER>
+  <ID>1</ID>
+  <Name>tpid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <DisplayName>试卷自身编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>1</KeyFieldType>
+  <DefaultValue>{auto_increment}</DefaultValue>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=372.00,238.00
+P2=372.00,312.00
+P3=348.00,312.00
+P4=348.00,385.00
+HookP1=136.00,83.00
+HookP2=117.00,1.00
+Mod_OP1=0
+Mod_OP2=0
+Mod_CP=0
+Horz1=0
+Horz2=0</GraphDesc>
+</DataModels_item1_item0_item1_item0_item1>
+
+
+<DataModels_item1_item0_item1_item0_item2>
+  <CTVER>43543230</CTVER>
+  <ID>2</ID>
+  <Name>tpname</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>2</OrderNo>
+  <DisplayName>考试名称</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>32</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item2>
+
+
+<DataModels_item1_item0_item1_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>3</ID>
+  <Name>tpbeizhu</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>3</OrderNo>
+  <DisplayName>考试备注</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item3>
+
+
+<DataModels_item1_item0_item1_item0_item4>
+  <CTVER>43543230</CTVER>
+  <ID>4</ID>
+  <Name>tptype</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>4</OrderNo>
+  <DisplayName>参加方式</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>200</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item4>
+
+
+<DataModels_item1_item0_item1_item0_item5>
+  <CTVER>43543230</CTVER>
+  <ID>6</ID>
+  <Name>tpwritemessage</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>5</OrderNo>
+  <DisplayName>考生填写信息</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item5>
+
+
+<DataModels_item1_item0_item1_item0_item6>
+  <CTVER>43543230</CTVER>
+  <ID>7</ID>
+  <Name>tpscore</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>6</OrderNo>
+  <DisplayName>考试及格分数</DisplayName>
+  <DataType>2</DataType>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item6>
+
+
+<DataModels_item1_item0_item1_item0_item7>
+  <CTVER>43543230</CTVER>
+  <ID>8</ID>
+  <Name>tpstartdate</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>7</OrderNo>
+  <DisplayName>考试开始时间</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>32</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item7>
+
+
+<DataModels_item1_item0_item1_item0_item8>
+  <CTVER>43543230</CTVER>
+  <ID>9</ID>
+  <Name>tpenddate</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>8</OrderNo>
+  <DisplayName>考试结束时间</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>32</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item8>
+
+
+<DataModels_item1_item0_item1_item0_item9>
+  <CTVER>43543230</CTVER>
+  <ID>10</ID>
+  <Name>tpdatitime</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>9</OrderNo>
+  <DisplayName>答题时长</DisplayName>
+  <DataType>2</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>6</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item9>
+
+
+<DataModels_item1_item0_item1_item0_item10>
+  <CTVER>43543230</CTVER>
+  <ID>26</ID>
+  <Name>tpfabu</Name>
+  <Memo>已发布，未发布</Memo>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>10</OrderNo>
+  <DisplayName>发布状态</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>32</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item10>
+
+
+<DataModels_item1_item0_item1_item0_item11>
+  <CTVER>43543230</CTVER>
+  <ID>23</ID>
+  <Name>b1</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>11</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item11>
+
+
+<DataModels_item1_item0_item1_item0_item12>
+  <CTVER>43543230</CTVER>
+  <ID>24</ID>
+  <Name>b2</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>12</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item12>
+
+
+<DataModels_item1_item0_item1_item0_item13>
+  <CTVER>43543230</CTVER>
+  <ID>25</ID>
+  <Name>b3</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>13</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item1_item0_item13>
+
+
+<DataModels_item1_item0_item2>
+  <CTVER>43543230</CTVER>
+  <ID>3</ID>
+  <Name>TestQuestions</Name>
+  <Caption>试卷题目表</Caption>
+  <Memo>每张试卷对应的题目</Memo>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>2</OrderNo>
+  <GraphDesc>Left=968.00
+Top=299.00</GraphDesc>
+</DataModels_item1_item0_item2>
+
+
+<DataModels_item1_item0_item2_item0>
+  <Count>9</Count>
+</DataModels_item1_item0_item2_item0>
+
+
+<DataModels_item1_item0_item2_item0_item1>
+  <CTVER>43543230</CTVER>
+  <ID>1</ID>
+  <Name>tqid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <DisplayName>试题自身编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>1</KeyFieldType>
+  <DefaultValue>{auto_increment}</DefaultValue>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=1384.00,384.00
+P2=1302.00,384.00
+P3=1302.00,382.00
+P4=1221.00,382.00
+HookP1=126.00,99.00
+HookP2=253.00,83.00
+Mod_OP1=0
+Mod_OP2=1
+Mod_CP=0
+Horz1=1
+Horz2=1</GraphDesc>
+</DataModels_item1_item0_item2_item0_item1>
+
+
+<DataModels_item1_item0_item2_item0_item2>
+  <CTVER>43543230</CTVER>
+  <ID>38</ID>
+  <Name>tpid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>2</OrderNo>
+  <DisplayName>试卷编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>3</KeyFieldType>
+  <RelateTable>TestPaper</RelateTable>
+  <RelateField>tpid</RelateField>
+  <Nullable>1</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=773.00,366.00
+P2=870.00,366.00
+P3=870.00,382.00
+P4=968.00,382.00
+HookP1=109.00,115.00
+HookP2=1.00,83.00
+Mod_OP1=0
+Mod_OP2=0
+Mod_CP=0
+Horz1=1
+Horz2=1</GraphDesc>
+</DataModels_item1_item0_item2_item0_item2>
+
+
+<DataModels_item1_item0_item2_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>37</ID>
+  <Name>tqbigtitle</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>3</OrderNo>
+  <DisplayName>试卷大题</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>50</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item2_item0_item3>
+
+
+<DataModels_item1_item0_item2_item0_item4>
+  <CTVER>43543230</CTVER>
+  <ID>39</ID>
+  <Name>tqnum</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>4</OrderNo>
+  <DisplayName>题目序号</DisplayName>
+  <DataType>2</DataType>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item2_item0_item4>
+
+
+<DataModels_item1_item0_item2_item0_item5>
+  <CTVER>43543230</CTVER>
+  <ID>2</ID>
+  <Name>qbid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>5</OrderNo>
+  <DisplayName>题库题目自身编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>3</KeyFieldType>
+  <RelateTable>QuestionBank</RelateTable>
+  <RelateField>qbid</RelateField>
+  <Nullable>1</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=1384.00,390.00
+P2=1302.00,390.00
+P3=1302.00,390.00
+P4=1221.00,390.00
+HookP1=127.00,105.00
+HookP2=253.00,91.00
+Mod_OP1=1
+Mod_OP2=1
+Mod_CP=0
+Horz1=1
+Horz2=1</GraphDesc>
+</DataModels_item1_item0_item2_item0_item5>
+
+
+<DataModels_item1_item0_item2_item0_item6>
+  <CTVER>43543230</CTVER>
+  <ID>50</ID>
+  <Name>tqscore</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>6</OrderNo>
+  <DisplayName>题目分数</DisplayName>
+  <DataType>3</DataType>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item2_item0_item6>
+
+
+<DataModels_item1_item0_item2_item0_item7>
+  <CTVER>43543230</CTVER>
+  <ID>40</ID>
+  <Name>b1</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>7</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item2_item0_item7>
+
+
+<DataModels_item1_item0_item2_item0_item8>
+  <CTVER>43543230</CTVER>
+  <ID>41</ID>
+  <Name>b2</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>8</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item2_item0_item8>
+
+
+<DataModels_item1_item0_item2_item0_item9>
+  <CTVER>43543230</CTVER>
+  <ID>42</ID>
+  <Name>b3</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>9</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item2_item0_item9>
+
+
+<DataModels_item1_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>5</ID>
+  <Name>QuestionBank</Name>
+  <Caption>题库-题目表</Caption>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>3</OrderNo>
+  <GraphDesc>Left=1384.00
+Top=285.00</GraphDesc>
+</DataModels_item1_item0_item3>
+
+
+<DataModels_item1_item0_item3_item0>
+  <Count>11</Count>
+</DataModels_item1_item0_item3_item0>
+
+
+<DataModels_item1_item0_item3_item0_item1>
+  <CTVER>43543230</CTVER>
+  <ID>1</ID>
+  <Name>qbid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <DisplayName>题库题目自身编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>1</KeyFieldType>
+  <DefaultValue>{auto_increment}</DefaultValue>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item1>
+
+
+<DataModels_item1_item0_item3_item0_item2>
+  <CTVER>43543230</CTVER>
+  <ID>2</ID>
+  <Name>qboutline</Name>
+  <Memo>java/se--ui/pp</Memo>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>2</OrderNo>
+  <DisplayName>所属大纲</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>200</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item2>
+
+
+<DataModels_item1_item0_item3_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>5</ID>
+  <Name>qbtype</Name>
+  <Memo>选择、问答</Memo>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>3</OrderNo>
+  <DisplayName>题型</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>200</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item3>
+
+
+<DataModels_item1_item0_item3_item0_item4>
+  <CTVER>43543230</CTVER>
+  <ID>3</ID>
+  <Name>qbtext</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>4</OrderNo>
+  <DisplayName>题干</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item4>
+
+
+<DataModels_item1_item0_item3_item0_item5>
+  <CTVER>43543230</CTVER>
+  <ID>4</ID>
+  <Name>qboptions</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>5</OrderNo>
+  <DisplayName>选项</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item5>
+
+
+<DataModels_item1_item0_item3_item0_item6>
+  <CTVER>43543230</CTVER>
+  <ID>7</ID>
+  <Name>qbanswer</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>6</OrderNo>
+  <DisplayName>答案</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>200</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item6>
+
+
+<DataModels_item1_item0_item3_item0_item7>
+  <CTVER>43543230</CTVER>
+  <ID>8</ID>
+  <Name>qbdifficulty</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>7</OrderNo>
+  <DisplayName>题目难度</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>200</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item7>
+
+
+<DataModels_item1_item0_item3_item0_item8>
+  <CTVER>43543230</CTVER>
+  <ID>9</ID>
+  <Name>qbcreatetime</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>8</OrderNo>
+  <DisplayName>创建日期</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>200</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item8>
+
+
+<DataModels_item1_item0_item3_item0_item9>
+  <CTVER>43543230</CTVER>
+  <ID>23</ID>
+  <Name>b1</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>9</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item9>
+
+
+<DataModels_item1_item0_item3_item0_item10>
+  <CTVER>43543230</CTVER>
+  <ID>24</ID>
+  <Name>b2</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>10</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item10>
+
+
+<DataModels_item1_item0_item3_item0_item11>
+  <CTVER>43543230</CTVER>
+  <ID>25</ID>
+  <Name>b3</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>11</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item3_item0_item11>
+
+
+<DataModels_item1_item0_item4>
+  <CTVER>43543230</CTVER>
+  <ID>6</ID>
+  <Name>student</Name>
+  <Caption>考生安排表</Caption>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>4</OrderNo>
+  <GraphDesc>Left=508.00
+Top=750.00</GraphDesc>
+</DataModels_item1_item0_item4>
+
+
+<DataModels_item1_item0_item4_item0>
+  <Count>10</Count>
+</DataModels_item1_item0_item4_item0>
+
+
+<DataModels_item1_item0_item4_item0_item1>
+  <CTVER>43543230</CTVER>
+  <ID>1</ID>
+  <Name>sid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <DisplayName>自身编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>1</KeyFieldType>
+  <DefaultValue>{auto_increment}</DefaultValue>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item4_item0_item1>
+
+
+<DataModels_item1_item0_item4_item0_item2>
+  <CTVER>43543230</CTVER>
+  <ID>122</ID>
+  <Name>sname</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>2</OrderNo>
+  <DisplayName>考生姓名</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>200</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item4_item0_item2>
+
+
+<DataModels_item1_item0_item4_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>2</ID>
+  <Name>snumber</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>3</OrderNo>
+  <DisplayName>考生账号(手机号码)</DisplayName>
+  <DataType>1</DataType>
+  <IndexType>1</IndexType>
+  <Nullable>1</Nullable>
+  <DataLength>11</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item4_item0_item3>
+
+
+<DataModels_item1_item0_item4_item0_item4>
+  <CTVER>43543230</CTVER>
+  <ID>3</ID>
+  <Name>spassword</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>4</OrderNo>
+  <DisplayName>考生密码</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>50</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item4_item0_item4>
+
+
+<DataModels_item1_item0_item4_item0_item5>
+  <CTVER>43543230</CTVER>
+  <ID>4</ID>
+  <Name>sdep</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>5</OrderNo>
+  <DisplayName>部门</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>200</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item4_item0_item5>
+
+
+<DataModels_item1_item0_item4_item0_item6>
+  <CTVER>43543230</CTVER>
+  <ID>5</ID>
+  <Name>ssex</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>6</OrderNo>
+  <DisplayName>性别</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>32</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item4_item0_item6>
+
+
+<DataModels_item1_item0_item4_item0_item7>
+  <CTVER>43543230</CTVER>
+  <ID>100</ID>
+  <Name>screatdate</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>7</OrderNo>
+  <DisplayName>考生创建时间</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>32</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item4_item0_item7>
+
+
+<DataModels_item1_item0_item4_item0_item8>
+  <CTVER>43543230</CTVER>
+  <ID>97</ID>
+  <Name>b1</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>8</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item4_item0_item8>
+
+
+<DataModels_item1_item0_item4_item0_item9>
+  <CTVER>43543230</CTVER>
+  <ID>98</ID>
+  <Name>b2</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>9</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item4_item0_item9>
+
+
+<DataModels_item1_item0_item4_item0_item10>
+  <CTVER>43543230</CTVER>
+  <ID>99</ID>
+  <Name>b3</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>10</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item4_item0_item10>
+
+
+<DataModels_item1_item0_item5>
+  <CTVER>43543230</CTVER>
+  <ID>7</ID>
+  <Name>StuTestPaper</Name>
+  <Caption>考生-试卷表免登录</Caption>
+  <Memo>免登录</Memo>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>5</OrderNo>
+  <GraphDesc>Left=563.00
+Top=-13.00</GraphDesc>
+</DataModels_item1_item0_item5>
+
+
+<DataModels_item1_item0_item5_item0>
+  <Count>10</Count>
+</DataModels_item1_item0_item5_item0>
+
+
+<DataModels_item1_item0_item5_item0_item1>
+  <CTVER>43543230</CTVER>
+  <ID>1</ID>
+  <Name>stpid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <DisplayName>自身编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>1</KeyFieldType>
+  <DefaultValue>{auto_increment}</DefaultValue>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item5_item0_item1>
+
+
+<DataModels_item1_item0_item5_item0_item2>
+  <CTVER>43543230</CTVER>
+  <ID>2</ID>
+  <Name>sname</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>2</OrderNo>
+  <DisplayName>考生姓名</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>32</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item5_item0_item2>
+
+
+<DataModels_item1_item0_item5_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>4</ID>
+  <Name>tpwritemessage</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>3</OrderNo>
+  <DisplayName>考生信息</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item5_item0_item3>
+
+
+<DataModels_item1_item0_item5_item0_item4>
+  <CTVER>43543230</CTVER>
+  <ID>3</ID>
+  <Name>tpid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>4</OrderNo>
+  <DisplayName>试卷编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>3</KeyFieldType>
+  <RelateTable>TestPaper</RelateTable>
+  <RelateField>tpid</RelateField>
+  <Nullable>1</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=672.00,251.00
+P2=672.00,210.00
+P3=672.00,210.00
+P4=672.00,169.00
+HookP1=117.00,123.00
+HookP2=109.00,182.00
+Mod_OP1=1
+Mod_OP2=1
+Mod_CP=0
+Horz1=0
+Horz2=0</GraphDesc>
+</DataModels_item1_item0_item5_item0_item4>
+
+
+<DataModels_item1_item0_item5_item0_item5>
+  <CTVER>43543230</CTVER>
+  <ID>112</ID>
+  <Name>tqnum</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>5</OrderNo>
+  <DisplayName>题目序号</DisplayName>
+  <DataType>2</DataType>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item5_item0_item5>
+
+
+<DataModels_item1_item0_item5_item0_item6>
+  <CTVER>43543230</CTVER>
+  <ID>5</ID>
+  <Name>stpanswer</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>6</OrderNo>
+  <DisplayName>考生对应答案</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item5_item0_item6>
+
+
+<DataModels_item1_item0_item5_item0_item7>
+  <CTVER>43543230</CTVER>
+  <ID>40</ID>
+  <Name>stpscore</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>7</OrderNo>
+  <DisplayName>考生所得分数</DisplayName>
+  <DataType>3</DataType>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item5_item0_item7>
+
+
+<DataModels_item1_item0_item5_item0_item8>
+  <CTVER>43543230</CTVER>
+  <ID>148</ID>
+  <Name>b1</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>8</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item5_item0_item8>
+
+
+<DataModels_item1_item0_item5_item0_item9>
+  <CTVER>43543230</CTVER>
+  <ID>156</ID>
+  <Name>b2</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>9</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item5_item0_item9>
+
+
+<DataModels_item1_item0_item5_item0_item10>
+  <CTVER>43543230</CTVER>
+  <ID>157</ID>
+  <Name>b3</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>10</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item5_item0_item10>
+
+
+<DataModels_item1_item0_item6>
+  <CTVER>43543230</CTVER>
+  <ID>8</ID>
+  <Name>LoginStuTestPaper</Name>
+  <Caption>考生-试卷表（需要登录）</Caption>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>6</OrderNo>
+  <GraphDesc>Left=504.00
+Top=540.00</GraphDesc>
+</DataModels_item1_item0_item6>
+
+
+<DataModels_item1_item0_item6_item0>
+  <Count>9</Count>
+</DataModels_item1_item0_item6_item0>
+
+
+<DataModels_item1_item0_item6_item0_item1>
+  <CTVER>43543230</CTVER>
+  <ID>1</ID>
+  <Name>lstpid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <DisplayName>自身编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>1</KeyFieldType>
+  <DefaultValue>{auto_increment}</DefaultValue>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item6_item0_item1>
+
+
+<DataModels_item1_item0_item6_item0_item2>
+  <CTVER>43543230</CTVER>
+  <ID>2</ID>
+  <Name>snumber</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>2</OrderNo>
+  <DisplayName>考生账号</DisplayName>
+  <DataType>1</DataType>
+  <KeyFieldType>3</KeyFieldType>
+  <RelateTable>student</RelateTable>
+  <RelateField>snumber</RelateField>
+  <Nullable>1</Nullable>
+  <DataLength>11</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=648.00,750.00
+P2=648.00,728.00
+P3=648.00,728.00
+P4=648.00,706.00
+HookP1=140.00,91.00
+HookP2=144.00,166.00
+Mod_OP1=1
+Mod_OP2=1
+Mod_CP=0
+Horz1=0
+Horz2=0</GraphDesc>
+</DataModels_item1_item0_item6_item0_item2>
+
+
+<DataModels_item1_item0_item6_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>3</ID>
+  <Name>tpid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>3</OrderNo>
+  <DisplayName>试卷编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>3</KeyFieldType>
+  <RelateTable>TestPaper</RelateTable>
+  <RelateField>tpid</RelateField>
+  <Nullable>1</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=648.00,481.00
+P2=648.00,510.00
+P3=648.00,510.00
+P4=648.00,540.00
+HookP1=93.00,99.00
+HookP2=144.00,1.00
+Mod_OP1=0
+Mod_OP2=0
+Mod_CP=0
+Horz1=0
+Horz2=0</GraphDesc>
+</DataModels_item1_item0_item6_item0_item3>
+
+
+<DataModels_item1_item0_item6_item0_item4>
+  <CTVER>43543230</CTVER>
+  <ID>4</ID>
+  <Name>tqnum</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>4</OrderNo>
+  <DisplayName>题目序号</DisplayName>
+  <DataType>2</DataType>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item6_item0_item4>
+
+
+<DataModels_item1_item0_item6_item0_item5>
+  <CTVER>43543230</CTVER>
+  <ID>5</ID>
+  <Name>lstpanswer</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>5</OrderNo>
+  <DisplayName>考生对应答案</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item6_item0_item5>
+
+
+<DataModels_item1_item0_item6_item0_item6>
+  <CTVER>43543230</CTVER>
+  <ID>30</ID>
+  <Name>lstpgetscore</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>6</OrderNo>
+  <DisplayName>考生得分</DisplayName>
+  <DataType>3</DataType>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item6_item0_item6>
+
+
+<DataModels_item1_item0_item6_item0_item7>
+  <CTVER>43543230</CTVER>
+  <ID>189</ID>
+  <Name>b1</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>7</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item6_item0_item7>
+
+
+<DataModels_item1_item0_item6_item0_item8>
+  <CTVER>43543230</CTVER>
+  <ID>190</ID>
+  <Name>b2</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>8</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item6_item0_item8>
+
+
+<DataModels_item1_item0_item6_item0_item9>
+  <CTVER>43543230</CTVER>
+  <ID>191</ID>
+  <Name>b3</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>9</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item6_item0_item9>
+
+
+<DataModels_item1_item0_item7>
+  <CTVER>43543230</CTVER>
+  <ID>9</ID>
+  <Name>stutestscore</Name>
+  <Caption>考生试卷总分表</Caption>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>7</OrderNo>
+  <GraphDesc>Left=224.00
+Top=308.00</GraphDesc>
+</DataModels_item1_item0_item7>
+
+
+<DataModels_item1_item0_item7_item0>
+  <Count>7</Count>
+</DataModels_item1_item0_item7_item0>
+
+
+<DataModels_item1_item0_item7_item0_item1>
+  <CTVER>43543230</CTVER>
+  <ID>1</ID>
+  <Name>stsid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <DisplayName>自身编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>1</KeyFieldType>
+  <DefaultValue>{auto_increment}</DefaultValue>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item7_item0_item1>
+
+
+<DataModels_item1_item0_item7_item0_item2>
+  <CTVER>43543230</CTVER>
+  <ID>2</ID>
+  <Name>sname</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>2</OrderNo>
+  <DisplayName>考生姓名</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>32</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item7_item0_item2>
+
+
+<DataModels_item1_item0_item7_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>23</ID>
+  <Name>tpid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>3</OrderNo>
+  <DisplayName>试卷编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>3</KeyFieldType>
+  <RelateTable>TestPaper</RelateTable>
+  <RelateField>tpid</RelateField>
+  <Nullable>1</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=555.00,374.00
+P2=492.00,374.00
+P3=492.00,375.00
+P4=428.00,375.00
+HookP1=117.00,123.00
+HookP2=204.00,67.00
+Mod_OP1=1
+Mod_OP2=0
+Mod_CP=0
+Horz1=1
+Horz2=1</GraphDesc>
+</DataModels_item1_item0_item7_item0_item3>
+
+
+<DataModels_item1_item0_item7_item0_item4>
+  <CTVER>43543230</CTVER>
+  <ID>24</ID>
+  <Name>stsscore</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>4</OrderNo>
+  <DisplayName>学生试卷总分</DisplayName>
+  <DataType>3</DataType>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item7_item0_item4>
+
+
+<DataModels_item1_item0_item7_item0_item5>
+  <CTVER>43543230</CTVER>
+  <ID>211</ID>
+  <Name>b1</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>5</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item7_item0_item5>
+
+
+<DataModels_item1_item0_item7_item0_item6>
+  <CTVER>43543230</CTVER>
+  <ID>212</ID>
+  <Name>b2</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>6</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item7_item0_item6>
+
+
+<DataModels_item1_item0_item7_item0_item7>
+  <CTVER>43543230</CTVER>
+  <ID>213</ID>
+  <Name>b3</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>7</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item7_item0_item7>
+
+
+<DataModels_item1_item0_item8>
+  <CTVER>43543230</CTVER>
+  <ID>10</ID>
+  <Name>User</Name>
+  <Caption>系统使用注册用户</Caption>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>8</OrderNo>
+  <GraphDesc>Left=993.00
+Top=52.00</GraphDesc>
+</DataModels_item1_item0_item8>
+
+
+<DataModels_item1_item0_item8_item0>
+  <Count>8</Count>
+</DataModels_item1_item0_item8_item0>
+
+
+<DataModels_item1_item0_item8_item0_item1>
+  <CTVER>43543230</CTVER>
+  <ID>1</ID>
+  <Name>uid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <DisplayName>自身编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>1</KeyFieldType>
+  <DefaultValue>{auto_increment}</DefaultValue>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item8_item0_item1>
+
+
+<DataModels_item1_item0_item8_item0_item2>
+  <CTVER>43543230</CTVER>
+  <ID>2</ID>
+  <Name>username</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>2</OrderNo>
+  <DisplayName>用户名</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>200</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item8_item0_item2>
+
+
+<DataModels_item1_item0_item8_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>3</ID>
+  <Name>userpwd</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>3</OrderNo>
+  <DisplayName>登录密码</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>200</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item8_item0_item3>
+
+
+<DataModels_item1_item0_item8_item0_item4>
+  <CTVER>43543230</CTVER>
+  <ID>4</ID>
+  <Name>usertel</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>4</OrderNo>
+  <DisplayName>用户手机号码</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>11</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item8_item0_item4>
+
+
+<DataModels_item1_item0_item8_item0_item5>
+  <CTVER>43543230</CTVER>
+  <ID>5</ID>
+  <Name>usermessage</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>5</OrderNo>
+  <DisplayName>需求信息</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item8_item0_item5>
+
+
+<DataModels_item1_item0_item8_item0_item6>
+  <CTVER>43543230</CTVER>
+  <ID>225</ID>
+  <Name>b1</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>6</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item8_item0_item6>
+
+
+<DataModels_item1_item0_item8_item0_item7>
+  <CTVER>43543230</CTVER>
+  <ID>226</ID>
+  <Name>b2</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>7</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item8_item0_item7>
+
+
+<DataModels_item1_item0_item8_item0_item8>
+  <CTVER>43543230</CTVER>
+  <ID>227</ID>
+  <Name>b3</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>8</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item8_item0_item8>
+
+
+</CTOXML>
