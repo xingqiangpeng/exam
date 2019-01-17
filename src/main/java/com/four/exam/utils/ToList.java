@@ -11,9 +11,11 @@ public class ToList {
         for (int i = 0; i < list.size(); i++) {
             Map<String, Object> map = list.get(i);
             for (String str : map.keySet()) {
-                String str1=(String)(map.get(str));
-                String[] arr=str1.split("/");
-                list1.add(arr);
+                if(str.equals("sdep")) {
+                    String str1 = (String) (map.get(str));
+                    String[] arr = str1.split("/");
+                    list1.add(arr);
+                }
             }
 
         }
