@@ -1,11 +1,11 @@
 package com.four.exam.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Component
 @Entity
 public class Testpaper {
     private int tpid;
@@ -23,6 +23,7 @@ public class Testpaper {
     private String b3;
 
     @Id
+    @GeneratedValue
     @Column(name = "tpid")
     public int getTpid() {
         return tpid;
@@ -175,5 +176,24 @@ public class Testpaper {
     @Override
     public int hashCode() {
         return Objects.hash(tpid, tpname, tpbeizhu, tptype, tpwritemessage, tpscore, tpstartdate, tpenddate, tpdatitime, tpfabu, b1, b2, b3);
+    }
+
+    @Override
+    public String toString() {
+        return "Testpaper{" +
+                "tpid=" + tpid +
+                ", tpname='" + tpname + '\'' +
+                ", tpbeizhu='" + tpbeizhu + '\'' +
+                ", tptype='" + tptype + '\'' +
+                ", tpwritemessage='" + tpwritemessage + '\'' +
+                ", tpscore=" + tpscore +
+                ", tpstartdate='" + tpstartdate + '\'' +
+                ", tpenddate='" + tpenddate + '\'' +
+                ", tpdatitime=" + tpdatitime +
+                ", tpfabu='" + tpfabu + '\'' +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
     }
 }

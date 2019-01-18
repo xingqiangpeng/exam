@@ -60,13 +60,13 @@ insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'第三�
 select * from testquestions;
 
 --stutestscore考生试卷总分表
-insert into stutestscore(sname,tpid,stsscore) values('邢强鹏',1,3.0);
-insert into stutestscore(sname,tpid,stsscore) values('邓欢',2,3.0);
-insert into stutestscore(sname,tpid,stsscore) values('陈泽夫',2,4.0);
-insert into stutestscore(sname,tpid,stsscore) values('刘江徽',3,6.0);
-insert into stutestscore(sname,tpid,stsscore) values('傅正鹏',3,6.0);
-insert into stutestscore(sname,tpid,stsscore) values('黄芪',3,6.0);
-insert into stutestscore(sname,tpid,stsscore) values('真假诚',3,6.0);
+insert into stutestscore(uid,tpid,stsscore) values(1,1,3.0);
+insert into stutestscore(uid,tpid,stsscore) values(1,2,3.0);
+insert into stutestscore(uid,tpid,stsscore) values(2,2,4.0);
+insert into stutestscore(uid,tpid,stsscore) values(1,3,6.0);
+insert into stutestscore(uid,tpid,stsscore) values(3,3,6.0);
+insert into stutestscore(uid,tpid,stsscore) values(2,3,6.0);
+insert into stutestscore(uid,tpid,stsscore) values(1,3,6.0);
 select * from stutestscore;
 
 --loginstutestpaper 考生-试卷表-需要登录
@@ -110,3 +110,7 @@ insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) val
 insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('真假诚','姓名:真假诚/口令:121214',2,3,'BC',0.0);
 insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('真假诚','姓名:真假诚/口令:121214',2,4,'朱恒/孙尚香/去中路',3.0);
 select * from stutestpaper;
+--免登录考试的成绩表
+insert into stutestscore2(information,tpid,stsscore) values('姓名:傅正鹏/口令:121214',1,8);
+insert into stutestscore2(information,tpid,stsscore) values('姓名:傅正鹏/口令:121214',2,8);
+insert into stutestscore2(information,tpid,stsscore) values('姓名:傅正鹏/口令:121214',3,10);

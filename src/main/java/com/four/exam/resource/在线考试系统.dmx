@@ -2,7 +2,7 @@
 <CTOXML>
 
 <DataModels>
-  <TableCount>8</TableCount>
+  <TableCount>9</TableCount>
   <Count>1</Count>
 </DataModels>
 
@@ -20,7 +20,7 @@
 
 
 <DataModels_item1_item0>
-  <Count>8</Count>
+  <Count>9</Count>
 </DataModels_item1_item0>
 
 
@@ -1219,26 +1219,26 @@ Horz2=0</GraphDesc>
 
 <DataModels_item1_item0_item7>
   <CTVER>43543230</CTVER>
-  <ID>9</ID>
-  <Name>stutestscore</Name>
-  <Caption>考生试卷总分表</Caption>
+  <ID>10</ID>
+  <Name>User</Name>
+  <Caption>系统使用注册用户</Caption>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>7</OrderNo>
-  <GraphDesc>Left=224.00
-Top=308.00</GraphDesc>
+  <GraphDesc>Left=9.00
+Top=407.00</GraphDesc>
 </DataModels_item1_item0_item7>
 
 
 <DataModels_item1_item0_item7_item0>
-  <Count>7</Count>
+  <Count>8</Count>
 </DataModels_item1_item0_item7_item0>
 
 
 <DataModels_item1_item0_item7_item0_item1>
   <CTVER>43543230</CTVER>
   <ID>1</ID>
-  <Name>stsid</Name>
+  <Name>uid</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>1</OrderNo>
@@ -1255,14 +1255,14 @@ Top=308.00</GraphDesc>
 <DataModels_item1_item0_item7_item0_item2>
   <CTVER>43543230</CTVER>
   <ID>2</ID>
-  <Name>sname</Name>
+  <Name>username</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>2</OrderNo>
-  <DisplayName>考生姓名</DisplayName>
+  <DisplayName>用户名</DisplayName>
   <DataType>1</DataType>
   <Nullable>0</Nullable>
-  <DataLength>32</DataLength>
+  <DataLength>200</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item7_item0_item2>
@@ -1270,43 +1270,31 @@ Top=308.00</GraphDesc>
 
 <DataModels_item1_item0_item7_item0_item3>
   <CTVER>43543230</CTVER>
-  <ID>23</ID>
-  <Name>tpid</Name>
+  <ID>3</ID>
+  <Name>userpwd</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>3</OrderNo>
-  <DisplayName>试卷编号</DisplayName>
-  <DataType>2</DataType>
-  <KeyFieldType>3</KeyFieldType>
-  <RelateTable>TestPaper</RelateTable>
-  <RelateField>tpid</RelateField>
-  <Nullable>1</Nullable>
+  <DisplayName>登录密码</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>200</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
-  <GraphDesc>P1=555.00,374.00
-P2=492.00,374.00
-P3=492.00,375.00
-P4=428.00,375.00
-HookP1=117.00,123.00
-HookP2=204.00,67.00
-Mod_OP1=1
-Mod_OP2=0
-Mod_CP=0
-Horz1=1
-Horz2=1</GraphDesc>
 </DataModels_item1_item0_item7_item0_item3>
 
 
 <DataModels_item1_item0_item7_item0_item4>
   <CTVER>43543230</CTVER>
-  <ID>24</ID>
-  <Name>stsscore</Name>
+  <ID>4</ID>
+  <Name>usertel</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>4</OrderNo>
-  <DisplayName>学生试卷总分</DisplayName>
-  <DataType>3</DataType>
+  <DisplayName>用户手机号码</DisplayName>
+  <DataType>1</DataType>
   <Nullable>0</Nullable>
+  <DataLength>11</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item7_item0_item4>
@@ -1314,14 +1302,14 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item7_item0_item5>
   <CTVER>43543230</CTVER>
-  <ID>211</ID>
-  <Name>b1</Name>
+  <ID>5</ID>
+  <Name>usermessage</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>5</OrderNo>
-  <DisplayName>bei</DisplayName>
+  <DisplayName>需求信息</DisplayName>
   <DataType>1</DataType>
-  <Nullable>1</Nullable>
+  <Nullable>0</Nullable>
   <DataLength>2000</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
@@ -1330,8 +1318,8 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item7_item0_item6>
   <CTVER>43543230</CTVER>
-  <ID>212</ID>
-  <Name>b2</Name>
+  <ID>225</ID>
+  <Name>b1</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>6</OrderNo>
@@ -1346,8 +1334,8 @@ Horz2=1</GraphDesc>
 
 <DataModels_item1_item0_item7_item0_item7>
   <CTVER>43543230</CTVER>
-  <ID>213</ID>
-  <Name>b3</Name>
+  <ID>226</ID>
+  <Name>b2</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>7</OrderNo>
@@ -1360,28 +1348,44 @@ Horz2=1</GraphDesc>
 </DataModels_item1_item0_item7_item0_item7>
 
 
-<DataModels_item1_item0_item8>
+<DataModels_item1_item0_item7_item0_item8>
   <CTVER>43543230</CTVER>
-  <ID>10</ID>
-  <Name>User</Name>
-  <Caption>系统使用注册用户</Caption>
+  <ID>227</ID>
+  <Name>b3</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>8</OrderNo>
-  <GraphDesc>Left=993.00
-Top=52.00</GraphDesc>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item7_item0_item8>
+
+
+<DataModels_item1_item0_item8>
+  <CTVER>43543230</CTVER>
+  <ID>9</ID>
+  <Name>stutestscore</Name>
+  <Caption>考生试卷总分表</Caption>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>8</OrderNo>
+  <GraphDesc>Left=39.00
+Top=229.00</GraphDesc>
 </DataModels_item1_item0_item8>
 
 
 <DataModels_item1_item0_item8_item0>
-  <Count>8</Count>
+  <Count>7</Count>
 </DataModels_item1_item0_item8_item0>
 
 
 <DataModels_item1_item0_item8_item0_item1>
   <CTVER>43543230</CTVER>
   <ID>1</ID>
-  <Name>uid</Name>
+  <Name>stsid</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>1</OrderNo>
@@ -1398,46 +1402,71 @@ Top=52.00</GraphDesc>
 <DataModels_item1_item0_item8_item0_item2>
   <CTVER>43543230</CTVER>
   <ID>2</ID>
-  <Name>username</Name>
+  <Name>uid</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>2</OrderNo>
-  <DisplayName>用户名</DisplayName>
-  <DataType>1</DataType>
-  <Nullable>0</Nullable>
-  <DataLength>200</DataLength>
+  <DisplayName>用户id</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>3</KeyFieldType>
+  <RelateTable>User</RelateTable>
+  <RelateField>uid</RelateField>
+  <Nullable>1</Nullable>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=213.00,482.00
+P2=543.00,482.00
+P3=543.00,304.00
+P4=243.00,304.00
+HookP1=102.00,75.00
+HookP2=140.00,75.00
+Mod_OP1=0
+Mod_OP2=0
+Mod_CP=1
+Horz1=1
+Horz2=1</GraphDesc>
 </DataModels_item1_item0_item8_item0_item2>
 
 
 <DataModels_item1_item0_item8_item0_item3>
   <CTVER>43543230</CTVER>
-  <ID>3</ID>
-  <Name>userpwd</Name>
+  <ID>23</ID>
+  <Name>tpid</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>3</OrderNo>
-  <DisplayName>登录密码</DisplayName>
-  <DataType>1</DataType>
-  <Nullable>0</Nullable>
-  <DataLength>200</DataLength>
+  <DisplayName>试卷编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>3</KeyFieldType>
+  <RelateTable>TestPaper</RelateTable>
+  <RelateField>tpid</RelateField>
+  <Nullable>1</Nullable>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=555.00,374.00
+P2=399.00,374.00
+P3=399.00,296.00
+P4=243.00,296.00
+HookP1=117.00,123.00
+HookP2=204.00,67.00
+Mod_OP1=1
+Mod_OP2=0
+Mod_CP=0
+Horz1=1
+Horz2=1</GraphDesc>
 </DataModels_item1_item0_item8_item0_item3>
 
 
 <DataModels_item1_item0_item8_item0_item4>
   <CTVER>43543230</CTVER>
-  <ID>4</ID>
-  <Name>usertel</Name>
+  <ID>24</ID>
+  <Name>stsscore</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>4</OrderNo>
-  <DisplayName>用户手机号码</DisplayName>
-  <DataType>1</DataType>
+  <DisplayName>学生试卷总分</DisplayName>
+  <DataType>3</DataType>
   <Nullable>0</Nullable>
-  <DataLength>11</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
 </DataModels_item1_item0_item8_item0_item4>
@@ -1445,14 +1474,14 @@ Top=52.00</GraphDesc>
 
 <DataModels_item1_item0_item8_item0_item5>
   <CTVER>43543230</CTVER>
-  <ID>5</ID>
-  <Name>usermessage</Name>
+  <ID>211</ID>
+  <Name>b1</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>5</OrderNo>
-  <DisplayName>需求信息</DisplayName>
+  <DisplayName>bei</DisplayName>
   <DataType>1</DataType>
-  <Nullable>0</Nullable>
+  <Nullable>1</Nullable>
   <DataLength>2000</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
@@ -1461,8 +1490,8 @@ Top=52.00</GraphDesc>
 
 <DataModels_item1_item0_item8_item0_item6>
   <CTVER>43543230</CTVER>
-  <ID>225</ID>
-  <Name>b1</Name>
+  <ID>212</ID>
+  <Name>b2</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>6</OrderNo>
@@ -1477,8 +1506,8 @@ Top=52.00</GraphDesc>
 
 <DataModels_item1_item0_item8_item0_item7>
   <CTVER>43543230</CTVER>
-  <ID>226</ID>
-  <Name>b2</Name>
+  <ID>213</ID>
+  <Name>b3</Name>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
   <OrderNo>7</OrderNo>
@@ -1491,20 +1520,158 @@ Top=52.00</GraphDesc>
 </DataModels_item1_item0_item8_item0_item7>
 
 
-<DataModels_item1_item0_item8_item0_item8>
+<DataModels_item1_item0_item9>
   <CTVER>43543230</CTVER>
-  <ID>227</ID>
-  <Name>b3</Name>
+  <ID>9</ID>
+  <Name>stutestscore2</Name>
+  <Caption>考生试卷总分表</Caption>
   <CreateDate>1899-12-30</CreateDate>
   <ModifyDate>1899-12-30</ModifyDate>
-  <OrderNo>8</OrderNo>
+  <OrderNo>9</OrderNo>
+  <GraphDesc>Left=953.00
+Top=602.00</GraphDesc>
+</DataModels_item1_item0_item9>
+
+
+<DataModels_item1_item0_item9_item0>
+  <Count>7</Count>
+</DataModels_item1_item0_item9_item0>
+
+
+<DataModels_item1_item0_item9_item0_item1>
+  <CTVER>43543230</CTVER>
+  <ID>1</ID>
+  <Name>stsid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>1</OrderNo>
+  <DisplayName>自身编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>1</KeyFieldType>
+  <DefaultValue>{auto_increment}</DefaultValue>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item9_item0_item1>
+
+
+<DataModels_item1_item0_item9_item0_item2>
+  <CTVER>43543230</CTVER>
+  <ID>2</ID>
+  <Name>information</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>2</OrderNo>
+  <DisplayName>用户信息</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>0</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=213.00,490.00
+P2=328.00,490.00
+P3=328.00,684.00
+P4=1019.00,684.00
+HookP1=110.00,83.00
+HookP2=1.00,67.00
+Mod_OP1=0
+Mod_OP2=0
+Mod_CP=1
+Horz1=1
+Horz2=1</GraphDesc>
+</DataModels_item1_item0_item9_item0_item2>
+
+
+<DataModels_item1_item0_item9_item0_item3>
+  <CTVER>43543230</CTVER>
+  <ID>23</ID>
+  <Name>tpid</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>3</OrderNo>
+  <DisplayName>试卷编号</DisplayName>
+  <DataType>2</DataType>
+  <KeyFieldType>3</KeyFieldType>
+  <RelateTable>TestPaper</RelateTable>
+  <RelateField>tpid</RelateField>
+  <Nullable>1</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+  <GraphDesc>P1=773.00,374.00
+P2=896.00,374.00
+P3=896.00,692.00
+P4=1019.00,692.00
+HookP1=117.00,123.00
+HookP2=1.00,75.00
+Mod_OP1=1
+Mod_OP2=0
+Mod_CP=0
+Horz1=1
+Horz2=1</GraphDesc>
+</DataModels_item1_item0_item9_item0_item3>
+
+
+<DataModels_item1_item0_item9_item0_item4>
+  <CTVER>43543230</CTVER>
+  <ID>24</ID>
+  <Name>stsscore</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>4</OrderNo>
+  <DisplayName>学生试卷总分</DisplayName>
+  <DataType>3</DataType>
+  <Nullable>0</Nullable>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item9_item0_item4>
+
+
+<DataModels_item1_item0_item9_item0_item5>
+  <CTVER>43543230</CTVER>
+  <ID>211</ID>
+  <Name>b1</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>5</OrderNo>
   <DisplayName>bei</DisplayName>
   <DataType>1</DataType>
   <Nullable>1</Nullable>
   <DataLength>2000</DataLength>
   <EditorReadOnly>0</EditorReadOnly>
   <EditorEnabled>0</EditorEnabled>
-</DataModels_item1_item0_item8_item0_item8>
+</DataModels_item1_item0_item9_item0_item5>
+
+
+<DataModels_item1_item0_item9_item0_item6>
+  <CTVER>43543230</CTVER>
+  <ID>212</ID>
+  <Name>b2</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>6</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item9_item0_item6>
+
+
+<DataModels_item1_item0_item9_item0_item7>
+  <CTVER>43543230</CTVER>
+  <ID>213</ID>
+  <Name>b3</Name>
+  <CreateDate>1899-12-30</CreateDate>
+  <ModifyDate>1899-12-30</ModifyDate>
+  <OrderNo>7</OrderNo>
+  <DisplayName>bei</DisplayName>
+  <DataType>1</DataType>
+  <Nullable>1</Nullable>
+  <DataLength>2000</DataLength>
+  <EditorReadOnly>0</EditorReadOnly>
+  <EditorEnabled>0</EditorEnabled>
+</DataModels_item1_item0_item9_item0_item7>
 
 
 </CTOXML>

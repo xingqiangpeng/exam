@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="js/layui/css/layui.css"/>
     <script src="js/layui/layui.js"></script>
     <script src="js/vue/vue.min.js"></script>
-    <script src="js/laydate/laydate.js"></script>
     <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
     <style>
         .lefts {
@@ -44,7 +43,7 @@
             position: absolute;
             z-index: 100;
             background: white;
-            margin-left: 185px;
+            /*margin-left: 185px;*/
         }
 
         .tdhi td {
@@ -82,10 +81,10 @@
     </div>
     <div class="layui-tab layui-tab-brief clearfloat" lay-even lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title">
-            <li class="layui-this">进行中（）</li>
-            <li>未开始（）</li>
-            <li>已结束（）</li>
-            <li>全部（）</li>
+            <li class="layui-this" v-on:click="jxz">进行中（）</li>
+            <li v-on:click="chaxun('未开始')">未开始（）</li>
+            <li v-on:click="chaxun('已结束')">已结束（）</li>
+            <li v-on:click="quanbu">全部（）</li>
         </ul>
         <div class="layui-tab-content as">
             <div class="clearfloat bottoms" v-for="item,index in data">
@@ -115,7 +114,7 @@
                         <tr>
                             <td>{{item.tpfabu}}</td>
                             <td>
-                                <button class="layui-btn genduo">更多操作</button>
+                                <button class="layui-btn genduo">更多操作</button><br>
                                 <div class="shows activeshow">
                                     <table class="tdhi">
                                         <tr>
@@ -140,7 +139,7 @@
                                             <td><a href="#">人工评分</a></td>
                                         </tr>
                                         <tr>
-                                            <td><a href="#">删除考试</a></td>
+                                            <td><a href="#" v-on:click="shanchu(index)">删除考试</a></td>
                                         </tr>
                                         <tr>
                                             <td><a href="#">查看缺考人员</a></td>
@@ -184,20 +183,26 @@
     </div>
 </div>
 </div>
-<div id="apps">
+<div id="apps" style="display: none">
     <table class="layui-table">
         <tr>
             <td>考试名称</td>
-            <td><input type="text"/></td>
+            <td><input type="text" v-model="data[0].tpname"/></td>
         </tr>
         <tr>
             <td>答题时间</td>
-            <td><input type="text"/></td>
+            <td><input type="text" v-model="data[0].tpdatitime"/></td>
         </tr>
         <tr>
             <td>有效时间</td>
-            <td><input type="text" id="date1"/>至</td>
-            <td><input type="text" id="date2"/></td>
+            <td><input type="text" id="date11" v-model="data[0].tpstartdate" />至</td>
+            <td><input type="text" id="date21" v-model="data[0].tpenddate"/></td>
+        </tr>
+        <tr>
+            <td>
+                <button v-on:click="quedings">确定</button>
+            </td>
+
         </tr>
     </table>
 </div>
@@ -207,25 +212,61 @@
     var vueapps=new Vue({
         el:"#apps",
         data:{
-            data:[]
+            data:[{tpname:"",tpdatitime:"",tpstartdate:"",tpenddate:""}]
         },
         methods:{
-
+            quedings:function () {
+                $.post("../updatetestpaperdata.do", {
+                    name1:JSON.stringify(vueapps.data)
+                }, function (data) {
+                    console.log(data)
+                    if(data>0){
+                        alert("修改成功")
+                    }else{
+                        alert("修改失败")
+                    }
+                });
+            }
         }
     });
     var vueap = new Vue({
         el: "#app",
         data: {
-            data: []
+            data: [{}]
         },
         methods: {
             ksshezhi:function (i) {
+                var arr=[getname(this.data[i])];
+                vueapps.data=arr;
                 layer.open({
                     area: ['600px', '500px'],
                     title:"用户编辑",
                     type: 1,
                     content: $('#apps')
                 })
+            },
+            shanchu:function (i) {
+                $.post("../deletetestpaperdata.do", {
+                    id:this.data[i].tpid
+                }, function (data) {
+                       alert(data)
+                });
+            },
+            jxz:function () {
+                $.post("../testpaperdata.do", {}, function (data) {
+                    vueap.data = data;
+                });
+            },
+            chaxun:function (str) {
+                $.post("../findfabutestpaperdata.do", {fabu:str}, function (data) {
+                    vueap.data = data;
+                });
+            },
+            quanbu:function () {
+                $.post("../findallstestpaperdata.do", {}, function (data) {
+                    console.log(data)
+                    vueap.data = data;
+                });
             }
         }
     });
@@ -246,23 +287,34 @@
         $(this).removeClass("bottomsacrive")
         return false;
     });
-    $.post("testpaperdata.do", {}, function (data) {
+    $.post("../testpaperdata.do", {}, function (data) {
         vueap.data = data;
     });
-    layui.use('element', function () {
-        var element = layui.element;
-    });
-    layui.use(['element','layer'], function() {
+    layui.use(['element','layer','laydate'], function() {
         var element = layui.element;
         var layer = layui.layer;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: "#date11" //指定元素
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: "#date21" //指定元素
+            ,type: 'datetime'
+        });
     });
-    laydate.render({
-        elem: "#date1" //指定元素
-        ,type: 'datetime'
-    });
-    laydate.render({
-        elem: "#date2" //指定元素
-        ,type: 'datetime'
-    });
+    function getname(obj) {
+        var opj=new Object();
+        for(var i in obj){
+            opj[i]=obj[i];
+        }
+        return opj;
+    }
+    function funcs() {
+        laydate.render({
+            elem: "#date11" //指定元素
+            ,type: 'datetime'
+        });
+    }
 </script>
 </html>
