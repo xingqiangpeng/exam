@@ -60,13 +60,14 @@ insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'第三�
 select * from testquestions;
 
 --stutestscore考生试卷总分表
-insert into stutestscore(uid,tpid,stsscore) values(1,1,3.0);
-insert into stutestscore(uid,tpid,stsscore) values(1,2,3.0);
-insert into stutestscore(uid,tpid,stsscore) values(2,2,4.0);
-insert into stutestscore(uid,tpid,stsscore) values(1,3,6.0);
-insert into stutestscore(uid,tpid,stsscore) values(3,3,6.0);
-insert into stutestscore(uid,tpid,stsscore) values(2,3,6.0);
-insert into stutestscore(uid,tpid,stsscore) values(1,3,6.0);
+insert into stutestscore(sid,tpid,stsscore) values(1,1,3.0);
+insert into stutestscore(sid,tpid,stsscore) values(1,2,3.0);
+insert into stutestscore(sid,tpid,stsscore) values(2,2,4.0);
+insert into stutestscore(sid,tpid,stsscore) values(1,3,6.0);
+insert into stutestscore(sid,tpid,stsscore) values(3,3,6.0);
+insert into stutestscore(sid,tpid,stsscore) values(2,3,6.0);
+insert into stutestscore(sid,tpid,stsscore) values(1,3,6.0);
+insert into stutestscore(sid,tpid,stsscore) values(1,4,6.0);
 select * from stutestscore;
 
 --loginstutestpaper 考生-试卷表-需要登录

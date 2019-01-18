@@ -171,7 +171,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <button class="layui-btn">查看成绩</button>
+                                <button class="layui-btn" v-on:click="chakanchengji(index)">查看成绩</button>
                                 <button class="layui-btn" v-on:click="ksshezhi(index)">考试设置</button>
                                 <button class="layui-btn">复制考试</button>
                             </td>
@@ -267,6 +267,10 @@
                     console.log(data)
                     vueap.data = data;
                 });
+            },
+            chakanchengji:function (i) {
+                localStorage.setItem("testpaper",JSON.stringify(this.data[i]));
+                window.top.vue.change("score/kaoshiqingk.html");
             }
         }
     });

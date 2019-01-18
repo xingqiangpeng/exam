@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>学生考试得分情况</title>
+		<link rel="stylesheet" type="text/css" href="../js/layui/css/layui.css"/>
+		<script src="../js/layui/layui.js"></script>
+		<script src="../js/vue/vue.min.js"></script>
+        <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+	</head>
+	<body>
+		<div id="app">
+            <div>
+                <table>
+                    <tr>
+                        <td>姓名：</td>
+                        <td><input type="text"  v-model="xingming"/> </td>
+                        <td><button v-on:click="chaxun">查询</button></td>
+                    </tr>
+                </table>
+            </div>
+			<table class="layui-table" v-if="type=='安排考试'">
+				<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>部门</th>
+					<th>总分</th>
+                    <th>操作</th>
+				</tr>
+				<tr v-for="item,index in data">
+                    <td>{{index+1}}</td>
+                    <td>{{item.sname}}</td>
+                    <td>{{item.ssex}}</td>
+                    <td>{{item.sdep}}</td>
+                    <td>{{item.stsscore}}</td>
+                    <td>
+                        <button>查看详情</button>
+                        <button>以往考试走势图</button>
+                    </td>
+				</tr>
+			</table>
+            <table class="layui-table" v-else>
+                <tr>
+                    <th>序号</th>
+                    <th v-for="item in name">{{item}}</th>
+                    <th>总分</th>
+                    <th>操作</th>
+                </tr>
+                <tr v-for="item,index in data">
+                    <td>{{index+1}}</td>
+                    <td v-for="iteme in name">{{item[iteme]}}</td>
+                    <td>{{item.stsscore}}</td>
+                    <td>
+                        <button>查看详情</button>
+                        <button>以往考试走势图</button>
+                    </td>
+                </tr>
+            </table>
+		</div>
+		
+	</body>
+	
+	<script>
+		var vueapp=new Vue({
+			el:"#app",
+			data:{
+				data:[],
+                type:"",
+                name:[],
+                xingming:""
+			},
+            methods:{
+                chaxun:function () {
+                    alert(this.xingming)
+                }
+            }
+		});
+		var obj=JSON.parse(localStorage.getItem("testpaper"));
+        vueapp.type=obj.tptype;
+		if(obj.tptype=="安排考试"){
+            $.post("../../findsrcroBytpid.do", {tpid:obj.tpid}, function (data) {
+                vueapp.data = data;
+            });
+        }else{
+            $.post("../../findsrcroBytpids.do", {tpid:obj.tpid}, function (data) {
+                vueapp.data = data;
+                var name1=[];
+                for(var j=0;j<data.length;j++){
+                    var arr=data[j].information.split("/");
+                    for(var i=0;i<arr.length;i++){
+                        var arr1=arr[i].split(":");
+                        data[j][arr1[0]]=arr1[1];
+                        if(j==0){
+                            name1.push(arr1[0])
+                        }
+                    }
+                }
+                vueapp.name=name1;
+            });
+        }
+	</script>
+</html>

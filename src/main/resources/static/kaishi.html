@@ -14,6 +14,30 @@
 				margin: auto;
 			}
 		</style>
+        <script>
+            function GetQueryString(name)
+            {
+                var href=window.location.href;
+                var index=href.indexOf("?");
+                var str=href.substring(index+1,href.length)
+                var arr=str.split("&");
+                for(var i=0;i<arr.length;i++){
+                    var arr1=arr[i].split("=");
+                    return arr1[1];
+                }
+            }
+            var testmaper=null;
+            $.ajaxSettings.async = false;
+            $.post("../findbyid.do", {id:0}, function (data) {
+                if(data!=null){
+                    testmaper = data;
+                }else{
+                    console.log("ff")
+                    window.location.href="404.html"
+                }
+            });
+            $.ajaxSettings.async = true;
+        </script>
 	</head>
 
 	<body>
@@ -47,7 +71,8 @@
 						</td>
 						<td>
 							<input type="text" value="名字" />
-						</td
+						</td>
+
 					</tr>
 				</table>
 			</div>
@@ -82,23 +107,10 @@
 		new Vue({
 			el: "#app",
 			data: {
-				type:GetQueryString("name")
+				type:["1"]
 			}
 		});
-		function GetQueryString(name)
-		{
-			var href=window.location.href;
-			var index=href.indexOf("?");
-			var str=href.substring(index+1,href.length)
-			var arr=str.split("&");
-			for(var i=0;i<arr.length;i++){
-				var arr1=arr[i].split("=");
-				if(name==arr1[0]){
-					return arr1[1].split(",");
-				}
-			}
-		}
-		console.log(GetQueryString("name"))
+
 	</script>
 
 </html>

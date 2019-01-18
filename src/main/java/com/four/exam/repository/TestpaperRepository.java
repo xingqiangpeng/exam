@@ -1,5 +1,6 @@
 package com.four.exam.repository;
 
+import com.four.exam.entity.Stutestscore2;
 import com.four.exam.entity.Testpaper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,8 +23,13 @@ public interface TestpaperRepository extends JpaRepository<Testpaper,Integer> {
     @Modifying
     @Query(value = "select t.*,s.sums from Testpaper t left outer join (select tpid,count(*) sums from stutestscore group by tpid) s on t.tpid=s.tpid order by t.tpid desc",nativeQuery = true)
     List<Testpaper> findAlls();
-    //根据试卷id查看学生的考试总得分
+    //根据试卷id查看学生的考试总得分一有安排的
     @Modifying
-    @Query("select ")
+    @Query(value = "select s.stsid,s.tpid,s.stsscore,u.* from Stutestscore s left outer join Student u on s.sid=u.sid where s.tpid=?",nativeQuery = true)
     List<Map<String,Object>> findsrcroBytpid(int tpid);
+    //根据试卷id查看学生的考试总得分二没有安排的
+    @Modifying
+    @Query("select s  from Stutestscore2 s  where s.tpid=:tpid")
+    List<Stutestscore2> findsrcroBytpids(int tpid);
+
 }

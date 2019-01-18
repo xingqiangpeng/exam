@@ -115,7 +115,7 @@ alter table `User` comment= '系统使用注册用户';
 create table  `stutestscore`
 (
   `stsid`           INT auto_increment primary key not null comment '自身编号',
-  `uid`             INT comment '用户id',
+  `sid`             INT comment '用户id',
   `tpid`            INT comment '试卷编号',
   `stsscore`        DOUBLE not null comment '学生试卷总分',
   `b1`              VARCHAR(2000) comment 'bei',
@@ -156,8 +156,8 @@ alter  table `LoginStuTestPaper`
     references `TestPaper`(`tpid`);
 
 alter  table `stutestscore`
-  add constraint `FK_stutestscore_uid` foreign key (`uid`)
-    references `User`(`uid`);
+  add constraint `FK_stutestscore_sid` foreign key (`sid`)
+    references `student`(`sid`);
 alter  table `stutestscore`
   add constraint `FK_stutestscore_tpid` foreign key (`tpid`)
     references `TestPaper`(`tpid`);
@@ -165,6 +165,8 @@ alter  table `stutestscore`
 alter  table `stutestscore2`
   add constraint `FK_stutestscore2_tpid` foreign key (`tpid`)
     references `TestPaper`(`tpid`);
+
+
 
 alter  table `User` change `username` `username` VARCHAR(200) null;
 

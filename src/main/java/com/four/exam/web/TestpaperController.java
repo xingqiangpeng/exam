@@ -53,4 +53,19 @@ public class TestpaperController {
     public Object findfabutestpaperdata(String fabu){
         return testpaperRepository.findByTpfabu(fabu);
     }
+    //查看安排考试的学生
+    @RequestMapping("findsrcroBytpid.do")
+    public Object findsrcroBytpid(String tpid){
+        return testpaperRepository.findsrcroBytpid(Integer.parseInt(tpid));
+    }
+    //查看非安排考试的学生
+    @RequestMapping("findsrcroBytpids.do")
+    public Object findsrcroBytpids(String tpid){
+        return testpaperRepository.findsrcroBytpids(Integer.parseInt(tpid));
+    }
+    //查看非安排考试的学生
+    @RequestMapping("findbyid.do")
+    public Object findbyid(String id){
+        return testpaperRepository.findById(Integer.parseInt(id));
+    }
 }
