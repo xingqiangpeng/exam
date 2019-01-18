@@ -21,6 +21,7 @@ public class Questionbank {
     private String b3;
 
     @Id
+
     @Column(name = "qbid")
     public int getQbid() {
         return qbid;
@@ -151,5 +152,22 @@ public class Questionbank {
     @Override
     public int hashCode() {
         return Objects.hash(qbid, qboutline, qbtype, qbtext, qboptions, qbanswer, qbdifficulty, qbcreatetime, b1, b2, b3);
+    }
+
+    @Override
+    public String toString() {
+        return "Questionbank{" +
+                "qbid=" + qbid +
+                ", qboutline='" + qboutline + '\'' +
+                ", qbtype='" + qbtype + '\'' +
+                ", qbtext='" + qbtext + '\'' +
+                ", qboptions='" + qboptions + '\'' +
+                ", qbanswer='" + qbanswer + '\'' +
+                ", qbdifficulty='" + qbdifficulty + '\'' +
+                ", qbcreatetime='" + qbcreatetime + '\'' +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
     }
 }

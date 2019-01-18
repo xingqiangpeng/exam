@@ -1,5 +1,8 @@
 package com.four.exam.utils;
 
+import com.four.exam.repository.QuestionbankRepository;
+import org.apache.tomcat.util.json.JSONParser;
+import org.springframework.boot.json.GsonJsonParser;
 import sun.applet.Main;
 
 import java.util.*;
@@ -51,14 +54,15 @@ public class ToList {
     public static void main(String[] args) {
         List<Map<String,Object>> list=new ArrayList<>();
         Map<String,Object> map=new HashMap<>();
-        map.put("name","java/js");
+        map.put("123","java/js");
         Map<String,Object> map1=new HashMap<>();
-        map1.put("name","java/js1");
+        map1.put("123","java/js1");
         Map<String,Object> map2=new HashMap<>();
-        map2.put("name","ui/cc");
+        map2.put("123","ui/cc");
         Map<String,Object> map3=new HashMap<>();
-        map3.put("name","yu/pp");
+        map3.put("123","yu/pp");
         Collections.addAll(list,map,map1,map2,map3);
+        System.out.println(list);
         System.out.println(toListMap(list));
     }
 }
