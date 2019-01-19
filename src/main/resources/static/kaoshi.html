@@ -1,291 +1,474 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title>创建考试</title>
-		<link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" />
-		<script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
-		<script src="js/layui/layui.js"></script>
-		<script src="js/vue/vue.min.js"></script>
-		<style type="text/css">
-			.centermain{text-align: center;}
-			ul li {
-				width: 300px !important;
-			}
-			
-			.layui-tab-content {
-				height: 900px !important;
-			}
-			
-			table {
-				/*width: 1200px !important;*/
-				margin: auto;
-			}
-			.activeshow{
-				display: none;
-			}
-			.btnss{text-align: center;}
-			#showstable{
-				width: 1100px;
-				margin: auto;
-			}
-		</style>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <title>创建考试</title>
+    <link rel="stylesheet" type="text/css" href="js/layui/css/layui.css"/>
+    <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+    <script src="js/layui/layui.js"></script>
+    <script src="js/vue/vue.min.js"></script>
+    <style type="text/css">
+        .centermain {
+            text-align: center;
+        }
 
-	<body>
-		<div class="layui-tab layui-tab-card" class="centermain">
-			<ul class="layui-tab-title">
-				<li class="layui-this">考试信息</li>
-				<li>设计试卷</li>
-				<li>发布试卷</li>
-			</ul>
-			<div class="layui-tab-content" style="height: 100px;" id="apps">
-				<div class="layui-tab-item layui-show">
-					<div id="showstable">
-					<div>
-						<h4>基本信息</h4>
-						<table class="layui-table">
-							<tr>
-								<td>考试名称</td>
-								<td><input type="text" /></td>
-							</tr>
-							<tr>
-								<td>考试须知</td>
-								<td><textarea>
-    					可以交白卷
-    				</textarea></td>
-							</tr>
-						</table>
-					</div>
-					<div class="kaoshianpai">
-						<h4>参加方式</h4>
-						<div>
-							<table class="layui-table">
-								<tr>
-									<td rowspan="4">考生参加方式</td>
-									<td><input type="radio" name="fshi" v-on:click="kaoshimethod('0')" checked="checked"/>
-										<a>免登录考试</a>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="radio" name="fshi"  v-on:click="kaoshimethod('1')"/>
-										<a>口令考试</a>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="radio" name="fshi"  v-on:click="kaoshimethod('0,1')"/>
-										<a>免登录+口令考试</a>
-									</td>
-								</tr>
-								<tr>
-									<td><input type="radio" name="fshi"  v-on:click="kaoshimethod('2')"/>
-										<a>安排考试</a>
-									</td>
-								</tr>
-							</table>
-						</div>
-						<!--//免登录考试-->
-						<div v-bind:class="{'activeshow':dateshow[0]}" >
-							<table class="layui-table">
-								<tr>
-									<td rowspan="2">
-										设置考生信息
-									</td>
-									<td>字段名称</td>
-									<td>格式要求</td>
-									<td>是否必填</td>
-									<td>操作</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="text" value="名字" />
-									</td>
-									<td>
-										<select>
-											<option value="文本">文本</option>
-											<option value="文本">选择框</option>
-											<option value="文本">手机号码</option>
-											<option value="文本">文本</option>
-											<option value="文本">文本</option>
-										</select>
-									</td>
-									<td><input type="checkbox" /></td>
-									<td></td>
-								</tr>
-							</table>
-						</div>
-						<!--//口令考试-->
-						<div v-bind:class="{'activeshow':dateshow[1]}">
-							<table class="layui-table">
-								<tr>
-									<td>考试口令</td>
-									<td><input type="text" /></td>
-								</tr>
-							</table>
-						</div>
-						<!--安排考试-->
-						<div v-bind:class="{'activeshow':dateshow[2]}">
-							
-						
-						<table class="layui-table">
-							<tr>
-								<td rowspan="2">考生安排</td>
-								<td>
-									<button>指定考生</button>
-									<button>指定部门</button>
-									<button>删除</button>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<table class="layui-table">
-										<tr>
-											<th><input type="checkbox" />全部</th>
-											<th>考试信息</th>
-											<th>所属部门</th>
-											<th>电话号码</th>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-						</div>
-						<div class="btnss">
-							<button class="layui-btn layui-btn-radius layui-btn-normal">保存&去设计试卷</button>
-						</div>
-					</div>
-					</div>
-				</div>
-				<div class="layui-tab-item">
-					<div id="app1">
-						<div>
-							<button v-on:click="chuangjian" class="layui-btn layui-btn-normal">创建试题大题</button>
-							<span>共{{subjectmain.length}}道大题，共20分</span>
-						</div>
-						<div>
-							<table class="layui-table" v-for="item,index in subjectmain">
-								<tr>
-									<th>第{{item.titl}}大题（{{item.main.length}}道试题，共9分）</th>
-									<th>
-										<select v-model="item.type">
-											<option value="单选题">单选题</option>
-											<option value="多选题">多选题</option>
-											<option value="选择题">选择题</option>
-											<option value="填空题">填空题</option>
-											<option value="简答题">简答题</option>
-											<option value="程序题">程序题</option>
-										</select>
-									</th>
-									<th>
-										<button class="layui-btn layui-btn-radius layui-btn-primary">从题库选择</button>
-										<button class="layui-btn layui-btn-radius layui-btn-primary">新增试题</button>
-									</th>
-									<th>
-										<button class="layui-btn layui-btn-radius layui-btn-primary">快速新增</button>
-										<button class="layui-btn layui-btn-radius layui-btn-primary">导入试题</button>
-									</th>
-									<th>
-										<button v-on:click="shanchu(index)" class="layui-btn layui-btn-radius layui-btn-danger">删除大题</button></th>
-								</tr>
-								<tr>
-									<th>序号</th>
-									<th>试题类型</th>
-									<th>试题内容</th>
-									<th>标准答案</th>
-									<th  class="showbtn">分数<button>批量修改</button></th>
-								</tr>
-								<tr v-for="items,indexs in item.main">
-									<td>{{indexs+1}}</td>
-									<td>单选</td>
-									<td>{{items.tname}}</td>
-									<td>A</td>
-									<td><input type="text" value="3" /></td>
-								</tr>
-							</table>
-						</div>
-						<div>
-							<button class="layui-btn">完成设计&去分布考试</button>
-							<button class="layui-btn layui-btn-warm">试卷浏览</button>
-							<button class="layui-btn layui-btn-warm">返回上一步</button>
-						</div>
-					</div>
-				</div>
-				<div class="layui-tab-item">
-					<div>
-						<h4>以下列任意一种方式通知考生参加考试</h4>
-						<p>1.将二维码发给考试</p>
-						<p>2.复制连接发给考生，打开连接参加考试</p>
-						<input type="text" />
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--修改分数-->
-		<div id="xiugaifenshu" class="activeshow">
-			<input type="text" />
-			<button id="guanbi">确定</button>
-		</div>
-	</body>
-	<script>
-		//显示四中方式的
-		var dateshow=[false,true,true];
-		//题目的显示
-		var subjectmain=[{titl:"1",type:"单选题",main:[{tname:"javam面向对象的特点",titllist:["A：继承","B:ff","C:fffdd","D:fffsdf"],fenshu:3},{tname:"javam面向对象的特点",titllist:["A：继承","B:ff","C:fffdd","D:fffsdf"],fenshu:3}]},
-		{titl:"2",type:"单选题",main:[{tname:"javam面向对象的特点",titllist:["A：继承","B:ff","C:fffdd","D:fffsdf"]}]}
-						]
-		var vueapps=new Vue({
-			el:"#apps",
-			data:{
-				dateshow:dateshow,
-				subjectmain:subjectmain
-			},
-			methods:{
-				kaoshimethod:function(str){
-					var arr=str.split(",");
-					for(var i=0;i<this.dateshow.length;i++){
-						this.dateshow.splice(i,1,true);
-					}
-					for(var i=0;i<arr.length;i++){
-						this.dateshow.splice(arr[i],1,false);
-					}
-				},
-				//创建大题
-				chuangjian:function(){
-					var i=this.subjectmain.length+1;
-					var obj={titl:i,type:"单选题",main:[]}
-					this.subjectmain.push(obj)
-				},
-				//删除大题
-				shanchu:function(k){
-					this.subjectmain.splice(k,1);
-					for(var j=0;j<this.subjectmain.length;j++){
-						this.subjectmain[j].titl=j+1;
-					}
-				}
-			}
-		})
-		//注意：选项卡 依赖 element 模块，否则无法进行功能性操作
-		var index=layui.use(['element','layer'], function() {
-			var element = layui.element;
-			var layer = layui.layer;
-		});
-		$(".showbtn").on('click','button',function(e){
-			var x1 = $(this).offset().left-60;
-            var y1 = $(this).offset().top-70;
-			console.log(x1+","+y1)
-			$(this).removeClass("activeshow");
-		  	layer.open({
-		  		offset:[y1+'px',x1+'px'],
-			  	type: 1,
-			  	content: $('#xiugaifenshu') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-			});
-		  })
-		$("#guanbi").click(function(){
-			console.log("fdf")
-			layer.close(layer.index);
-		})
-	</script>
-	</script>
+        ul li {
+            width: 300px !important;
+        }
 
+        .layui-tab-content {
+            height: 900px !important;
+        }
+
+        table {
+            /*width: 1200px !important;*/
+            margin: auto;
+        }
+
+        .activeshow {
+            display: none;
+        }
+
+        .btnss {
+            text-align: center;
+        }
+
+        #showstable {
+            width: 1100px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+<div class="layui-tab layui-tab-card" class="centermain">
+    <ul class="layui-tab-title">
+        <li id="informationli" class="layui-this">考试信息</li>
+        <li id="designli">设计试卷</li>
+        <li id="issueli">发布试卷</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 100px;" id="apps">
+        <!--<form action="/examinformation.do" method="post">-->
+            <div id="informationdiv" class="layui-tab-item layui-show">
+                <div id="showstable">
+                    <div>
+                        <h4>基本信息</h4>
+                        <table class="layui-table">
+                            <tr>
+                                <td>考试名称</td>
+                                <td><input type="text" id="tpname" placeholder="请输入考试名称"/></td>
+                            </tr>
+                            <tr>
+                                <td>考试须知</td>
+                                <td><textarea rows="3" cols="50" id="tpbeizhu"></textarea></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="kaoshianpai">
+                        <h4>参加方式</h4>
+                        <div>
+                            <table class="layui-table">
+                                <tr>
+                                    <td rowspan="4">考生参加方式</td>
+                                    <td><input type="radio" name="tptype" v-on:click="kaoshimethod('0')" checked="checked" value="免登录考试"/>
+                                        <a>免登录考试</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="radio" name="tptype" v-on:click="kaoshimethod('1')" value="口令考试"/>
+                                        <a>口令考试</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="radio" name="tptype" v-on:click="kaoshimethod('0,1')" value="免登录+口令考试"/>
+                                        <a>免登录+口令考试</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="radio" name="tptype" v-on:click="kaoshimethod('2')" value="安排考试"/>
+                                        <a>安排考试</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--//免登录考试-->
+                        <div v-bind:class="{'activeshow':dateshow[0]}">
+                            <table class="layui-table" id="table">
+                                <tr>
+                                    <th colspan="4">设置考生信息</th>
+                                </tr>
+                                <tr>
+                                    <th>字段名称</th>
+                                    <th>格式要求</th>
+                                    <th>是否必填</th>
+                                    <th>操作</th>
+                                </tr>
+                                <tr id="tr">
+                                    <td>
+                                        <input type="text" value="" placeholder="请输入显示名称，如姓名等"/>
+                                    </td>
+                                    <td>
+                                        <select>
+                                            <option value="文本">文本</option>
+                                            <option value="邮箱">邮箱</option>
+                                            <option value="手机号码">手机号码</option>
+                                            <option value="身份证">身份证</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="checkbox"/></td>
+                                    <td><button onclick="deleterow(this)">删除</button></td>
+                                </tr>
+                                <tr>
+                                    <th colspan="4">
+                                        <button onclick="addrow()">添加字段</button>
+                                    </th>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--//口令考试-->
+                        <div v-bind:class="{'activeshow':dateshow[1]}">
+                            <table class="layui-table">
+                                <tr>
+                                    <td>考试口令</td>
+                                    <td><input type="text" id="command"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!--安排考试-->
+                        <div v-bind:class="{'activeshow':dateshow[2]}">
+
+
+                            <table class="layui-table">
+                                <tr>
+                                    <td rowspan="2">考生安排</td>
+                                    <td>
+                                        <button>指定考生</button>
+                                        <button>指定部门</button>
+                                        <button>删除</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table class="layui-table">
+                                            <tr>
+                                                <th><input type="checkbox"/>全部</th>
+                                                <th>考试信息</th>
+                                                <th>所属部门</th>
+                                                <th>电话号码</th>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="btnss">
+                            <!--<input type="submit" id="ToDesign" class="layui-btn layui-btn-radius layui-btn-normal" value="保存&去设计试卷">-->
+                            <button id="todesign" class="layui-btn layui-btn-radius layui-btn-normal">保存&去设计试卷</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--</form>-->
+
+
+        <div id="designdiv" class="layui-tab-item">
+            <div id="app1">
+                <div>
+                    <button v-on:click="chuangjian" class="layui-btn layui-btn-normal">创建试题大题</button>
+                    <span>共{{subjectmain.length}}道大题，共20分</span>
+                </div>
+                <div>
+                    <table class="layui-table" v-for="item,index in subjectmain">
+                        <tr>
+                            <th>第{{item.titl}}大题（{{item.main.length}}道试题，共9分）</th>
+                            <th>
+                                <select v-model="item.type">
+                                    <option value="单选题">单选题</option>
+                                    <option value="多选题">多选题</option>
+                                    <option value="选择题">选择题</option>
+                                    <option value="填空题">填空题</option>
+                                    <option value="简答题">简答题</option>
+                                    <option value="程序题">程序题</option>
+                                </select>
+                            </th>
+                            <th>
+                                <button class="layui-btn layui-btn-radius layui-btn-primary">从题库选择</button>
+                                <button class="layui-btn layui-btn-radius layui-btn-primary">新增试题</button>
+                            </th>
+                            <th>
+                                <button class="layui-btn layui-btn-radius layui-btn-primary">快速新增</button>
+                                <button class="layui-btn layui-btn-radius layui-btn-primary">导入试题</button>
+                            </th>
+                            <th>
+                                <button v-on:click="shanchu(index)" class="layui-btn layui-btn-radius layui-btn-danger">
+                                    删除大题
+                                </button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>序号</th>
+                            <th>试题类型</th>
+                            <th>试题内容</th>
+                            <th>标准答案</th>
+                            <th class="showbtn">分数
+                                <button>批量修改</button>
+                            </th>
+                        </tr>
+                        <tr v-for="items,indexs in item.main">
+                            <td>{{indexs+1}}</td>
+                            <td>单选</td>
+                            <td>{{items.tname}}</td>
+                            <td>A</td>
+                            <td><input type="text" value="3"/></td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <button id="toissue" class="layui-btn">完成设计&去分布考试</button>
+                    <button class="layui-btn layui-btn-warm">试卷浏览</button>
+                    <button id="toinformation" class="layui-btn layui-btn-warm">返回上一步</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="issuediv" class="layui-tab-item">
+            <div>
+                <h4>以下列任意一种方式通知考生参加考试</h4>
+                <p>1.将二维码发给考试</p>
+                <p>2.复制连接发给考生，打开连接参加考试</p>
+                <input type="text"/>
+            </div>
+        </div>
+    </div>
+</div>
+<!--修改分数-->
+<div id="xiugaifenshu" class="activeshow">
+    <input type="text"/>
+    <button id="guanbi">确定</button>
+</div>
+</body>
+<script>
+    // 添加表格行
+    function addrow(){
+        var tr = $("#tr");                                 //tr是你要克隆的表格行的id
+        var newtr = tr.clone();                            //克隆tr行
+        newtr.find(":input").each(function(i){      //循环新克隆的newtr，在里边找到所有的input标签，
+            $(this).val("");                                    //给该标签的value赋值为空
+        });
+        var length=$("#table tr").length-2; //获取id="table"表格中的行数,如果表格中有th择需要-1
+        var tab = $("#table tr:eq("+length+")");  //获取最后一行的位置
+        tab.after(newtr);                   //在id="tr"的表格行tr后插入克隆行newtr
+    }
+    // 删除表格行
+    function deleterow(node){
+        console.log(node.parentNode.parentNode.rowIndex);
+        var length=node.parentNode.parentNode.rowIndex; //获取id="table"表格中的行数,如果表格中有th择需要-1
+        var tab = $("#table tr:eq("+length+")");  //获取指定的tr标签位置
+        if(length>2){
+            tab.remove();  //删除指定的tr标签
+        }
+    }
+</script>
+<script>
+    //显示四中方式的
+    var dateshow = [false, true, true];
+    //题目的显示
+    var subjectmain = [{
+        titl: "1",
+        type: "单选题",
+        main: [{
+            tname: "javam面向对象的特点",
+            titllist: ["A：继承", "B:ff", "C:fffdd", "D:fffsdf"],
+            fenshu: 3
+        }, {tname: "javam面向对象的特点", titllist: ["A：继承", "B:ff", "C:fffdd", "D:fffsdf"], fenshu: 3}]
+    },
+        {titl: "2", type: "单选题", main: [{tname: "javam面向对象的特点", titllist: ["A：继承", "B:ff", "C:fffdd", "D:fffsdf"]}]}
+    ]
+    var vueapps = new Vue({
+        el: "#apps",
+        data: {
+            dateshow: dateshow,
+            subjectmain: subjectmain
+        },
+        methods: {
+            kaoshimethod: function (str) {
+                var arr = str.split(",");
+                for (var i = 0; i < this.dateshow.length; i++) {
+                    this.dateshow.splice(i, 1, true);
+                }
+                for (var i = 0; i < arr.length; i++) {
+                    this.dateshow.splice(arr[i], 1, false);
+                }
+            },
+            //创建大题
+            chuangjian: function () {
+                var i = this.subjectmain.length + 1;
+                var obj = {titl: i, type: "单选题", main: []}
+                this.subjectmain.push(obj)
+            },
+            //删除大题
+            shanchu: function (k) {
+                this.subjectmain.splice(k, 1);
+                for (var j = 0; j < this.subjectmain.length; j++) {
+                    this.subjectmain[j].titl = j + 1;
+                }
+            }
+        }
+    })
+/*
+    //第一步：定义json格式数据
+    var postData = {
+        "param1" : "param1",
+        "areaId" : 2,
+        "deleteId" : 3
+    };
+    /!**ajax的type,url,dataType,contentType,data属性*!/
+    $.ajax({
+        async : false,
+        cache : false,
+        type : 'POST',
+        url : 'area',
+        dataType : "json",
+        contentType : 'application/json', //第二步：定义格式
+        data : JSON.stringify(postData), //第二步；把json转为String传递给后台
+        error : function() {
+            alert('请求失败 ');
+        },
+        success : function(data) {
+            alert(data);
+        }
+    });*/
+
+    /* Ajax('post', 'kaoshi.do', { , function(data) {
+
+     }, function(error) {
+         console.log(error);
+         alert(error)
+     });*/
+
+    //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+    var index = layui.use(['element', 'layer'], function () {
+        var element = layui.element;
+        var layer = layui.layer;
+    });
+    $(".showbtn").on('click', 'button', function (e) {
+        var x1 = $(this).offset().left - 60;
+        var y1 = $(this).offset().top - 70;
+        console.log(x1 + "," + y1)
+        $(this).removeClass("activeshow");
+        layer.open({
+            offset: [y1 + 'px', x1 + 'px'],
+            type: 1,
+            content: $('#xiugaifenshu') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+        });
+    })
+    $("#guanbi").click(function () {
+        console.log("fdf")
+        layer.close(layer.index);
+    })
+    // 点击保存去设计试卷跳到设计试卷
+    $("#todesign").click(function(){
+        $("#informationli").removeClass("layui-this");
+        $("#informationdiv").removeClass("layui-show");
+        $("#designdiv").addClass("layui-show");
+        $("#designli").addClass("layui-this");
+        console.log(typeof $("input[name='tptype']:checked").val());
+        console.log($("input[name='tptype']:checked").val());
+
+        var jsonStr="";                                    //设置考生需要填写的信息
+        // 判断参加的方式为那种方式
+        if("免登录考试"==$("input[name='tptype']:checked").val()){
+            $('#table').find('tr').each(function () {               //tableId 是table表格的id
+                $(this).find('td').each(function () {
+                    $(this).find('input').each(function () {                        //获取td中input的值
+                        if($(this).val()) {                                    //myName是input标签的一个自定义属性
+                            jsonStr +=$(this).val();
+                        }
+                    });
+                    $(this).find('select').each(function () {                        //获取td中input的值
+                        // alert(typeof $(this).find("option:selected").text());
+                        if($(this).find("option:selected").text()) {                                    //myName是input标签的一个自定义属性
+                            jsonStr +=":"+$(this).find("option:selected").text()+"/";
+                        }
+                    });
+                })
+            })
+            jsonStr = jsonStr.substring(0,jsonStr.length-1);
+        }
+
+        if("口令考试"==$("input[name='tptype']:checked").val()){
+            jsonStr+="姓名:文本/口令:"+$("#command").val();
+        }
+        console.log("免登录+口令考试"==$("input[name='tptype']:checked").val());
+        if("免登录+口令考试"==$("input[name='tptype']:checked").val()){
+            $('#table').find('tr').each(function () {               //tableId 是table表格的id
+                $(this).find('td').each(function () {
+                    $(this).find('input').each(function () {                        //获取td中input的值
+                        if($(this).val()) {                                    //myName是input标签的一个自定义属性
+                            jsonStr +=$(this).val();
+                        }
+                    });
+                    $(this).find('select').each(function () {                        //获取td中input的值
+                        // alert(typeof $(this).find("option:selected").text());
+                        if($(this).find("option:selected").text()) {                                    //myName是input标签的一个自定义属性
+                            jsonStr +=":"+$(this).find("option:selected").text()+"/";
+                        }
+                    });
+                })
+            })
+            jsonStr+="口令:"+$("#command").val();
+        }
+
+        if("安排考试"==$("input[name='tptype']:checked").val()){
+
+        }
+            console.log(jsonStr);
+
+        // var postData= { //（2）传递参数到后台，注意后台接收方式
+        //     "tpname":$("#tpname").val(),
+        //     "tpbeizhu":$("#tpbeizhu").val(),
+        //     "tptype":$("input[name='tptype']:checked").val(),
+        //     // "tpwirtemessage":jsonStr,
+        //     "ids": "254,249,248"
+        // }
+        /*var tpwirtemessage=function(){
+
+        }*/
+        /**重点：ajax的type,url,dataType,data属性*/
+        console.log($("#tpname").val());
+        console.log($("#tpbeizhu").val());
+        $.ajax({
+            async : false,
+            cache : false,
+            type : 'POST',
+            url : 'addtestpaper',
+            dataType : "json",
+            data :{
+                "tpname":$("#tpname").val(),
+                "tpbeizhu":$("#tpbeizhu").val(),
+                "tptype":$("input[name='tptype']:checked").val(),
+                // "tpwritemessage":jsonStr,
+                "tpwritemessage":jsonStr
+            },
+            success : function(data) {
+                alert(data);
+            }
+        });
+    });
+    // 点击完成设计去发布考试跳到发布试卷
+    $("#toissue").click(function() {
+        $("#designli").removeClass("layui-this");
+        $("#designdiv").removeClass("layui-show");
+        $("#issuediv").addClass("layui-show");
+        $("#issueli").addClass("layui-this");
+    });
+    // 点击返回上一步跳到考试信息
+    $("#toinformation").click(function() {
+        $("#designli").removeClass("layui-this");
+        $("#designdiv").removeClass("layui-show");
+        $("#informationdiv").addClass("layui-show");
+        $("#informationli").addClass("layui-this");
+    });
+</script>
 </html>
