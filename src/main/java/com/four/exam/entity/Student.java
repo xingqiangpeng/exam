@@ -120,10 +120,27 @@ public class Student {
     }
 
     @Override
+    public String toString() {
+        return "Student{" +
+                "sid=" + sid +
+                ", sname='" + sname + '\'' +
+                ", snumber='" + snumber + '\'' +
+                ", spassword='" + spassword + '\'' +
+                ", sdep='" + sdep + '\'' +
+                ", ssex='" + ssex + '\'' +
+                ", screatdate='" + screatdate + '\'' +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
+
         return sid == student.sid &&
                 Objects.equals(sname, student.sname) &&
                 Objects.equals(snumber, student.snumber) &&
