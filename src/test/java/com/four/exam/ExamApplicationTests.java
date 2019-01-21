@@ -1,5 +1,6 @@
 package com.four.exam;
 
+import com.four.exam.repository.StudentRepository;
 import com.four.exam.repository.TestpaperRepository;
 import com.four.exam.repository.TestquestionsRepository;
 import org.junit.Test;
@@ -18,11 +19,15 @@ public class ExamApplicationTests {
     private TestpaperRepository testpaperRepository;
     @Resource
     private TestquestionsRepository testquestionsRepository;
+    @Resource
+    private StudentRepository studentRepository;
     @Test
     public void contextLoads() {
+        System.out.println(testquestionsRepository.findtimu(1));
     }
     @Test
     public void contextLoads1() {
+        System.out.println(studentRepository.findBySnumberAndSpassword("777777", "666666"));
     }
 }
 

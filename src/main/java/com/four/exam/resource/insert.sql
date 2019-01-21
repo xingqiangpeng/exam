@@ -1,3 +1,4 @@
+
 --testpaper试卷表
 insert into testpaper(tpname,tpbeizhu,tptype,tpwritemessage,tpscore,tpstartdate,tpenddate,tpdatitime,tpfabu)
 values('考试名称1','考试备注1','免登陆考试','姓名:文本/手机号码:手机号码/邮箱:邮箱/身份证号码:身份证','60','201901161630','201901171630','120','未发布');
@@ -30,33 +31,35 @@ insert into questionbank(qboutline,qbtype,qbtext,qboptions,qbanswer,qbdifficulty
 insert into questionbank(qboutline,qbtype,qbtext,qboptions,qbanswer,qbdifficulty,qbcreatetime) values("UI/pp",'多选题','谁是蜀国将军','A:黄忠/B:关羽/C:张飞/D:典韦','ABC','困难','20190116');
 insert into questionbank(qboutline,qbtype,qbtext,qboptions,qbanswer,qbdifficulty,qbcreatetime) values("java/se",'多选题','谁是魏国将军','A:许诸/B:张郃/C:张飞/D:典韦','ABD','困难','20190116');
 insert into questionbank(qboutline,qbtype,qbtext,qboptions,qbanswer,qbdifficulty,qbcreatetime) values("UI/pp",'单选题','谁是吴国将军','A:黄忠/B:徐晃/C:朱恒/D:典韦','C','特别困难','20190116');
-insert into questionbank(qboutline,qbtype,qbtext,qboptions,qbanswer,qbdifficulty,qbcreatetime) values("UI",'填空题','吴国将军是___,刘备的老婆是___,孙策叫周瑜___','请填写内容','朱恒/孙尚香/去中路','特别困难','20190116');
+insert into questionbank(qboutline,qbtype,qbtext,qboptions,qbanswer,qbdifficulty,qbcreatetime) values("UI/pp",'填空题','吴国将军是___,刘备的老婆是___,孙策叫周瑜___','3','朱恒/孙尚香/去中路','特别困难','20190116');
+insert into questionbank(qboutline,qbtype,qbtext,qboptions,qbanswer,qbdifficulty,qbcreatetime) values("UI/pp",'问答题','jsp的九大内置对象','session，request，response,page,pageContext,apllaction,out,expction','不知道','特别困难','20190116');
+insert into questionbank(qboutline,qbtype,qbtext,qboptions,qbanswer,qbdifficulty,qbcreatetime) values("UI/pp",'程序题','实现快速排序的算法','请填写内容','朱恒/孙尚香/去中路','特别困难','20190116');
 select * from questionbank;
 
 -- TestQuestions试卷题目表 每张试卷对应的题目
 --第一张试卷答案：B A ABC C
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(1,'第一大题',1,1,2.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(1,'第一大题',2,2,1.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(1,'第二大题',3,4,3.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(1,'第二大题',4,3,3.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(1,'1',1,1,2.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(1,'1',2,2,1.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(1,'2',3,4,3.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(1,'2',4,3,3.0);
 
 --第二张试卷答案：C ABD ABC C
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(2,'第一大题',1,3,2.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(2,'第二大题',2,5,1.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(2,'第二大题',3,4,3.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(2,'第三大题',4,6,3.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(2,'1',1,3,2.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(2,'2',2,5,1.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(2,'2',3,4,3.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(2,'3',4,6,3.0);
 
 --第三张试卷答案：C ABD ABC 朱恒/孙尚香/去中路
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(3,'第一大题',1,6,2.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(3,'第二大题',2,5,1.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(3,'第二大题',3,4,3.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(3,'第三大题',4,7,3.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(3,'1',1,6,2.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(3,'2',2,5,1.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(3,'2',3,4,3.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(3,'3',4,7,3.0);
 
 --第四张试卷答案: A C ABC 朱恒/孙尚香/去中路
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'第一大题',1,2,2.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'第二大题',2,3,1.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'第二大题',3,4,3.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'第三大题',4,7,3.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'1',1,2,2.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'2',2,3,1.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'2',3,8,3.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'3',4,9,3.0);
 select * from testquestions;
 
 --stutestscore考生试卷总分表
