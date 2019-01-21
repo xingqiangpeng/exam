@@ -68,20 +68,23 @@
 							姓名
 						</td>
 						<td>
-							<input type="text" />
+							<input type="text"  v-model="sselname" id="chaxunid1"/>
 						</td>
 						<td>
 							创建时间
 						</td>
 						<td>
-							<input type="text" placeholder="请选择日期" id="datatim1"/>
+							<input type="text" placeholder="请选择日期" id="datatim1"  v-model="statime" />
+						</td>
+                        <td>
+                            截止时间
+                        </td>
+						<td>
+							<input type="text" placeholder="请选择日期" id="datatim2" v-model="endtime"/>
 						</td>
 						<td>
-							<input type="text" placeholder="请选择日期" id="datatim2"/>
-						</td>
-						<td>
-							<button class="layui-btn layui-btn-primary">查询</button>
-							<button class="layui-btn layui-btn-primary">重置</button>
+							<button class="layui-btn layui-btn-primary" onclick="likecha()">查询</button>
+							<button class="layui-btn layui-btn-primary" onclick="clearcha()">重置</button>
 						</td>
 					</tr>
 				</table>
@@ -202,7 +205,7 @@
 			<table  class="layui-table" id="">
 				<tr>
 					<button class="layui-btn" onclick="addxinzen()">新增</button>
-					<button class="layui-btn layui-btn-primary" onclick="autoxinzen()">保存并新增</button>
+					<button class="layui-btn layui-btn-primary" onclick="autoxinzen()">新增并关闭</button>
 					<button class="layui-btn layui-btn-primary" onclick="stuclose()">关闭</button>
 				</tr>
 			</table>
@@ -235,22 +238,30 @@
 		function stuclose() {
 			layer.close(indexs);
         }
-        //新增按钮
-		function addxinzen() {
-
+        function getdate() {
             var date = new Date();
             var year = date.getFullYear();
             var month = date.getMonth() + 1;
             var day = date.getDate();
             var hour = date.getHours();
             var min = date.getMinutes();
+            var mis = date.getSeconds();
             if (month < 10) {
                 month = "0" + month;
             }
             if (day < 10) {
                 day = "0" + day;
             }
-            var nowDate = year + "-" + month + "-" + day + " "+hour+":"+min;
+            if(hour<10){
+                hour="0"+hour;
+			}
+            var nowDate = year + "-" + month + "-" + day + " "+hour+":"+min+":"+mis;
+            return nowDate;
+        }
+        //新增按钮
+		function addxinzen() {
+
+
             //建立数组，存放input里面的值
             var arrs=[];
             $("#studentshow :input[type='text']").each(function(i){
@@ -271,7 +282,7 @@
 			obj.spassword=Trim(arrs[2]);
 			obj.sdep=Trim(arrs[3]);
 			obj.ssex=Trim(sex);
-			obj.screatdate=nowDate;
+			obj.screatdate=getdate();
 			obj.b1="";
             obj.b2="";
             obj.b3="";
@@ -295,7 +306,78 @@
 
         }
 	</script>
+    <script>
+        //条件查询模块
+        function likecha(){
+            var strarr=[];
+            var  flag4=0;
+            var names1=$("#chaxunid1").val().trim();
+            var timer1=$("#datatim1").val().trim();
+            var timer2=$("#datatim2").val().trim();
+            if(names1==null||names1=="")
+            {
+                if(timer1==null||timer1==""){
+                    confirm("请输入查询条件");
+                    flag4=1;
+                }
 
+            }
+            if(flag4!=1) {
+                if (timer2 != null || timer2!="") {
+                    if (timer1 == null || timer1 ==" ") {
+                        confirm("请输入前面一个时间")
+                        flag4 = 1;
+                    }
+                }
+                if(timer1!=null||timer1!="") {
+                    if (timer2 == null || timer2 == "") {
+
+                        timer2 = getdate();
+                    }
+                }
+                if (timer1 > timer2) {
+                    confirm("起始时间必须小于结束时间");
+                    flag4 = 1;
+                }
+            }
+            if(flag4==0){
+
+                strarr.push(names1);
+                strarr.push(timer1);
+                strarr.push(timer2);
+                console.log(strarr);
+
+                $.ajax({
+                    url: 'chaxuns.do',
+                    type: 'POST',
+                    dataType: "json",
+                    traditional:true,
+                    async: false,
+                    data: {
+                        'tiao': strarr
+                    },
+                    success: function (data) {
+                        vueapp.pseons=data;
+
+                    },
+                    error: function (data) {
+
+                    }
+                });
+                $("#datatim1").val(timer1);
+                $("#datatim2").val(getdate());
+
+            }
+
+
+
+        }
+        function clearcha() {
+           $("#chaxunid1").val("");
+           $("#datatim1").val("");
+           $("#datatim2").val("");
+        }
+    </script>
 
 
 	<script>
@@ -304,7 +386,12 @@
 			data: {
 				data: [],
 				pseons: [],
-				selectall: false
+				selectall: false,
+                sselname:"",
+                endtime:"",
+                statime:""
+
+
 			},
 			methods: {
 				//留着
