@@ -55,4 +55,16 @@ public class StudentController {
 
         return studentRepository.findBySdepLike(seltiaojian);
     }
+    @RequestMapping("chaxuns.do")
+    public Object chaxuns(String[] tiao) {
+        if (tiao[1] == "") {
+
+            return studentRepository.findBySnameLike("%" + tiao[0] + "%");
+
+        } else {
+            return studentRepository.findBySnameLikeAndScreatdateBetween("%" + tiao[0] + "%", tiao[1], tiao[2]);
+        }
+
+
+    }
 }
