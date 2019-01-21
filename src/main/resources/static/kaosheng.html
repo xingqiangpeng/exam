@@ -3,11 +3,13 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>考生管理</title>
 		<script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
 		<link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" />
+        <link rel="stylesheet" href="layDate-v5.0.9/layDate-v5.0.9/laydate/theme/default/laydate.css">
 		<script src="js/layui/layui.js"></script>
 		<script src="js/vue/vue.min.js"></script>
+
 		<style>
 			#navul {
 				float: left;
@@ -17,8 +19,18 @@
 				float: left;
 				width: 70%;
 			}
+			.tdn{
+
+				position: absolute;
+			}
 		</style>
-	</head>
+		<script>
+			var indexs;
+		</script>
+
+
+
+    </head>
 
 	<body>
 		<div id="app">
@@ -43,37 +55,40 @@
 						<td>考生管理</td>
 						<td>
 							<button class="layui-btn layui-btn-primary" id="chaxun">查询</button>
-							<button class="layui-btn layui-btn-primary">新增</button>
+							<button class="layui-btn layui-btn-primary" onclick="addstudent()">新增</button>
 							<button class="layui-btn layui-btn-primary">批量导入</button>
-							<button class="layui-btn layui-btn-primary">批量删除</button>
+							<button class="layui-btn layui-btn-primary" onclick="deleteall()">批量删除</button>
 							<button class="layui-btn layui-btn-primary">导出</button>
 						</td>
 					</tr>
 				</table>
 				<table class="layui-table" id="chaxuns" style="display: none;">
-					<tr>
+					<tr >
 						<td>
 							姓名
 						</td>
 						<td>
-							<input type="text" />
+							<input type="text"  v-model="sselname" id="chaxunid1"/>
 						</td>
 						<td>
 							创建时间
 						</td>
 						<td>
-							<input type="text" />
+							<input type="text" placeholder="请选择日期" id="datatim1"  v-model="statime" />
+						</td>
+                        <td>
+                            截止时间
+                        </td>
+						<td>
+							<input type="text" placeholder="请选择日期" id="datatim2" v-model="endtime"/>
 						</td>
 						<td>
-							<input type="text" />
-						</td>
-						<td>
-							<button class="layui-btn layui-btn-primary">查询</button>
-							<button class="layui-btn layui-btn-primary">重置</button>
+							<button class="layui-btn layui-btn-primary" onclick="likecha()">查询</button>
+							<button class="layui-btn layui-btn-primary" onclick="clearcha()">重置</button>
 						</td>
 					</tr>
 				</table>
-				<table class="layui-table">
+				<table class="layui-table" id="tabless">
 					<tr>
 						<th><input type="checkbox" v-model="selectall" v-on:click="checkall" />全选</th>
 						<th>姓名</th>
@@ -84,106 +99,299 @@
 						<th>创建时间</th>
 						<th>操作</th>
 					</tr>
-					<tr v-for="item,index in pseons">
-						<td><input type="checkbox" v-model="item.check" /></td>
-						<td>{{item.pname}}</td>
-						<td>151116441625</td>
-						<td>{{item.dep}}</td>
-						<td>{{item.tel}}</td>
-						<td>男</td>
-						<td>2019-12-11 10:30</td>
+					<tr v-for="item,index in pseons" >
+						<td><input type="checkbox" v-model="item.check" name="test"/></td>
+						<td>{{item.sname}}</td>
+						<td>{{item.snumber}}</td>
+						<td>{{item.sdep}}</td>
+						<td>{{item.snumber}}</td>
+						<td>{{item.ssex}}</td>
+						<td>{{item.screatdate}}</td>
 						<td>
 							<button class="layui-btn layui-btn-warm" v-on:click="banji(index)">编辑</button>
-							<button class="layui-btn layui-btn-danger">删除</button>
+							<button class="layui-btn layui-btn-danger" v-on:click="del(index)">删除</button>
 						</td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		<div id="bainjishow" style="width: 500px;display: none;">
-			<table  class="layui-table" id="chaxuns" >
+			<table  class="layui-table" id="chaxuns" v-for="items in bainjishows" >
 				<tr>
 					<td>账号</td>
 					<td>
-						<input type="text" />
+						<input type="text"  v-model="items.snumber"/>
 					</td>
 				</tr>
 				<tr>
 					<td>姓名</td>
 					<td>
-						<input type="text" />
+						<input type="text" v-model="items.sname"/>
 					</td>
 				</tr>
 				<tr>
 					<td>密码</td>
 					<td>
-						<input type="text"/>
+						<input type="text" v-model="items.spassword"/>
 					</td>
 				</tr>
 				<tr>
 					<td>所属部门</td>
 					<td>
-						<input type="text"/>
+						<input type="text" v-model="items.sdep"/>
 					</td>
 				</tr>
 				<tr>
 					<td>手机号码</td>
 					<td>
-						<input type="text"/>
+						<input type="text" v-model="items.snumber"/>
 					</td>
 				</tr>
 				<tr>
 					<td>性别</td>
 					<td>
-						<input type="radio" name="radios" value="男"/>男
-						<input type="radio" name="radios" value="女"/>女
+						<input type="radio" name="radios" value="男" v-model="items.ssex"/>男
+						<input type="radio" name="radios" value="女" v-model="items.ssex"/>女
 					</td>
 				</tr>
-				<tr>
-					<td>账号</td>
-					<td>
-						<input type="text"/>
-					</td>
-				</tr>
+
 			</table>
 			<table  class="layui-table" id="chaxuns">
 				<tr>
-					<button class="layui-btn">保存</button>
-					<button class="layui-btn layui-btn-primary">保存并关闭</button>
-					<button class="layui-btn layui-btn-primary">保存并新增</button>
-					<button class="layui-btn layui-btn-primary">关闭</button>
+					<button class="layui-btn" onclick="save1()">保存</button>
+					<button class="layui-btn layui-btn-primary" onclick="autosave1()">保存并关闭</button>
+					<!--<button class="layui-btn layui-btn-primary">保存并新增</button>-->
+					<button class="layui-btn layui-btn-primary" onclick="close1()">关闭</button>
+				</tr>
+			</table>
+		</div>
+
+		<div id="studentshow" style="width: 500px;display: none;">
+			<table  class="layui-table" id="xinzen"  >
+				<tr>
+					<td>账号</td>
+					<td class="tdn">
+						<input type="text"  onkeyup="this.value=this.value.replace(/[^\d]/g,'')"/><span style="font-size: 5px;color: #0f6c8d">除数字外的字符无法写入</span>
+					</td>
+				</tr>
+				<tr>
+					<td>姓名</td>
+					<td class="tdn">
+						<input type="text"  onkeyup="value=value.replace(/[\d]/g,'') " /><span style="font-size: 5px;color: #0f6c8d">只能输入字母和汉字</span>
+					</td>
+				</tr>
+				<tr>
+					<td>密码</td>
+					<td class="tdn">
+						<input type="text" onKeyUp="value=value.replace(/[\W]/g,'')"/><span style="font-size: 5px;color: #0f6c8d">只能输入数字和字母</span>
+					</td>
+				</tr>
+				<tr>
+					<td>所属部门</td>
+
+					<td class="tdn">
+						<input type="text" />
+					</td>
+				</tr>
+				<tr>
+					<td>性别</td>
+					<td>
+						<input type="radio" name="radios" value="男" />男
+						<input type="radio" name="radios" value="女" />女
+					</td>
+				</tr>
+
+			</table>
+			<table  class="layui-table" id="">
+				<tr>
+					<button class="layui-btn" onclick="addxinzen()">新增</button>
+					<button class="layui-btn layui-btn-primary" onclick="autoxinzen()">新增并关闭</button>
+					<button class="layui-btn layui-btn-primary" onclick="stuclose()">关闭</button>
 				</tr>
 			</table>
 		</div>
 	</body>
+
 	<script>
-		var data = [{
-			name: "java",
-			list: ["java面向对象", "javase"]
-		}, {
-			name: "ui",
-			list: ["meiti", "pt"]
-		}];
-		var pseon = [{
-			pname: "邓欢",
-			tel: "15116441625",
-			dep: "java/se"
-		}, {
-			pname: "邓欢",
-			tel: "15116441625",
-			dep: "java/se"
-		}, {
-			pname: "邓欢",
-			tel: "15116441625",
-			dep: "java/se"
-		}]
-		pseon.forEach(item => item.check = false)
+        var flag3=0;
+		//新增学生模块
+		//显示出学生界面
+		function addstudent() {
+
+            indexs=layer.open({
+                area: ['600px', '500px'],
+                title:"新增用户",
+                type: 1,
+                content: $('#studentshow'),
+                end: function () {
+                    location.reload();
+                }
+
+            });
+            $("#studentshow :input[type='text']").each(function(i){
+               this.value=" ";
+            });
+
+
+        }
+        //关闭按钮
+		function stuclose() {
+			layer.close(indexs);
+        }
+        function getdate() {
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var hour = date.getHours();
+            var min = date.getMinutes();
+            var mis = date.getSeconds();
+            if (month < 10) {
+                month = "0" + month;
+            }
+            if (day < 10) {
+                day = "0" + day;
+            }
+            if(hour<10){
+                hour="0"+hour;
+			}
+            var nowDate = year + "-" + month + "-" + day + " "+hour+":"+min+":"+mis;
+            return nowDate;
+        }
+        //新增按钮
+		function addxinzen() {
+
+
+            //建立数组，存放input里面的值
+            var arrs=[];
+            $("#studentshow :input[type='text']").each(function(i){
+                arrs.push(this.value);
+            });
+            //获取到性别
+            var sex=$("#studentshow :input[name='radios']:checked").val();
+			if(sex!="男"&&sex!="女")
+			{
+			    sex="";
+			}
+
+            //创建对象
+			var obj={};
+			obj.sid=0;
+			obj.snumber=Trim(arrs[0]);
+			obj.sname=Trim(arrs[1]);
+			obj.spassword=Trim(arrs[2]);
+			obj.sdep=Trim(arrs[3]);
+			obj.ssex=Trim(sex);
+			obj.screatdate=getdate();
+			obj.b1="";
+            obj.b2="";
+            obj.b3="";
+			if(obj.snumber==""||obj.sname==""||obj.spassword==""){
+				confirm("请务必输入账号,姓名和密码")
+				flag3=1;
+			}
+			else{flag3=0}
+
+			if(flag3==0){
+                console.log(obj)
+			    $.post("insert.do",{stu:JSON.stringify(obj)},function(data){});
+			}
+
+
+        }
+        function autoxinzen() {
+            addxinzen();
+            if(flag3==0){ stuclose();}
+
+
+        }
+	</script>
+    <script>
+        //条件查询模块
+        function likecha(){
+            var strarr=[];
+            var  flag4=0;
+            var names1=$("#chaxunid1").val().trim();
+            var timer1=$("#datatim1").val().trim();
+            var timer2=$("#datatim2").val().trim();
+            if(names1==null||names1=="")
+            {
+                if(timer1==null||timer1==""){
+                    confirm("请输入查询条件");
+                    flag4=1;
+                }
+
+            }
+            if(flag4!=1) {
+                if (timer2 != null || timer2!="") {
+                    if (timer1 == null || timer1 ==" ") {
+                        confirm("请输入前面一个时间")
+                        flag4 = 1;
+                    }
+                }
+                if(timer1!=null||timer1!="") {
+                    if (timer2 == null || timer2 == "") {
+
+                        timer2 = getdate();
+                    }
+                }
+                if (timer1 > timer2) {
+                    confirm("起始时间必须小于结束时间");
+                    flag4 = 1;
+                }
+            }
+            if(flag4==0){
+
+                strarr.push(names1);
+                strarr.push(timer1);
+                strarr.push(timer2);
+                console.log(strarr);
+
+                $.ajax({
+                    url: 'chaxuns.do',
+                    type: 'POST',
+                    dataType: "json",
+                    traditional:true,
+                    async: false,
+                    data: {
+                        'tiao': strarr
+                    },
+                    success: function (data) {
+                        vueapp.pseons=data;
+
+                    },
+                    error: function (data) {
+
+                    }
+                });
+                $("#datatim1").val(timer1);
+                $("#datatim2").val(getdate());
+
+            }
+
+
+
+        }
+        function clearcha() {
+           $("#chaxunid1").val("");
+           $("#datatim1").val("");
+           $("#datatim2").val("");
+        }
+    </script>
+
+
+	<script>
 		var vueapp = new Vue({
 			el: "#app",
 			data: {
-				data: data,
-				pseons: pseon,
-				selectall: false
+				data: [],
+				pseons: [],
+				selectall: false,
+                sselname:"",
+                endtime:"",
+                statime:""
+
+
 			},
 			methods: {
 				//留着
@@ -192,7 +400,12 @@
 				},
 				//触发查询
 				add: function(str) {
-					console.log(str)
+                    $.post("tiaojian.do",{seltiaojian:str}, function (data) {
+                        pseon = data;
+                        pseon.forEach(item => item.check = false);
+						vueapp.pseons = pseon;
+
+                });
 				},
 				//全选
 				checkall: function() {
@@ -202,17 +415,32 @@
 						this.pseons.forEach(item => item.check = true);
 					}
 				},
-				//编辑
+				//编辑按钮触发
 				banji: function(i) {
-					vueshow.bainjishows=this.pseons[i];
+					//vueshow.bainjishows=this.pseons[i];
 					console.log(this.pseons[i])
-					layer.open({
+					indexs=layer.open({
 						area: ['600px', '500px'],
 						title:"用户编辑",
 						type: 1,
-			  			content: $('#bainjishow')
-					})
-				}
+			  			content: $('#bainjishow'),
+						end: function () {
+                        location.reload();
+                    }
+
+					});
+					var sdata=[getname(this.pseons[i])];
+
+                    vueshow.bainjishows=sdata;
+
+				},
+                del:function(index){
+				    if(confirm("删除账号将会删除考生成绩数据等，且可能会导致考生的终端设备无法再次参加考试，确认要删除吗?")){
+				        var ind=this.pseons[index].sid;
+                    	this.pseons.splice(index,1);
+                        $.post("deleteone.do",{selsid:ind},function(data){});
+                    }
+                }
 			},
 			watch: {
 				pseons: {
@@ -232,7 +460,14 @@
 			data:{
 				bainjishows:[]
 			}
-		})
+		});
+        var vueadd=new Vue({
+            el:"#studentshow",
+            data:{
+                studentshows:[]
+                //
+            }
+        });
 		var indexchaxun = true;
 		$("#chaxun").click(function() {
 			if(indexchaxun) {
@@ -247,6 +482,140 @@
 			var element = layui.element;
 			var layer = layui.layer;
 		});
+	</script>
+
+	<script>
+        function close1() {
+            layer.close(indexs);
+        }
+        function save1() {
+            $.post("savestu.do",{sdata1:JSON.stringify(vueshow.bainjishows)},function(data){});
+        }
+        function autosave1() {
+			save1();
+			close1();
+        }
+	</script>
+
+
+	<script>
+        $.post("stuselAll.do",function(data){
+            var data1=[];
+            for(var i in  data)
+            {
+                var data2={}
+                if(data[i].sdep!=null&&data[i].sdep!=""){
+                    var str=data[i].sdep.split("/");
+                    var str1=str[0];
+                    var str2=str[1];
+                    data2.name=str1;
+                    data2.list=[];
+                    data2.list.push(str2)
+                    if(data1.length==0){
+                        data1.push(data2)
+                    }
+                    else {
+                        var flag=0;
+                        for(var j=0;j<data1.length;j++){
+                            if(data2.name==data1[j].name){
+                                for (var k = 0; k < data1[j].list.length; k++) {
+                                    var flag1=0;
+                                    if(data2.list[0]!=data1[j].list[k])
+                                    {
+                                        flag1=1
+                                    }
+                                    else {
+                                        flag1=0;
+                                        break;
+                                    }
+                                }
+                                if(flag1!=0)
+                                {
+                                    data1[j].list.push(data2.list[0]);
+                                }
+                                flag=1;
+                            }
+                        }
+                        if(flag==0)
+                        {
+                            data1.push(data2);
+                        }
+                    }
+				}
+
+
+            }
+
+            vueapp.data=data1;
+            data.forEach(item => item.check = false)
+            vueapp.pseons=data;
+        });
+	</script>
+
+<script>
+	function deleteall(){
+        var arr=[];
+	    var yanall=confirm("是否将选择的全部学生进行删除，删除账号将会删除考生成绩数据等,且可能会导致考生的终端设备无法再次参加考试")
+		if(yanall){
+                $("input[name='test']:checked").each(function() { // 遍历选中的checkbox
+                    n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
+                    $("table#tabless").find("tr:eq("+n+")").remove();
+                });
+            vueapp.pseons.filter(function (vues) {
+                if(vues.check==true)
+                {
+                    arr.push(vues.sid);
+                }
+            });
+            $.ajax({
+                url: 'deleteAll.do',
+                type: 'POST',
+                dataType: "json",
+                traditional:true,
+                async: false,
+                data: {
+                    'ids': arr
+                },
+                success: function (data) {
+
+                },
+                error: function (data) {
+
+                }
+            });
+		}
+
+	}
+</script>
+
+	<script>
+        function getname(obj) {
+            var opj=new Object();
+            for(var i in obj){
+                opj[i]=obj[i];
+            }
+            return opj;
+        }
+        function Trim(str)
+        {
+            return str.replace(/(^\s*)|(\s*$)/g, "");
+        }
+        layui.use(['element','layer','laydate'], function() {
+            var element = layui.element;
+            var layer = layui.layer;
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: "#datatim1" //指定元素
+                ,type: 'datetime'
+            });
+            laydate.render({
+                elem: "#datatim2" //指定元素
+                ,type: 'datetime'
+            });
+        });
+
+
+
 	</script>
 
 </html>

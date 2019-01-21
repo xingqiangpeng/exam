@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns:resize="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+		<link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" />
+		<script src="js/layui/layui.js"></script>
+		<script src="js/vue/vue.min.js"></script>
+	</head>
+	<body>
+		<div  id="app"  style="width: 800px;margin-left: 80px">
+			<table class="layui-table" id="chaxun" >
+				<tr>
+					<td>试题类型</td>
+					<td>
+						<select v-on:click="xuanze" v-model="val" id="qbtype">
+							<option value="单选题">单选题</option>
+							<option value="多选题">多选题</option>
+							<option value="判断题">判断题</option>
+							<option value="填空题">填空题</option>
+							<option value="问答题">问答题</option>
+							<option value="程序题">程序题</option>
+						</select>
+					</td>
+					<td>所属分类</td>
+					<td>
+						<input type="text" id="qboutline"/>
+					</td>
+					<td>试题难度</td>
+					<td>
+						<select id="qbdifficulty">
+							<option value="简单">简单</option>
+							<option value="中等">中等</option>
+							<option value="困难">困难</option>
+							<option value="特别困难">特别困难</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>试题内容</td>
+					<td colspan="5">
+						<textarea name="reworkmes" style="width:80%;height:80px;resize: none" id="qbtext"></textarea>
+					</td>
+				</tr>
+			</table>
+			<!--题目内容选择-->
+			<div class="center">
+				<!--单选题-->
+				<table  class="layui-table" v-if="type=='单选题'">
+					<tr>
+						<th colspan="2">设置正确答案</th>
+						<th>选项内容</th>
+					</tr>
+					<tr v-for="item,index in data.list">
+						<td>
+                            <input type="radio" name="radios" v-bind:value="zifu[index]">
+                        </td>
+                        <td>
+                            {{zifu[index]}}
+                        </td>
+						<td>
+							<input type="text" v-model="item.daan"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<button class="layui-btn" v-on:click="add">添加选项</button>
+							<button class="layui-btn layui-btn-danger" v-on:click="removet">删减选项</button>
+						</td>
+					</tr>
+				</table>
+				<!--判断题-->
+				<table  class="layui-table"  v-if="type=='判断题'">
+					<tr>
+						<th>选项</th>
+						<th>
+							<input type="radio" name="ra" value="正确"/>正确
+							<input type="radio" name="ra" value="错误"/>错误
+						</th>
+					</tr>
+				</table>
+				<!--多选题-->
+				<table  class="layui-table"  v-if="type=='多选题'">
+					<tr>
+						<th colspan="2">设置正确答案</th>
+						<th>选项内容</th>
+					</tr>
+					<tr  v-for="item,index in data.anlist">
+						<td><input type="checkbox" name="radioduoxuan" v-bind:value="zifu[index]"></td>
+						<td>{{zifu[index]}}</td>
+						<td>
+							<input type="text"  v-model="item.daans"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<button class="layui-btn" v-on:click="add1">添加选项</button>
+							<button class="layui-btn layui-btn-danger" v-on:click="removet1">删减选项</button>
+						</td>
+					</tr>
+				</table>
+				<!--填空题-->
+				<table  class="layui-table"  v-if="type=='填空题'">
+					<tr   v-for="item,index in data.tklist">
+						<td>正确答案</td>
+						<td>
+							填空{{index+1}}答案
+						</td>
+						<td>
+							<input type="text" v-model="item.tkdaan"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<button class="layui-btn" v-on:click="add2">添加选项</button>
+							<button class="layui-btn layui-btn-danger" v-on:click="removet2">删减选项</button>
+						</td>
+					</tr>
+				</table>
+				<!--问答题-->
+				<table  class="layui-table"  v-if="type=='问答题'">
+					<tr >
+						<td>正确答案</td>
+						<td>
+							参考答案
+						</td>
+						<td>
+							<textarea style="width: 450px;height: 80px;resize: none" id="wendati"></textarea>
+						</td>
+					</tr>
+				</table>
+				<!--程序题-->
+				<table  class="layui-table"  v-if="type=='程序题'">
+					<tr >
+						<td>正确答案</td>
+						<td>
+							参考答案
+						</td>
+						<td>
+							<textarea style="width: 450px;height: 80px;resize: none" id="chengxuti"></textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<table  class="layui-table" id="chaxuns">
+				<tr>
+					<button class="layui-btn" v-on:click="sava">保存</button>
+					<button class="layui-btn layui-btn-primary">保存并关闭</button>
+					<button class="layui-btn layui-btn-primary">保存并新增</button>
+					<button class="layui-btn layui-btn-primary">关闭</button>
+				</tr>
+			</table>
+		</div>
+	</body>
+	<script>
+		var zifu=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+		var data={list:[{daan:"答案1"},{daan:"答案2"}],anlist:[{daans:"答案1"},{daans:"答案2"}],tklist:[{tkdaan:"答案1"},{tkdaan:"答案2"}]}
+		var vueapp=new Vue({
+			el:"#app",
+			data:{
+				type:"单选题",
+				val:"单选题",
+				zifu:zifu,
+				data:data
+			},
+			methods:{
+				xuanze:function(){
+					this.type=this.val;
+				},
+				add:function(){//单选题
+				    var s={daan:""};
+					this.data.list.push(s);
+					console.log(this.data);
+				},
+				removet:function(){
+					this.data.list.pop();
+				},
+				add1:function(){//多选题
+                    var s1={daans:""};
+                    this.data.anlist.push(s1);
+                    console.log(this.data);
+				},
+				removet1:function(){
+					this.data.anlist.pop();
+				},
+                add2:function(){//填空题
+                    var s2={tkdaan:""};
+                    this.data.tklist.push(s2);
+                    console.log(this.data);
+                },
+                removet2:function(){
+                    this.data.tklist.pop();
+                },
+				sava:function () {
+				    if(confirm("是否添加试题？")){
+                        if($("#qbtype").val()=="单选题"){
+                            var stroptions="";
+                            var s1=this.data.list;
+                            for (var i = 0; i < s1.length; i++) {
+                                stroptions=stroptions+zifu[i]+":"+s1[i].daan;
+                                if (i<s1.length-1)  stroptions+="/";
+                            }
+                            $.post("tikuxinzeng.do", {
+                                qboutline:$("#qboutline").val(),
+                                qbtype:$("#qbtype").val(),
+                                qbtext:$("#qbtext").val(),
+                                qboptions:stroptions,
+                                qbanswer:$("input[name='radios']:checked").val(),
+                                qbdifficulty:$("#qbdifficulty").val()
+                            }, function (data) {
+                                if(data!=null)
+                                    alert("添加成功");
+                            })
+                        }
+                        if($("#qbtype").val()=="多选题"){
+                            var stroptions="";
+                            var s1=this.data.anlist;
+                            for (var i = 0; i < s1.length; i++) {
+                                stroptions=stroptions+zifu[i]+":"+s1[i].daans;
+                                if (i<s1.length-1)  stroptions+="/";
+                            }
+                            console.log(stroptions);
+                            var stranswer="";
+                            var s2=$("input[type=checkbox]:checked");
+                            for (var i = 0; i < s2.length; i++) {
+                                stranswer=stranswer+s2[i]._value;
+                            }
+                            $.post("tikuxinzeng.do", {
+                                qboutline:$("#qboutline").val(),
+                                qbtype:$("#qbtype").val(),
+                                qbtext:$("#qbtext").val(),
+                                qboptions:stroptions,
+                                qbanswer:stranswer,
+                                qbdifficulty:$("#qbdifficulty").val()
+                            }, function (data) {
+                                if(data!=null)
+                                    alert("添加成功");
+                            })
+                        }
+                        if($("#qbtype").val()=="判断题"){
+                            $.post("tikuxinzeng.do", {
+                                qboutline:$("#qboutline").val(),
+                                qbtype:$("#qbtype").val(),
+                                qbtext:$("#qbtext").val(),
+                                qboptions:"正确/错误",
+                                qbanswer:$("input[name='ra']:checked").val(),
+                                qbdifficulty:$("#qbdifficulty").val()
+                            }, function (data) {
+                                if(data!=null)
+                                    alert("添加成功");
+                            })
+                        }
+                        if($("#qbtype").val()=="问答题"){
+                            $.post("tikuxinzeng.do", {
+                                qboutline:$("#qboutline").val(),
+                                qbtype:$("#qbtype").val(),
+                                qbtext:$("#qbtext").val(),
+                                qboptions:"请填写答案",
+                                qbanswer:$("#wendati").val(),
+                                qbdifficulty:$("#qbdifficulty").val()
+                            }, function (data) {
+                                if(data!=null)
+                                    alert("添加成功");
+                            })
+                        }
+                        if($("#qbtype").val()=="程序题"){
+                            $.post("tikuxinzeng.do", {
+                                qboutline:$("#qboutline").val(),
+                                qbtype:$("#qbtype").val(),
+                                qbtext:$("#qbtext").val(),
+                                qboptions:"文件上传",
+                                qbanswer:$("#chengxuti").val(),
+                                qbdifficulty:$("#qbdifficulty").val()
+                            }, function (data) {
+                                if(data!=null)
+                                    alert("添加成功");
+                            })
+                        }
+                        if($("#qbtype").val()=="填空题"){
+                            var tkanswer="";
+                            var s2=this.data.tklist;
+                            for (var i = 0; i < s2.length; i++) {
+                                tkanswer=tkanswer+s2[i].tkdaan;
+                                if (i<s2.length-1)  tkanswer+="/";
+                            }
+                            $.post("tikuxinzeng.do", {
+                                qboutline:$("#qboutline").val(),
+                                qbtype:$("#qbtype").val(),
+                                qbtext:$("#qbtext").val(),
+                                qboptions:data.tklist.length,
+                                qbanswer:tkanswer,
+                                qbdifficulty:$("#qbdifficulty").val()
+                            }, function (data) {
+                                if(data!=null)
+                                    alert("添加成功");
+                            })
+                        }
+                    }
+                }
+			}
+		})
+		// var vuechaxuns=new Vue({
+		// 	el:"#chaxuns",
+		//
+		//
+		// })
+		var index=layui.use(['element','layer'], function() {
+			var element = layui.element;
+			var layer = layui.layer;
+		});
+	</script>
+</html>

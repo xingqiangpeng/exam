@@ -8,6 +8,7 @@
     <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
     <script src="js/layui/layui.js"></script>
     <script src="js/vue/vue.min.js"></script>
+    <script src="js/layui/layui.all.js"></script>
     <style type="text/css">
         .centermain {
             text-align: center;
@@ -62,6 +63,18 @@
                             <tr>
                                 <td>考试须知</td>
                                 <td><textarea rows="3" cols="50" id="tpbeizhu"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>考试开始时间</td>
+                                <td><input type="text" placeholder="请选择日期" id="tpstarttime" ></td>
+                            </tr>
+                            <tr>
+                                <td>考试结束时间</td>
+                                <td><input type="text" placeholder="请选择日期" id="tpendtime" ></td>
+                            </tr>
+                            <tr>
+                                <td>答题时长</td>
+                                <td><input type="text" id="tpdatitime" placeholder="请输入答题时长"/></td>
                             </tr>
                         </table>
                     </div>
@@ -381,18 +394,20 @@
         if("免登录考试"==$("input[name='tptype']:checked").val()){
             $('#table').find('tr').each(function () {               //tableId 是table表格的id
                 $(this).find('td').each(function () {
-                    $(this).find('input').each(function () {                        //获取td中input的值
+                    $(this).find('input[type="text"]').each(function () {                        //获取td中input的值
                         if($(this).val()) {                                    //myName是input标签的一个自定义属性
+                            console.log($(this).val());
                             jsonStr +=$(this).val();
                         }
                     });
                     $(this).find('select').each(function () {                        //获取td中input的值
-                        // alert(typeof $(this).find("option:selected").text());
                         if($(this).find("option:selected").text()) {                                    //myName是input标签的一个自定义属性
+                            console.log($(this).find("option:selected").text());
                             jsonStr +=":"+$(this).find("option:selected").text()+"/";
                         }
                     });
                 })
+                console.log(jsonStr);
             })
             jsonStr = jsonStr.substring(0,jsonStr.length-1);
         }
@@ -409,8 +424,8 @@
                             jsonStr +=$(this).val();
                         }
                     });
+                    console.log(jsonStr);
                     $(this).find('select').each(function () {                        //获取td中input的值
-                        // alert(typeof $(this).find("option:selected").text());
                         if($(this).find("option:selected").text()) {                                    //myName是input标签的一个自定义属性
                             jsonStr +=":"+$(this).find("option:selected").text()+"/";
                         }
@@ -449,7 +464,10 @@
                 "tpbeizhu":$("#tpbeizhu").val(),
                 "tptype":$("input[name='tptype']:checked").val(),
                 // "tpwritemessage":jsonStr,
-                "tpwritemessage":jsonStr
+                "tpwritemessage":jsonStr,
+                "tpstarttime":$("#tpstarttime").val(),
+                "tpendtime":$("#tpendtime").val(),
+                "tpdatitime":$("#tpdatitime").val()
             },
             success : function(data) {
                 alert(data);
@@ -469,6 +487,17 @@
         $("#designdiv").removeClass("layui-show");
         $("#informationdiv").addClass("layui-show");
         $("#informationli").addClass("layui-this");
+    });
+    layui.use('laydate', function() {
+        laydate = layui.laydate;
+        laydate.render({
+            elem: "#tpstarttime" //指定元素
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: "#tpendtime" //指定元素
+            ,type: 'datetime'
+        });
     });
 </script>
 </html>
