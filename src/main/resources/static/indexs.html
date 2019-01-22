@@ -434,13 +434,10 @@
                                 arr.push(object)
                             }
                          };
-                        // for(var p=0;p<arr.length;p++){
-                        //     arr[p].b1=""
-                        //     arr[p].b2=""
-                        //     arr[p].b3=""
-                        // }
                         $.post("../saveallstutest.do", {data:JSON.stringify(arr)}, function (data) {
                         });
+                    }else{
+
                     }
                 }
             }
