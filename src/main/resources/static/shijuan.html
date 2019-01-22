@@ -294,6 +294,7 @@
     });
     $.post("../testpaperdata.do", {}, function (data) {
         vueap.data = data;
+        console.log(JSON.stringify(data) )
     });
     layui.use(['element','layer','laydate'], function() {
         var element = layui.element;
