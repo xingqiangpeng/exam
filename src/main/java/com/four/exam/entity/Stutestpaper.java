@@ -1,9 +1,6 @@
 package com.four.exam.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +18,7 @@ public class Stutestpaper {
 
     @Id
     @Column(name = "stpid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getStpid() {
         return stpid;
     }
@@ -139,5 +137,21 @@ public class Stutestpaper {
     @Override
     public int hashCode() {
         return Objects.hash(stpid, sname, tpwritemessage, tpid, tqnum, stpanswer, stpscore, b1, b2, b3);
+    }
+
+    @Override
+    public String toString() {
+        return "Stutestpaper{" +
+                "stpid=" + stpid +
+                ", sname='" + sname + '\'' +
+                ", tpwritemessage='" + tpwritemessage + '\'' +
+                ", tpid=" + tpid +
+                ", tqnum=" + tqnum +
+                ", stpanswer='" + stpanswer + '\'' +
+                ", stpscore=" + stpscore +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
     }
 }

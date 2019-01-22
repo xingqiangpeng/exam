@@ -141,13 +141,16 @@
                 queding:function () {
                     if(this.type.indexOf('0')!=-1&&this.type.indexOf('1')!=-1){
                         var obj={};
-                        obj.tpwritemessage="";
+                        obj.tpwritemessage="姓名:"+this.xingming;
                         obj.kouling=this.kouling;
                         obj.sname=this.xingming;
                         obj.id=id;
                         obj.tptype=testmaper.tptype;
                         for(var i=0;i<this.name1.length;i++){
-                            obj.tpwritemessage+=this.name1[i].t1+this.name1[i].t3;
+                            obj.tpwritemessage+=this.name1[i].t1+":"+this.name1[i].t3;
+                            if(i!=this.name1.length-1){
+                                obj.tpwritemessage+="/";
+                            }
                         }
                         $.post("../findbyids.do", obj, function (data) {
                             if(data==1){
@@ -161,10 +164,13 @@
                     }else if(this.type.indexOf('0')!=-1&&this.type.length==1){
                         var obj={};
                         obj.sname=this.xingming;
-                        obj.tpwritemessage="";
+                        obj.tpwritemessage="姓名:"+this.xingming;
                         obj.tptype=testmaper.tptype;
                         for(var i=0;i<this.name1.length;i++){
-                            obj.tpwritemessage+=this.name1[i].t1+this.name1[i].t3;
+                            obj.tpwritemessage+=this.name1[i].t1+":"+this.name1[i].t3;
+                            if(i!=this.name1.length-1){
+                                obj.tpwritemessage+="/";
+                            }
                         }
                         localStorage.setItem("kaishi",JSON.stringify(obj));
                         window.location.href="indexs.html";

@@ -215,10 +215,9 @@
                                                 <i>{{items.tqnum}}</i><span>({{items.tqscore}}分)</span><font>{{items.qbtext}}</font><b
                                                     class="icon iconfont">&#xe881;</b>
                                             </div>
-
                                             <div class="test_content_nr_main">
                                                 <ul>
-                                                    <li><textarea v-model="item.answer"> </textarea></li>
+                                                    <li><textarea v-model="items.answer"></textarea></li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -403,14 +402,45 @@
                     for(var i=0;i<this.datalist.length;i++){
                         for(var j=0;j<this.datalist[i].list.length;j++){
                             if(this.datalist[i].list[j].qbtpye=="多选题"){
-                                console.log(this.datalist[i].list[j].answer)
                                 this.datalist[i].list[j].answer=this.datalist[i].list[j].answer.join("");
+                            }
+                            if(this.datalist[i].list[j].qbtpye=="填空题"){
+                                var str="";
+                                for(var k=0;k<this.datalist[i].list[j].answer.length;k++){
+                                    str+=this.datalist[i].list[j].answer[k].content.trim();
+                                    if(k!=this.datalist[i].list[j].answer.length-1){
+                                        str+="/";
+                                    }
+                                }
+                                this.datalist[i].list[j].answer=str;
                             }
                         }
                     }
+                    console.log(obj)
                     console.log(this.datalist)
                     if(obj.tptype!="安排考试"){
-
+                        var arr=[];
+                        for(var i=0;i<this.datalist.length;i++){
+                            for(var j=0;j<this.datalist[i].list.length;j++) {
+                                var object=new Object();
+                                for(var sx in obj){
+                                    object[sx]=obj[sx];
+                                }
+                                for(var sx1 in this.datalist[i].list[j]){
+                                    object[sx1]=this.datalist[i].list[j][sx1];
+                                }
+                                object.stpanswer=object.answer;
+                                object.stpscore=0;
+                                arr.push(object)
+                            }
+                         };
+                        // for(var p=0;p<arr.length;p++){
+                        //     arr[p].b1=""
+                        //     arr[p].b2=""
+                        //     arr[p].b3=""
+                        // }
+                        $.post("../saveallstutest.do", {data:JSON.stringify(arr)}, function (data) {
+                        });
                     }
                 }
             }
@@ -438,7 +468,7 @@
             } else if (data[i].qbtpye == "多选题") {
                 data[i].qboptions = data[i].qboptions.split("/");
                 data[i].answer = [];
-            } else if (data[i].qbtpye == "问答题") {
+            } else if (data[i].qbtpye == "问答题"||data[i].qbtpye == "程序题") {
                 data[i].answer = "";
             }
 

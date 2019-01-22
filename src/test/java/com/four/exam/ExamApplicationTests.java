@@ -1,6 +1,8 @@
 package com.four.exam;
 
+import com.four.exam.entity.Stutestpaper;
 import com.four.exam.repository.StudentRepository;
+import com.four.exam.repository.StutestpaperRepository;
 import com.four.exam.repository.TestpaperRepository;
 import com.four.exam.repository.TestquestionsRepository;
 import org.junit.Test;
@@ -21,6 +23,8 @@ public class ExamApplicationTests {
     private TestquestionsRepository testquestionsRepository;
     @Resource
     private StudentRepository studentRepository;
+    @Resource
+    private StutestpaperRepository stutestpaperRepository;
     @Test
     public void contextLoads() {
         System.out.println(testquestionsRepository.findtimu(1));
@@ -28,6 +32,10 @@ public class ExamApplicationTests {
     @Test
     public void contextLoads1() {
         System.out.println(studentRepository.findBySnumberAndSpassword("777777", "666666"));
+    }
+
+    @Test
+    public void dfafaf(){
     }
 }
 

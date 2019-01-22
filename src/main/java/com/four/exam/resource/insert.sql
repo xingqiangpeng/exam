@@ -58,8 +58,8 @@ insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(3,'3',4,7,3
 --第四张试卷答案: A C ABC 朱恒/孙尚香/去中路
 insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'1',1,2,2.0);
 insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'2',2,3,1.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'2',3,8,3.0);
-insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'3',4,9,3.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'3',3,8,3.0);
+insert into testquestions(tpid,tqbigtitle,tqnum,qbid,tqscore) values(4,'4',4,9,3.0);
 select * from testquestions;
 
 --stutestscore考生试卷总分表
