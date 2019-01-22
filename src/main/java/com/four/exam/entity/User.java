@@ -14,6 +14,21 @@ public class User {
     private String usertel;
     private String usermessage;
     private String b1;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", username='" + username + '\'' +
+                ", userpwd='" + userpwd + '\'' +
+                ", usertel='" + usertel + '\'' +
+                ", usermessage='" + usermessage + '\'' +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
+    }
+
     private String b2;
     private String b3;
 

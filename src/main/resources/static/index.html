@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>主界面</title>
+		<script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
 		<link rel="stylesheet" type="text/css" href="js/layui/css/layui.css"/>
 		<script src="js/layui/layui.js"></script>
 		<script src="js/vue/vue.min.js"></script>
@@ -10,6 +11,12 @@
 			#nav .nav-center{}
 			.nav-right{width: 200px;float: right;position: relative;top: -60px;}
 		</style>
+		<script>
+			var uid=localStorage.getItem("sid");
+            var pindexs;
+		</script>
+
+
 	</head>
 	<body>
 		<div id="app">
@@ -25,19 +32,162 @@
 				<li class="layui-nav-item ">
 					 <a href="javascript:;">个人中心</a>
 				    <dl class="layui-nav-child"> <!-- 二级菜单 -->
-				      <dd><a href="#">个人信息</a></dd>
-				      <dd><a href="#">修改密码</a></dd>
-				      <dd><a href="#">退出登录</a></dd>
+				      <dd><a href="#" v-on:click="person()">个人信息</a></dd>
+				      <dd><a href="#" v-on:click="personmima()">修改密码</a></dd>
+				      <dd><a href="#" v-on:click="tologin()">退出登录</a></dd>
 				    </dl>
 				</li>
 			</ul>
 		</div>
 		<iframe style="width: 100%;height: 700px;" v-bind:src="pagemain">
-			
+
 		</iframe>
+		</div>
+
+		<div id="personshow" style="width: 500px;display: none;">
+			<table  class="layui-table" id="lookmes"  >
+				<tr>
+					<td>用户名</td>
+					<td>
+						<input type="text"  v-model="datas.username"/>
+					</td>
+				</tr>
+				<tr>
+					<td>用户电话号码</td>
+					<td>
+						<input type="text" v-model="datas.usertel"/>
+					</td>
+				</tr>
+				<tr>
+					<td>用户备注信息</td>
+					<td>
+						<input type="text" v-model="datas.usermessage"/>
+					</td>
+				</tr>
+		</table>
+		<table  class="layui-table" id="percao">
+			<tr>
+				<button class="layui-btn" onclick="saveperson()">保存</button>
+				<button class="layui-btn layui-btn-primary" onclick="saveandclose()">保存并关闭</button>
+				<button class="layui-btn layui-btn-primary" onclick="closepseon()">关闭</button>
+			</tr>
+		</table>
+		</div>
+		<div id="passshow" style="width: 500px;display: none;">
+			<table  class="layui-table" id="lookpad"  >
+				<tr>
+					<td>原密码</td>
+					<td>
+						<input type="password" id="mima1" >
+					</td>
+				</tr>
+				<tr>
+					<td>新密码</td>
+					<td>
+						<input type="password" id="mima2" >
+					</td>
+				</tr>
+				<tr>
+					<td>确认新密码</td>
+					<td>
+						<input type="password" id="mima3">
+					</td>
+				</tr>
+			</table>
+			<table  class="layui-table" id="pwdcao">
+				<tr>
+					<button class="layui-btn"  id="savebt" onclick="savepwd()" >保存</button>
+<!--
+					<button class="layui-btn layui-btn-primary" onclick="saveandclosepwd()">保存并关闭</button>
+-->
+					<button class="layui-btn layui-btn-primary" onclick="closepwd()">关闭</button>
+				</tr>
+			</table>
 		</div>
 	</body>
 	<script>
+		//对用户信息进行操作
+		//展示用户框
+		function person(){
+
+            pindexs=layer.open({
+                area: ['600px', '500px'],
+                title:"用户信息",
+                type: 1,
+                content: $('#personshow'),
+
+
+            });
+            //发送请求得到用户账号信息
+            $.post("person.do",{uid:uid}, function (data) {
+                    vue1.datas=data;
+                });
+		};
+        //保存编辑按钮功能
+        function saveperson() {
+            $.post("saveperson.do",{psemess:JSON.stringify(vue1.datas)},function(data){});
+        }
+        //关闭按钮
+		function closepseon() {
+			layer.close(pindexs)
+        }
+        //保存关闭按钮
+        function saveandclose() {
+            saveperson();
+            closepseon();
+        }
+        //打开修改密码界面
+		function personmima() {
+			pindexs = layer.open({
+				area: ['600px', '500px'],
+				title: "修改密码",
+				type: 1,
+				content: $('#passshow'),
+			});
+
+        }
+        //进行修改密码操作
+		function savepwd() {
+			var m1=$("#mima1").val();
+            var m2=$("#mima2").val();
+            var m3=$("#mima3").val();
+            var fal=0;
+            if(m1==""||m2==""||m3=="")
+			{
+			    confirm("请将信息填全");
+			    fal=1;
+			}
+
+            if(m2!=m3&&m2!=""&&m3!="")
+			{
+			    confirm("两次密码不一致")
+				fal=1;
+			}
+            if(fal==0)
+			{
+                $.post("updatepwd.do",{uid:uid,pwd1:m1,pwd2:m2},function(data){
+					confirm(data);
+                    $("#mima1").val("")
+                    $("#mima2").val("")
+                    $("#mima3").val("")
+				});
+			}
+
+        }
+        function closepwd() {
+			layer.close(pindexs);
+        }
+	</script>
+	<script>
+        var vue1=new Vue({
+            el:"#personshow",
+            data:{
+                datas:[]
+            },
+            methods:{
+
+            }
+        });
 		var vue=new Vue({
 			el:"#app",
 			data:{
@@ -46,11 +196,30 @@
 			methods:{
 				change:function(str){
 					this.pagemain=str;
-				}
+
+				},
+                tologin:function () {
+                    window.location.href="login.html";
+                }
+
 			}
-		})
-		layui.use('element', function(){
-		  var element = layui.element;
+		});
+
+
+	</script>
+	<script>
+		layui.use(['element','layer','laydate'], function() {
+			var element = layui.element;
+			var layer = layui.layer;
+			var laydate = layui.laydate;
+			laydate.render({
+				elem: "#datatim1" //指定元素
+				,type: 'datetime'
+			});
+			laydate.render({
+				elem: "#datatim2" //指定元素
+				,type: 'datetime'
+			});
 		});
 	</script>
 </html>
