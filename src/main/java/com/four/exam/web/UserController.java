@@ -25,6 +25,7 @@ public class UserController {
         User user = JSONObject.parseObject(psemess, User.class);
         userRepository.save(user);
     }
+
     @RequestMapping("updatepwd.do")
     public String updateMi(String uid,String pwd1,String pwd2){
         User user=userRepository.findByUidAndUserpwd(new Integer(uid),pwd1);

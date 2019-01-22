@@ -56,9 +56,11 @@
 						<td>
 							<button class="layui-btn layui-btn-primary" id="chaxun">查询</button>
 							<button class="layui-btn layui-btn-primary" onclick="addstudent()">新增</button>
-							<button class="layui-btn layui-btn-primary">批量导入</button>
+							<button class="layui-btn layui-btn-primary" onclick="href()">批量导入</button>
 							<button class="layui-btn layui-btn-primary" onclick="deleteall()">批量删除</button>
+<!--
 							<button class="layui-btn layui-btn-primary">导出</button>
+-->
 						</td>
 					</tr>
 				</table>
@@ -211,7 +213,11 @@
 			</table>
 		</div>
 	</body>
-
+	<script>
+		function href() {
+            window.location.href="charu.html";
+        }
+	</script>
 	<script>
         var flag3=0;
 		//新增学生模块

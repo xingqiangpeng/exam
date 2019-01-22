@@ -5,11 +5,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.four.exam.entity.Student;
 import com.four.exam.repository.StudentRepository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -66,5 +70,15 @@ public class StudentController {
         }
 
 
+    }
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    @RequestMapping("saveall.do")
+    public String saveAllStudent(String allstu,HttpServletRequest request){
+        ArrayList<Student> list=JSON.parseObject(allstu,new TypeReference<ArrayList<Student>>(){});
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setScreatdate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        }
+        studentRepository.saveAll(list);
+        return "插入成功";
     }
 }

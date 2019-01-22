@@ -1,3 +1,5 @@
+--创建数据库
+--CREATE DATABASE exam DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 -- TestPaper
 create table  `TestPaper`
 (
@@ -97,19 +99,6 @@ create table  `LoginStuTestPaper`
 );
 alter table `LoginStuTestPaper` comment= '考生-试卷表（需要登录）';
 
--- stutestscore
-create table  `stutestscore`
-(
-  `stsid`           INT auto_increment primary key not null comment '自身编号',
-  `sname`           VARCHAR(32) not null comment '考生姓名',
-  `tpid`            INT comment '试卷编号',
-  `stsscore`        DOUBLE not null comment '学生试卷总分',
-  `b1`              VARCHAR(2000) comment 'bei',
-  `b2`              VARCHAR(2000) comment 'bei',
-  `b3`              VARCHAR(2000) comment 'bei'
-);
-alter table `stutestscore` comment= '考生试卷总分表';
-
 -- User
 create table  `User`
 (
@@ -123,6 +112,32 @@ create table  `User`
   `b3`              VARCHAR(2000) comment 'bei'
 );
 alter table `User` comment= '系统使用注册用户';
+
+-- stutestscore
+create table  `stutestscore`
+(
+  `stsid`           INT auto_increment primary key not null comment '自身编号',
+  `sid`             INT comment '用户id',
+  `tpid`            INT comment '试卷编号',
+  `stsscore`        DOUBLE not null comment '学生试卷总分',
+  `b1`              VARCHAR(2000) comment 'bei',
+  `b2`              VARCHAR(2000) comment 'bei',
+  `b3`              VARCHAR(2000) comment 'bei'
+);
+alter table `stutestscore` comment= '考生试卷总分表';
+
+-- stutestscore2
+create table  `stutestscore2`
+(
+  `stsid`           INT auto_increment primary key not null comment '自身编号',
+  `information`     VARCHAR(2000) not null comment '用户信息',
+  `tpid`            INT comment '试卷编号',
+  `stsscore`        DOUBLE not null comment '学生试卷总分',
+  `b1`              VARCHAR(2000) comment 'bei',
+  `b2`              VARCHAR(2000) comment 'bei',
+  `b3`              VARCHAR(2000) comment 'bei'
+);
+alter table `stutestscore2` comment= '考生试卷总分表';
 
 alter  table `TestQuestions`
   add constraint `FK_TestQuestions_tpid` foreign key (`tpid`)
@@ -143,8 +158,17 @@ alter  table `LoginStuTestPaper`
     references `TestPaper`(`tpid`);
 
 alter  table `stutestscore`
+  add constraint `FK_stutestscore_sid` foreign key (`sid`)
+    references `student`(`sid`);
+alter  table `stutestscore`
   add constraint `FK_stutestscore_tpid` foreign key (`tpid`)
     references `TestPaper`(`tpid`);
+
+alter  table `stutestscore2`
+  add constraint `FK_stutestscore2_tpid` foreign key (`tpid`)
+    references `TestPaper`(`tpid`);
+
+
 
 alter  table `User` change `username` `username` VARCHAR(200) null;
 

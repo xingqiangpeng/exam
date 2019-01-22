@@ -7,9 +7,9 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Stutestscore {
+public class Stutestscore2 {
     private int stsid;
-    private Integer sid;
+    private String information;
     private Integer tpid;
     private double stsscore;
     private String b1;
@@ -27,13 +27,13 @@ public class Stutestscore {
     }
 
     @Basic
-    @Column(name = "sid")
-    public Integer getSid() {
-        return sid;
+    @Column(name = "information")
+    public String getInformation() {
+        return information;
     }
 
-    public void setSid(Integer sid) {
-        this.sid = sid;
+    public void setInformation(String information) {
+        this.information = information;
     }
 
     @Basic
@@ -90,10 +90,10 @@ public class Stutestscore {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Stutestscore that = (Stutestscore) o;
+        Stutestscore2 that = (Stutestscore2) o;
         return stsid == that.stsid &&
                 Double.compare(that.stsscore, stsscore) == 0 &&
-                Objects.equals(sid, that.sid) &&
+                Objects.equals(information, that.information) &&
                 Objects.equals(tpid, that.tpid) &&
                 Objects.equals(b1, that.b1) &&
                 Objects.equals(b2, that.b2) &&
@@ -102,6 +102,6 @@ public class Stutestscore {
 
     @Override
     public int hashCode() {
-        return Objects.hash(stsid, sid, tpid, stsscore, b1, b2, b3);
+        return Objects.hash(stsid, information, tpid, stsscore, b1, b2, b3);
     }
 }

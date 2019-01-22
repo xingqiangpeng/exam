@@ -1,9 +1,6 @@
 package com.four.exam.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -21,6 +18,7 @@ public class Student {
 
     @Id
     @Column(name = "sid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getSid() {
         return sid;
     }
