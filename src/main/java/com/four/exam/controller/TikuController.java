@@ -74,4 +74,8 @@ public class TikuController {
         if(endtime==null||endtime.length()==0)       endtime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         return questionbankRepository.findAllByQbtextIsLikeAndQbtypeIsLikeAndQbcreatetimeBetween(qbtext,qbtype,starttime,endtime);
     }
+    @RequestMapping("tikufindine.do")
+    public Object tikuFindOne(Integer qbid){
+        return questionbankRepository.findById(qbid);
+    }
 }

@@ -140,4 +140,20 @@ public class Student {
     public int hashCode() {
         return Objects.hash(sid, sname, snumber, spassword, sdep, ssex, screatdate, b1, b2, b3);
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "sid=" + sid +
+                ", sname='" + sname + '\'' +
+                ", snumber='" + snumber + '\'' +
+                ", spassword='" + spassword + '\'' +
+                ", sdep='" + sdep + '\'' +
+                ", ssex='" + ssex + '\'' +
+                ", screatdate='" + screatdate + '\'' +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
+    }
 }

@@ -34,7 +34,6 @@ public class StudentController {
         for (int i = 0; i < ids.length; i++) {
             Integer h=(new Integer(ids[i]));
             studentRepository.deleteById(h);
-
         }
     }
     @RequestMapping("deleteone.do")

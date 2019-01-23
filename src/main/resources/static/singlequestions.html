@@ -49,11 +49,6 @@
                 <td>试题题库管理</td>
                 <td>
                     <button class="layui-btn layui-btn-primary" id="chaxun">查询</button>
-                    <!--<button class="layui-btn layui-btn-primary" v-on:click="addnew()">新增试题</button>-->
-                    <!--<button class="layui-btn layui-btn-primary">快速新增</button>-->
-                    <!--<button class="layui-btn layui-btn-primary">导入试题</button>-->
-                    <!--<button class="layui-btn layui-btn-primary">导出</button>-->
-                    <!--<button class="layui-btn layui-btn-primary" v-on:click="deleteall">批量删除</button>-->
                 </td>
             </tr>
         </table>
@@ -106,16 +101,10 @@
                 <td>{{item.qbdifficulty}}</td>
                 <td>{{item.qbcreatetime}}</td>
                 <td>
-                    <button class="layui-btn layui-btn-warm" v-on:click="bianji(index)">编辑</button>
-                    <button class="layui-btn layui-btn-danger" v-on:click="deleteone(index)">删除</button>
+                    <button class="layui-btn layui-btn-warm" v-on:click="bianji(index)">查看详情</button>
                 </td>
             </tr>
         </table>
-    </div>
-    <div id="down">
-        <button class="layui-btn layui-btn-warm" v-on:click="select()">选择</button>
-        <button class="layui-btn layui-btn-warm" v-on:click="option()">选择并关闭</button>
-        <button class="layui-btn layui-btn-warm" v-on:click="bianji(index)">关闭</button>
     </div>
 </div>
 
@@ -153,106 +142,26 @@
                     this.pseons.forEach(item => item.check = true);
                 }
             },
-            select:function(){
-                var arr=[];
-                    $("input[name='test']:checked").each(function() { // 遍历选中的checkbox
-                        n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
-                    });
-                    vueapp.pseons.filter(function (vues) {
-                        if(vues.check==true)
-                        {
-                            arr.push(vues.qbid);
-                        }
-                    });
-                    $.ajax({
-                        url: 'singlequestionsselectbyqbid.do',
-                        type: 'POST',
-                        dataType: "json",
-                        traditional:true,
-                        async: false,
-                        data: {
-                            'ids': arr
-                        },
-                        /*success: function (data) {
-                            if(confirm("添加成功！"))
-                                window.location.reload();
-                            window.location.reload();
-                        },
-                        error: function (data) {
-                            if(confirm("添加失败！"))
-                                window.location.reload();
-                            window.location.reload();
-                        }*/
-                    });
-            },
-            /*//新增试题
-            addnew: function () {
+            //查看试题
+            bianji:function(i){
+                localStorage.setItem("bianjioneqbcreatetime", vueapp.pseons[i].qbcreatetime);
+                localStorage.setItem("bianjioneqbid", vueapp.pseons[i].qbid);
+                localStorage.setItem("bianjioneqboutline", vueapp.pseons[i].qboutline);
+                localStorage.setItem("bianjioneqbtype", vueapp.pseons[i].qbtype);
+                localStorage.setItem("bianjioneqbtext", vueapp.pseons[i].qbtext);
+                localStorage.setItem("bianjioneqboptions", vueapp.pseons[i].qboptions);
+                localStorage.setItem("bianjioneqbanswer", vueapp.pseons[i].qbanswer);
+                localStorage.setItem("bianjioneqbdifficulty", vueapp.pseons[i].qbdifficulty);
+                console.log(i);
                 layer.open({
-                    title: '试题新增/编辑',
+                    title: '试题详情',
                     maxmin: true,
                     type: 2,
-                    content: 'shitibianji.html',
-                    area: ['1000px', '500px']
-                });
-            },*/
-            //编辑试题
-            bianji:function(index){
-                console.log(index);
-                layer.open({
-                    title: '试题新增/编辑',
-                    maxmin: true,
-                    type: 2,
-                    content: 'shitibianji.html',
-                    area: ['1000px', '500px']
+                    content: 'itemdetails.html',
+                    area: ['60%', '60%']
                 });
             },
-            //删除单个
-            deleteone:function(i){
-                if(confirm("确定要从题库中删除此条数据吗？")){
-                    $.post("tikudeleteone.do",{
-                        qbid:vueapp.pseons[i].qbid
-                    },function(data){
-                        if(confirm("删除成功！"))
-                            window.location.reload();
-                        window.location.reload();
-                    })
-                }
-            },
-            /*//批量删除
-            deleteall:function(){
-                var arr=[];
-                if(confirm("是否将选择的试题进行删除，删除它们，它们将不能再被使用！")){
-                    $("input[name='test']:checked").each(function() { // 遍历选中的checkbox
-                        n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
-                    });
-                    vueapp.pseons.filter(function (vues) {
-                        if(vues.check==true)
-                        {
-                            arr.push(vues.qbid);
-                        }
-                    });
-                    $.ajax({
-                        url: 'tikudeleteall.do',
-                        type: 'POST',
-                        dataType: "json",
-                        traditional:true,
-                        async: false,
-                        data: {
-                            'ids': arr
-                        },
-                        success: function (data) {
-                            if(confirm("删除成功！"))
-                                window.location.reload();
-                            window.location.reload();
-                        },
-                        error: function (data) {
-                            if(confirm("删除失败！"))
-                                window.location.reload();
-                            window.location.reload();
-                        }
-                    });
-                }
-            },*/
+
             //查询功能
             chaxunin:function () {
                 $.post("tikuchaxun.do",{
@@ -284,6 +193,41 @@
         }
     });
 
+    // 选择
+    function selectquestion(){
+        console.log(333);
+        var arr=[];
+        $("input[name='test']:checked").each(function() { // 遍历选中的checkbox
+            n = $(this).parents("tr").index();  // 获取checkbox所在行的顺序
+        });
+        vueapp.pseons.filter(function (vues) {
+            if(vues.check==true)
+            {
+                arr.push(vues.qbid);
+            }
+        });
+        $.ajax({
+            url: 'singlequestionsselectbyqbid.do',
+            type: 'POST',
+            dataType: "json",
+            traditional:true,
+            async: false,
+            data: {
+                'ids': arr
+            },
+            /*success: function (data) {
+                if(confirm("添加成功！"))
+                    window.location.reload();
+                window.location.reload();
+            },
+            error: function (data) {
+                if(confirm("添加失败！"))
+                    window.location.reload();
+                window.location.reload();
+            }*/
+        });
+        return arr;
+    }
     $.post("tiku.do", {}, function (data) {
         pseon = data;
         pseon.forEach(item => item.check = false);
