@@ -28,7 +28,10 @@
                     return arr1[1];
                 }
             }
-            var id=2;
+            var id=GetQueryString(id);
+            if(typeof(id)=="undefined"){
+                location.href="404.html"
+            }
             var testmaper=null;
             var name1=[];
             $.ajaxSettings.async = false;
@@ -50,6 +53,8 @@
                     window.location.href="404.html"
                 }
             });
+            localStorage.setItem("timer",testmaper.tpdatitime);
+            console.log(testmaper)
             $.ajaxSettings.async = true;
         </script>
 	</head>
@@ -146,6 +151,7 @@
                         obj.sname=this.xingming;
                         obj.id=id;
                         obj.tptype=testmaper.tptype;
+                        obj.tpname=this.data[0].tpname;
                         for(var i=0;i<this.name1.length;i++){
                             obj.tpwritemessage+=this.name1[i].t1+":"+this.name1[i].t3;
                             if(i!=this.name1.length-1){
@@ -166,6 +172,8 @@
                         obj.sname=this.xingming;
                         obj.tpwritemessage="姓名:"+this.xingming;
                         obj.tptype=testmaper.tptype;
+                        obj.id=id;
+                        obj.tpname=this.data[0].tpname;
                         for(var i=0;i<this.name1.length;i++){
                             obj.tpwritemessage+=this.name1[i].t1+":"+this.name1[i].t3;
                             if(i!=this.name1.length-1){
@@ -176,10 +184,18 @@
                         window.location.href="indexs.html";
                     }else if(this.type.indexOf('1')!=-1&&this.type.length==1){
                         var obj={};
-                        obj.kouling=this.kouling;
                         obj.sname=this.xingming;
                         obj.id=id;
+                        obj.kouling=this.kouling;
                         obj.tptype=testmaper.tptype;
+                        obj.tpname=this.data[0].tpname;
+                        obj.tpwritemessage="姓名:"+this.xingming+"/口令:"+this.kouling;
+                        for(var i=0;i<this.name1.length;i++){
+                            obj.tpwritemessage+=this.name1[i].t1+":"+this.name1[i].t3;
+                            if(i!=this.name1.length-1){
+                                obj.tpwritemessage+="/";
+                            }
+                        }
                         $.post("../findbyids.do", obj, function (data) {
                             if(data==1){
                                 localStorage.setItem("kaishi",JSON.stringify(obj));
@@ -193,6 +209,7 @@
                         var obj={username:this.username,pwd:this.pwd}
                         obj.id=id;
                         obj.tptype=testmaper.tptype;
+                        obj.tpname=this.data[0].tpname;
                         $.post("../finduserbyunamepwd.do", obj, function (data) {
                             if(data!=0){
                                 localStorage.setItem("kaishi",JSON.stringify(obj));

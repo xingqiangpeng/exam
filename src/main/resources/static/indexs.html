@@ -14,10 +14,20 @@
             background: #5d9cec;
             color: #fff;
         }
-
+        textarea{
+            width: 700px;
+            height: 200px;
+            font-size: 18px;
+        }
+        .options{
+            min-height: 40px;
+        }
     </style>
     <script>
-        var obj =JSON.parse(localStorage.getItem("kaishi"));
+        var objp =JSON.parse(localStorage.getItem("kaishi"));
+        if(objp==null){
+            location.href="404.html";
+        }
     </script>
 </head>
 
@@ -41,8 +51,8 @@
                                     <div class="test_content_title">
                                         <h2>单选题</h2>
                                         <p>
-                                            <span>共</span><i class="content_lit">60</i><span>题，</span><span>合计</span><i
-                                                class="content_fs">60</i><span>分</span>
+                                            <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题，</span><span>合计</span><i
+                                                class="content_fs">{{item.sum}}</i><span>分</span>
                                         </p>
                                     </div>
                                 </div>
@@ -81,8 +91,8 @@
                                     <div class="test_content_title">
                                         <h2>多选题</h2>
                                         <p>
-                                            <span>共</span><i class="content_lit">30</i><span>题，</span><span>合计</span><i
-                                                class="content_fs">30</i><span>分</span>
+                                            <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题，</span><span>合计</span><i
+                                                class="content_fs">{{item.sum}}</i><span>分</span>
                                         </p>
                                     </div>
                                 </div>
@@ -120,8 +130,8 @@
                                     <div class="test_content_title">
                                         <h2>判断题</h2>
                                         <p>
-                                            <span>共</span><i class="content_lit">30</i><span>题，</span><span>合计</span><i
-                                                class="content_fs">30</i><span>分</span>
+                                            <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题，</span><span>合计</span><i
+                                                class="content_fs">{{item.sum}}</i><span>分</span>
                                         </p>
                                     </div>
                                 </div>
@@ -142,7 +152,8 @@
                                                                id="1_answer_1_option_89" v-model="items.answer"
                                                                value="正确"
                                                         />
-                                                        <label for="1_answer_1_option_89">
+                                                        <label for="1_answer_1_option_89" v-model="items.answer"
+                                                               value="正确">
                                                             正确
                                                         </label>
                                                     </li>
@@ -168,8 +179,8 @@
                                     <div class="test_content_title">
                                         <h2>填空题</h2>
                                         <p>
-                                            <span>共</span><i class="content_lit">30</i><span>题，</span><span>合计</span><i
-                                                class="content_fs">30</i><span>分</span>
+                                            <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题，</span><span>合计</span><i
+                                                class="content_fs">{{item.sum}}</i><span>分</span>
                                         </p>
                                     </div>
                                 </div>
@@ -185,7 +196,7 @@
                                             <div class="test_content_nr_main">
                                                 <ul>
 
-                                                    <li v-for="item1,index1 in items.answer">
+                                                    <li v-for="item1,index1 in items.answer"  class="options">
                                                         <label>
                                                             答案{{index1+1}}
                                                         </label>
@@ -202,8 +213,8 @@
                                     <div class="test_content_title">
                                         <h2>问答题</h2>
                                         <p>
-                                            <span>共</span><i class="content_lit">30</i><span>题，</span><span>合计</span><i
-                                                class="content_fs">30</i><span>分</span>
+                                            <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题，</span><span>合计</span><i
+                                                class="content_fs">{{item.sum}}</i><span>分</span>
                                         </p>
                                     </div>
                                 </div>
@@ -217,7 +228,7 @@
                                             </div>
                                             <div class="test_content_nr_main">
                                                 <ul>
-                                                    <li><textarea v-model="items.answer"></textarea></li>
+                                                    <li  class="option"><textarea v-model="items.answer"></textarea></li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -229,8 +240,8 @@
                                     <div class="test_content_title">
                                         <h2>程序题</h2>
                                         <p>
-                                            <span>共</span><i class="content_lit">30</i><span>题，</span><span>合计</span><i
-                                                class="content_fs">30</i><span>分</span>
+                                            <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题，</span><span>合计</span><i
+                                                class="content_fs">{{item.sum}}</i><span>分</span>
                                         </p>
                                     </div>
                                 </div>
@@ -245,11 +256,15 @@
                                             </div>
 
                                             <div class="test_content_nr_main">
-                                                <ul>
-
+                                                <ul class="optionss">
                                                     <li>
-                                                        <form method="post">
-                                                            <input type="file"/>
+                                                        <form>
+                                                        </form>
+                                                        <form enctype="multipart/form-data">
+                                                            <input type="text" name="tpname" style="display: none;" :value="items.tpname">
+                                                            <input type="file" name="fileName" style="width: 200px !important;"/>
+                                                            <button  type="button" :onclick="['dd(this,'+index+','+indexs+')']">上传文件</button>
+                                                            <span>还未上传文件</span>
                                                         </form>
                                                     </li>
                                                 </ul>
@@ -265,7 +280,7 @@
             </div>
             <div class="nr_right">
                 <div class="nr_rt_main">
-                    <div class="rt_nr1">
+                    <div class="rt_nr1" id="datika">
                         <div class="rt_nr1_title">
                             <h1>
                                 <i class="icon iconfont">&#xe692;</i>答题卡
@@ -279,7 +294,7 @@
                                 <div class="rt_content_tt" >
                                     <h2>单选题</h2>
                                     <p>
-                                        <span>共</span><i class="content_lit">60</i><span>题</span>
+                                        <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题</span>
                                     </p>
                                 </div>
                                 <div class="rt_content_nr answerSheet">
@@ -293,7 +308,7 @@
                                 <div class="rt_content_tt">
                                     <h2>多选题</h2>
                                     <p>
-                                        <span>共</span><i class="content_lit">30</i><span>题</span>
+                                        <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题</span>
                                     </p>
                                 </div>
                                 <div class="rt_content_nr answerSheet">
@@ -303,11 +318,24 @@
                                 </div>
                             </div>
 
+                            <div class="rt_content" v-if="item.list[0].qbtpye=='判断题'">
+                                <div class="rt_content_tt">
+                                    <h2>判断题</h2>
+                                    <p>
+                                        <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题</span>
+                                    </p>
+                                </div>
+                                <div class="rt_content_nr answerSheet">
+                                    <ul>
+                                        <li v-for="items,indexs in item.list"><a :href="['#qu_'+index+'_'+indexs]">{{items.tqnum}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                             <div class="rt_content" v-if="item.list[0].qbtpye=='填空题'">
                                 <div class="rt_content_tt">
                                     <h2>填空题</h2>
                                     <p>
-                                        <span>共</span><i class="content_lit">30</i><span>题</span>
+                                        <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题</span>
                                     </p>
                                 </div>
                                 <div class="rt_content_nr answerSheet">
@@ -320,7 +348,7 @@
                                 <div class="rt_content_tt">
                                     <h2>问答题</h2>
                                     <p>
-                                        <span>共</span><i class="content_lit">30</i><span>题</span>
+                                        <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题</span>
                                     </p>
                                 </div>
                                 <div class="rt_content_nr answerSheet">
@@ -333,7 +361,7 @@
                                 <div class="rt_content_tt">
                                     <h2>程序题</h2>
                                     <p>
-                                        <span>共</span><i class="content_lit">30</i><span>题</span>
+                                        <span>共</span><i class="content_lit">{{item.sizes}}</i><span>题</span>
                                     </p>
                                 </div>
                                 <div class="rt_content_nr answerSheet">
@@ -369,13 +397,32 @@
         });
         $('.alt-2').countDown({
             css_class: 'countdown-alt-2'
-        });
+        })
 
     });
 
 
     $(function () {
         $('#clicks').on("click", "li.option", function () {
+            // debugger;
+            var examId = $(this).closest('.test_content_nr_main').closest('li').attr('id'); // 得到题目ID
+            var cardLi = $('a[href=#' + examId + ']'); // 根据题目ID找到对应答题卡
+            // 设置已答题
+            if (!cardLi.hasClass('hasBeenAnswer')) {
+                cardLi.addClass('hasBeenAnswer');
+            }
+        })
+
+        $('#clicks').on("click", "li.options", function () {
+            // debugger;
+            var examId = $(this).closest('.test_content_nr_main').closest('li').attr('id'); // 得到题目ID
+            var cardLi = $('a[href=#' + examId + ']'); // 根据题目ID找到对应答题卡
+            // 设置已答题
+            if (!cardLi.hasClass('hasBeenAnswer')) {
+                cardLi.addClass('hasBeenAnswer');
+            }
+        })
+        $('#clicks').on("click", "ul.optionss", function () {
             // debugger;
             var examId = $(this).closest('.test_content_nr_main').closest('li').attr('id'); // 得到题目ID
             var cardLi = $('a[href=#' + examId + ']'); // 根据题目ID找到对应答题卡
@@ -398,55 +445,23 @@
         },
         methods: {
             jiaojuan:function () {
+                if($("#datika a.hasBeenAnswer").length!=$("#datika li").length){
+                    alert("试题没有做完不能提交")
+                }else{
                 if(confirm("确定交卷吗")){
-                    for(var i=0;i<this.datalist.length;i++){
-                        for(var j=0;j<this.datalist[i].list.length;j++){
-                            if(this.datalist[i].list[j].qbtpye=="多选题"){
-                                this.datalist[i].list[j].answer=this.datalist[i].list[j].answer.join("");
-                            }
-                            if(this.datalist[i].list[j].qbtpye=="填空题"){
-                                var str="";
-                                for(var k=0;k<this.datalist[i].list[j].answer.length;k++){
-                                    str+=this.datalist[i].list[j].answer[k].content.trim();
-                                    if(k!=this.datalist[i].list[j].answer.length-1){
-                                        str+="/";
-                                    }
-                                }
-                                this.datalist[i].list[j].answer=str;
-                            }
-                        }
-                    }
-                    console.log(obj)
-                    console.log(this.datalist)
-                    if(obj.tptype!="安排考试"){
-                        var arr=[];
-                        for(var i=0;i<this.datalist.length;i++){
-                            for(var j=0;j<this.datalist[i].list.length;j++) {
-                                var object=new Object();
-                                for(var sx in obj){
-                                    object[sx]=obj[sx];
-                                }
-                                for(var sx1 in this.datalist[i].list[j]){
-                                    object[sx1]=this.datalist[i].list[j][sx1];
-                                }
-                                object.stpanswer=object.answer;
-                                object.stpscore=0;
-                                arr.push(object)
-                            }
-                         };
-                        $.post("../saveallstutest.do", {data:JSON.stringify(arr)}, function (data) {
-                        });
-                    }else{
-
-                    }
+                    tijiao();
+                }
                 }
             }
         }
     });
-    $.post("../tqfindbytimu.do", {tpid: 4}, function (data) {
+    //定时器
+    var timer=localStorage.getItem("timer");
+    vue.time=Math.floor(timer/60)+":"+timer%60;
+    $.post("../tqfindbytimu.do", {tpid: objp.id}, function (data) {
         vue.datalist = sortzl(data);
     });
-
+    setTimeout("tijiao()",timer*60*1000);
     //数据处理
     function sortzl(data) {
         for (var i = 0; i < data.length; i++) {
@@ -470,7 +485,6 @@
             }
 
         }
-        console.log(data)
         var name = [];
         for (var i = 0; i < data.length; i++) {
             var flage = true;
@@ -494,7 +508,104 @@
                 }
             }
         }
+        for (var i = 0; i < name.length; i++) {
+            var sum=0;
+            name[i].list.forEach(function (item) {
+                sum=eval(sum+"+"+item.tqscore);
+            });
+            name[i].sum=sum;
+            name[i].sizes=name[i].list.length;
+        }
+        console.log(obj)
+        for (var i = 0; i < name.length; i++) {
+            for (var j = 0; j < name[i].list.length; j++) {
+                name[i].list[j].tpname=objp.tpname;
+            }
+        }
+        console.log(name)
         return name;
     }
+
+    function tijiao() {
+        for(var i=0;i<vue.datalist.length;i++){
+            for(var j=0;j<vue.datalist[i].list.length;j++){
+                if(vue.datalist[i].list[j].qbtpye=="多选题"){
+                    vue.datalist[i].list[j].answer=vue.datalist[i].list[j].answer.join("");
+                }
+                if(vue.datalist[i].list[j].qbtpye=="填空题"){
+                    var str="";
+                    for(var k=0;k<vue.datalist[i].list[j].answer.length;k++){
+                        str+=vue.datalist[i].list[j].answer[k].content.trim();
+                        if(k!=vue.datalist[i].list[j].answer.length-1){
+                            str+="/";
+                        }
+                    }
+                    vue.datalist[i].list[j].answer=str;
+                }
+            }
+        }
+        if(objp.tptype!="安排考试"){
+            var arr=[];
+            for(var i=0;i<vue.datalist.length;i++){
+                for(var j=0;j<vue.datalist[i].list.length;j++) {
+                    var object=new Object();
+                    for(var sx in objp){
+                        object[sx]=objp[sx];
+                    }
+                    for(var sx1 in vue.datalist[i].list[j]){
+                        object[sx1]=vue.datalist[i].list[j][sx1];
+                    }
+                    object.stpanswer=object.answer;
+                    object.stpscore=0;
+                    arr.push(object)
+                }
+            };
+            console.log(arr)
+            $.post("../saveallstutest.do", {data:JSON.stringify(arr)}, function (data) {
+                localStorage.clear();
+                alert("提交成功")
+                location.href="chengg.html"
+            });
+        }else{
+            var arr=[];
+            for(var i=0;i<vue.datalist.length;i++){
+                for(var j=0;j<vue.datalist[i].list.length;j++) {
+                    var object=new Object();
+                    for(var sx in objp){
+                        object[sx]=objp[sx];
+                    }
+                    for(var sx1 in vue.datalist[i].list[j]){
+                        object[sx1]=vue.datalist[i].list[j][sx1];
+                    }
+                    object.snumber=object.username;
+                    object.lstpanswer=object.answer;
+                    object.lstpgestpscore=0;
+                    arr.push(object)
+                }
+            };
+            console.log(arr)
+            $.post("../saveallloginstutest.do", {data:JSON.stringify(arr)}, function (data) {
+                localStorage.clear();
+                alert("提交成功")
+                location.href="chengg.html"
+            });
+        }
+    }
+    function dd(obj,x,y){
+        $.ajax({
+            url: '/fileUpload',
+            type: 'POST',
+            cache: false,
+            data: new FormData(obj.parentNode),
+            processData: false,
+            contentType: false,
+            success:function (data) {
+                vue.datalist[x].list[y].answer=data;
+                obj.parentNode.getElementsByTagName("span")[0].innerHTML="提交成功";
+            }
+        }).done(function(res) {
+        }).fail(function(res) {});
+    }
+    console.log(objp)
 </script>
 </html>

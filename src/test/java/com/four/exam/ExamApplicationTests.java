@@ -36,6 +36,14 @@ public class ExamApplicationTests {
 
     @Test
     public void dfafaf(){
+        Stutestpaper stutestpaper=new Stutestpaper();
+        stutestpaper.setSname("fff");
+        stutestpaper.setTpwritemessage("fff");
+        stutestpaper.setTpid(1);
+        stutestpaper.setTqnum(1);
+        stutestpaper.setStpanswer("fdf");
+        stutestpaper.setStpscore(0);
+        System.out.println(stutestpaperRepository.save(stutestpaper));
     }
 }
 

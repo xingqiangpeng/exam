@@ -1,9 +1,6 @@
 package com.four.exam.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -19,6 +16,7 @@ public class Loginstutestpaper {
     private String b3;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "lstpid")
     public int getLstpid() {
         return lstpid;
@@ -122,6 +120,21 @@ public class Loginstutestpaper {
                 Objects.equals(b1, that.b1) &&
                 Objects.equals(b2, that.b2) &&
                 Objects.equals(b3, that.b3);
+    }
+
+    @Override
+    public String toString() {
+        return "Loginstutestpaper{" +
+                "lstpid=" + lstpid +
+                ", snumber='" + snumber + '\'' +
+                ", tpid=" + tpid +
+                ", tqnum=" + tqnum +
+                ", lstpanswer='" + lstpanswer + '\'' +
+                ", lstpgetscore=" + lstpgetscore +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
     }
 
     @Override
