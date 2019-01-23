@@ -111,5 +111,10 @@ public class TestpaperController {
         }
         return "0";
     }
+    //通过id查找试卷信息
+    @RequestMapping("selectpf.do")
+    public Object selectType(String sjid){
+        return testpaperRepository.findById(new Integer(sjid));
+    }
 
 }

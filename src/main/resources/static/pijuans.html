@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" />
+    <link rel="stylesheet" href="layDate-v5.0.9/layDate-v5.0.9/laydate/theme/default/laydate.css">
+    <script src="js/layui/layui.js"></script>
+    <script src="js/vue/vue.min.js"></script>
+<style>
+    .layui-table{
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+    <div id="total">
+        <div id="button">
+            <table class="layui-table">
+                <tr>
+                    <td>系统自动阅卷题</td>
+                    <td><button class="layui-btn layui-btn-warm" onclick="xuanon()" >获取分数</button></td>
+                    <td>分数:&nbsp;&nbsp;&nbsp<input type="text" id="fen1" ></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</body>
+<script>
+    //学生账号
+    var pjnumber=localStorage.getItem("snumber");
+    //试卷id
+    var pjshiid=localStorage.getItem("shijuanid");
+    //考试类型
+    var type=localStorage.getItem("type");
+    function xuanon() {
+        if(type=="安排考试"){
+            $.post("xuanon.do",{pjnumber:pjnumber,pjshiid:pjshiid},function(data){
+                $("#fen1").val(data);
+            });
+        }
+        else{
+            var sname=localStorage.getItem("sname");
+            $.post("noxuan.do",{sname:sname,pjshiid:pjshiid},function(data){
+                $("#fen1").val(data);
+            });
+        }
+
+    }
+
+</script>
+</html>

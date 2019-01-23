@@ -125,6 +125,21 @@ public class Loginstutestpaper {
     }
 
     @Override
+    public String toString() {
+        return "Loginstutestpaper{" +
+                "lstpid=" + lstpid +
+                ", snumber='" + snumber + '\'' +
+                ", tpid=" + tpid +
+                ", tqnum=" + tqnum +
+                ", lstpanswer='" + lstpanswer + '\'' +
+                ", lstpgetscore=" + lstpgetscore +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(lstpid, snumber, tpid, tqnum, lstpanswer, lstpgetscore, b1, b2, b3);
     }

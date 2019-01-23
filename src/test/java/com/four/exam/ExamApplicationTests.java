@@ -37,5 +37,14 @@ public class ExamApplicationTests {
     @Test
     public void dfafaf(){
     }
+
+    @Test
+    public void ss(){
+        String str="asdasdasd";
+        for (int i = 0; i < str.split("").length; i++) {
+            System.out.println(str.split("")[i]);
+        }
+
+    }
 }
 

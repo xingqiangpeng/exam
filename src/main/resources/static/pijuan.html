@@ -20,12 +20,12 @@
             font-size: 18px;
         }
     </style>
-    <script>
-        var obj =JSON.parse(localStorage.getItem("kaishi"));
-        if(obj==null){
-            location.href="404.html";
-        }
-    </script>
+    <!--<script>-->
+        <!--var obj =JSON.parse(localStorage.getItem("kaishi"));-->
+        <!--if(obj==null){-->
+            <!--location.href="404.html";-->
+        <!--}-->
+    <!--</script>-->
 </head>
 
 <body>
@@ -431,9 +431,11 @@
         }
     });
     //定时器
-    var timer=localStorage.getItem("timer");
-    vue.time=Math.floor(timer/60)+":"+timer%60;
-    $.post("../tqfindbytimu.do", {tpid: obj.id}, function (data) {
+   /* var timer=localStorage.getItem("timer");
+    vue.time=Math.floor(timer/60)+":"+timer%60;*/
+    var pjnumber=localStorage.getItem("snumber");
+    var pjshiid=localStorage.getItem("shijuanid");
+    $.post("../tqfindbytimu.do", {tpid: pjshiid}, function (data) {
         vue.datalist = sortzl(data);
     });
     setTimeout("tijiao()",timer*60*1000);
