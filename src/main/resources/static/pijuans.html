@@ -31,12 +31,12 @@
             <div v-for="item,index in data">
                 <div v-if="item.qbtype=='问答题'">
                     <h4>问答题,题目：{{item.qbtext}}</h4>
-                    <table>
+                    <table class="layui-table">
                         <tr>
                             <th>考生答案</th>
                             <th>参考答案</th>
                             <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
-                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                                <button @click="manfen(index)"  class="layui-btn layui-btn-warm">满分{{item.tqscore}}分</button>
                             </th>
                         </tr>
                         <tr>
@@ -47,17 +47,17 @@
                 </div>
                 <div v-if="item.qbtype=='程序题'">
                     <h4>程序题,题目：{{item.qbtext}}</h4>
-                    <table>
+                    <table class="layui-table">
                         <tr>
                             <th>考生答案</th>
                             <th>参考答案</th>
                             <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
-                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                                <button @click="manfen(index)"   class="layui-btn layui-btn-warm">满分{{item.tqscore}}分</button>
                             </th>
                         </tr>
                         <tr>
                             <td>
-                                <a :href="['/download.do?filename='+item.lstpanswer]">下载考试答案</a>
+                                <a :href="['/download.do?filename='+item.lstpanswer]" tabindex="_blank"   class="layui-btn layui-btn-warm">下载考试答案</a>
                             </td>
                             <td>{{item.qboptions}}</td>
                         </tr>
@@ -69,12 +69,12 @@
             <div v-for="item,index in data">
                 <div v-if="item.qbtype=='问答题'">
                     <h4>问答题,题目：{{item.qbtext}}</h4>
-                    <table>
+                    <table  class="layui-table">
                         <tr>
                             <th>考生答案</th>
                             <th>参考答案</th>
                             <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
-                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                                <button @click="manfen(index)"   class="layui-btn layui-btn-warm">满分{{item.tqscore}}分</button>
                             </th>
                         </tr>
                         <tr>
@@ -85,17 +85,17 @@
                 </div>
                 <div v-if="item.qbtype=='程序题'">
                     <h4>程序题,题目：{{item.qbtext}}</h4>
-                    <table>
+                    <table  class="layui-table">
                         <tr>
                             <th>考生答案</th>
                             <th>参考答案</th>
                             <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
-                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                                <button @click="manfen(index)"   class="layui-btn layui-btn-warm">满分{{item.tqscore}}分</button>
                             </th>
                         </tr>
                         <tr>
                             <td>
-                                <a :href="['/download.do?filename='+item.stpanswer]">下载考试答案</a>
+                                <a :href="['/download.do?filename='+item.stpanswer]"   class="layui-btn layui-btn-warm">下载考试答案</a>
                             </td>
                             <td>{{item.qboptions}}</td>
                         </tr>
@@ -103,7 +103,7 @@
                 </div>
             </div>
         </div>
-        <button @click="chafenshu">查分数</button>
+        <button @click="chafenshu"   class="layui-btn layui-btn-warm">插入分数</button>
     </div>
 </body>
 <script>
@@ -148,7 +148,9 @@
             },
             chafenshu:function () {
                 var data=this.data.filter(item=>item.qbtype=="程序题"||item.qbtype=="问答题");
-                console.log(data)
+                //程序问答题的总分
+                /*var sum=0;
+                vue.data.forEach(item=>sum+=item.stpscore);*/
                 if(type=='安排考试'){
                     $.post("../updateBysnumber2.do", {data:JSON.stringify(data)}, function (data) {
                         alert(data)
