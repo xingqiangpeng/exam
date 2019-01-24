@@ -397,6 +397,7 @@ var statue=false;
                     //获取到对应的数据
                     //获取到对应的tqid
                     var tqid=subjectmain[i].main[j].tqid;
+                    console.log(tqid)
                     //页面中删除小题
                     subjectmain[i].main.splice(j,1)
                     subjectmain[i].numbers-=1;
@@ -721,12 +722,8 @@ var statue=false;
     })
     // 点击保存去设计试卷跳到设计试卷
     $("#todesign").click(function () {
-        $("#informationli").removeClass("layui-this");
-        $("#informationdiv").removeClass("layui-show");
-        $("#designdiv").addClass("layui-show");
-        $("#designli").addClass("layui-this");
-        console.log(typeof $("input[name='tptype']:checked").val());
-        console.log($("input[name='tptype']:checked").val());
+        // console.log(typeof $("input[name='tptype']:checked").val());
+        // console.log($("input[name='tptype']:checked").val());
 
         var jsonStr = "";                                    //设置考生需要填写的信息
         // 判断参加的方式为那种方式
@@ -773,7 +770,6 @@ var statue=false;
             })
             jsonStr += "口令:" + $("#command").val();
         }
-
         if ("安排考试" == $("input[name='tptype']:checked").val()) {
             $('#kaoshengtable').find('tr').each(function () {
                 jsonStr += "sdep:"+$(this).find("td:eq(2)").text()+";snumber:"+$(this).find("td:eq(1)").text()+";"
@@ -785,29 +781,64 @@ var statue=false;
         /**重点：ajax的type,url,dataType,data属性*/
         console.log($("#tpname").val());
         console.log($("#tpbeizhu").val());
-        // var tpid=-1;
-        $.ajax({
-            async: false,
-            cache: false,
-            type: 'POST',
-            url: 'addtestpaper',
-            dataType: "json",
-            data: {
-                tpname: $("#tpname").val(),
-                tpbeizhu: $("#tpbeizhu").val(),
-                tptype: $("input[name='tptype']:checked").val(),
-                tpwritemessage: jsonStr,
-                tpstarttime: $("#tpstarttime").val(),
-                tpendtime: $("#tpendtime").val(),
-                tpdatitime: $("#tpdatitime").val(),
-                tpfabu:"未发布",
-                // tpid:tpid
-            },
-            success: function (data) {
-                console.log(data);
-                localStorage.setItem("kaoshitpid",data);
-            }
-        });
+        var flags=1;
+        var timer1=$("#tpstarttime").val().trim();
+        var timer2=$("#tpendtime").val().trim();
+        var tpdatitime=$("#tpdatitime").val().trim();
+        var tpname=$("#tpname").val().trim();
+        if (tpname == null || timer1 ==" ") {
+            confirm("请输入考试名称！")
+            flags = 0;
+        }
+        if (timer1 == null || timer1 ==" ") {
+            confirm("请输入考试开始时间！")
+            flags = 0;
+        }
+        if (timer2 == null || timer2=="") {
+            confirm("请输入考试结束时间！")
+            flags = 0;
+        }
+        if (timer1 > timer2) {
+            confirm("考试开始时间必须考试结束时间！");
+            flags = 0;
+        }
+        console.log(tpdatitime);
+        console.log("tpdatitime:"+isNaN(tpdatitime));
+        if (tpdatitime==" "||tpdatitime==null){
+            confirm("请输入答题时长！")
+            flags = 0;
+        }
+       /* if (isNaN(tpdatitime)){
+            confirm("您输入的答题时长有误，请重新输入！")
+            flags = 0;
+        }*/
+        if (flags==1){
+            $.ajax({
+                async: false,
+                cache: false,
+                type: 'POST',
+                url: 'addtestpaper',
+                dataType: "json",
+                data: {
+                    tpname: $("#tpname").val(),
+                    tpbeizhu: $("#tpbeizhu").val(),
+                    tptype: $("input[name='tptype']:checked").val(),
+                    tpwritemessage: jsonStr,
+                    tpstarttime: $("#tpstarttime").val(),
+                    tpendtime: $("#tpendtime").val(),
+                    tpdatitime: $("#tpdatitime").val(),
+                    tpfabu:"未发布",
+                },
+                success: function (data) {
+                    console.log(data);
+                    localStorage.setItem("kaoshitpid",data);
+                }
+            });
+            $("#informationli").removeClass("layui-this");
+            $("#informationdiv").removeClass("layui-show");
+            $("#designdiv").addClass("layui-show");
+            $("#designli").addClass("layui-this");
+        }
     });
     // 点击完成设计去发布考试跳到发布试卷
     $("#toissue").click(function () {

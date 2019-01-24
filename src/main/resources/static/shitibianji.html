@@ -125,13 +125,26 @@
         </table>
         <!--程序题-->
         <table  class="layui-table"  v-if="type=='程序题'">
-            <tr >
+            <tr>
                 <td>正确答案</td>
                 <td>
-                    参考答案
+                    参考答案啊啊啊
                 </td>
                 <td>
-                    <textarea style="width: 450px;height: 80px;resize: none" id="chengxuti" v-model="wendatidaan"></textarea>
+                    <div class="test_content_nr_main">
+                        <ul class="optionss">
+                            <li>
+                                <form>
+                                </form>
+                                <form enctype="multipart/form-data">
+                                    <input type="text" name="tpname" style="display: none;">
+                                    <input type="file" name="fileName" style="width: 200px !important;"/>
+                                    <button  type="button" :onclick="['dd(this)']">上传文件</button>
+                                    <span>原文件:{{cxtdaan}}</span>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -150,6 +163,8 @@
 <script>
     var zifu=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     var data={list:[],anlist:[],tklist:[]}
+    var cxtanswer=""
+    var cxtdaan=localStorage.getItem("bianjioneqbanswer")
     var vueapp=new Vue({
         el:"#app",
         data:{
@@ -275,8 +290,8 @@
                             qboutline:$("#qboutline").val(),
                             qbtype:$("#qbtype").val(),
                             qbtext:$("#qbtext").val(),
-                            qboptions:"请填写答案",
-                            qbanswer:$("#chengxuti").val(),
+                            qboptions:"文件上传",
+                            qbanswer:cxtanswer,
                             qbdifficulty:$("#qbdifficulty").val(),
                             qbcreatetime:localStorage.getItem("bianjioneqbcreatetime")
                         }, function (data) {
@@ -355,6 +370,23 @@
     }
     if(strtype=="判断题"){
         vueapp.panduanti=localStorage.getItem("bianjioneqbanswer");
+    }
+    function dd(obj){
+        $.ajax({
+            url: '/cxtfileUpload',
+            type: 'POST',
+            cache: false,
+            data: new FormData(obj.parentNode),
+            processData: false,
+            contentType: false,
+            success:function (data) {
+                obj.parentNode.getElementsByTagName("span")[0].innerHTML=data;
+                if(data!="false"){
+                    cxtanswer=data;
+                }
+            }
+        }).done(function(res) {
+        }).fail(function(res) {});
     }
 </script>
 </html>

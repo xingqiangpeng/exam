@@ -79,7 +79,7 @@
                         </tr>
                         <tr>
                             <td>{{item.stpanswer}}</td>
-                            <td>{{item.qboptions}}</td>
+                            <td>{{item.qbanswer}}</td>
                         </tr>
                     </table>
                 </div>
@@ -164,17 +164,22 @@
         }
     });
     if(type=='安排考试'){
+        var sname=localStorage.getItem("sname");
         $.post("../findbynames2.do", {snumber: pjnumber, id: pjshiid}, function (data) {
             data.forEach(item => item.stpscore = "");
             vue.data = data;
-            console.log(data)
+            console.log("fdfdf222")
+            console.log(data);
         });
     }else{
+        var sname=localStorage.getItem("sname");
         $.post("../findbynames.do", {name: sname, id: pjshiid}, function (data) {
             data.forEach(item => item.stpscore = "");
             vue.data = data;
+            console.log("fdfdf1111")
             console.log(data)
         });
     }
+
 </script>
 </html>

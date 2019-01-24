@@ -1,12 +1,18 @@
 package com.four.exam.web;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.four.exam.entity.Questionbank;
 import com.four.exam.repository.QuestionbankRepository;
+import com.four.exam.utils.BeanMapUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class TikuController {
@@ -77,5 +83,15 @@ public class TikuController {
     @RequestMapping("tikufindine.do")
     public Object tikuFindOne(Integer qbid){
         return questionbankRepository.findById(qbid);
+    }
+
+    @RequestMapping("saveallquestionbank.do")
+    public void saveAllQuestionBank(String allstu) throws Exception {
+        List<Map<String, Object>> listMap = JSON.parseObject(allstu, new TypeReference<List<Map<String,Object>>>(){});
+        for (int i = 0; i < listMap.size(); i++) {
+            Questionbank qb=(Questionbank) BeanMapUtils.mapToBean(listMap.get(i), Questionbank.class);
+            qb.setQbcreatetime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            questionbankRepository.save(qb);
+        }
     }
 }
