@@ -1,9 +1,6 @@
 package com.four.exam.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -21,7 +18,7 @@ public class Questionbank {
     private String b3;
 
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "qbid")
     public int getQbid() {
         return qbid;

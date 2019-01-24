@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface QuestionbankRepository extends JpaRepository<Questionbank,Integer> {
     List<Questionbank> findAllByQboutlineContains(String str);
+    List<Questionbank> findAllByQbtextIsLikeAndQbtypeIsLikeAndQbcreatetimeBetween(String qbtext,String qbtype,String starttime,String endtime);
 }

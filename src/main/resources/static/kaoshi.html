@@ -30,6 +30,12 @@
 				width: 1100px;
 				margin: auto;
 			}
+			.redfont{
+				color: red;
+				font-weight: bold;
+				font-style:oblique;
+				font-size: 17px
+			}
 		</style>
 	</head>
 
@@ -157,50 +163,53 @@
 					</div>
 					</div>
 				</div>
+				<!--设计试卷-->
 				<div class="layui-tab-item">
 					<div id="app1">
 						<div>
 							<button v-on:click="chuangjian" class="layui-btn layui-btn-normal">创建试题大题</button>
-							<span>共{{subjectmain.length}}道大题，共20分</span>
+							<span>共<label class="redfont">{{subjectmain.length}}</label>道大题，共<label class="redfont">{{scores}}</label>分</span>
 						</div>
 						<div>
 							<table class="layui-table" v-for="item,index in subjectmain">
 								<tr>
-									<th>第{{item.titl}}大题（{{item.main.length}}道试题，共9分）</th>
+									<th>第<label class="redfont">{{item.titl}}</label>大题（<label class="redfont">{{item.main.length}}</label>道试题，共<label class="redfont">{{item.allscore}}</label>分）</th>
 									<th>
 										<select v-model="item.type">
 											<option value="单选题">单选题</option>
 											<option value="多选题">多选题</option>
-											<option value="选择题">选择题</option>
+											<option value="判断题">判断题</option>
 											<option value="填空题">填空题</option>
-											<option value="简答题">简答题</option>
+											<option value="问答题">问答题</option>
 											<option value="程序题">程序题</option>
 										</select>
 									</th>
 									<th>
-										<button class="layui-btn layui-btn-radius layui-btn-primary">从题库选择</button>
+										<button class="layui-btn layui-btn-radius layui-btn-primary" v-on:click="ctqxz(index)">从题库选择</button>
 										<button class="layui-btn layui-btn-radius layui-btn-primary">新增试题</button>
 									</th>
 									<th>
 										<button class="layui-btn layui-btn-radius layui-btn-primary">快速新增</button>
 										<button class="layui-btn layui-btn-radius layui-btn-primary">导入试题</button>
 									</th>
-									<th>
-										<button v-on:click="shanchu(index)" class="layui-btn layui-btn-radius layui-btn-danger">删除大题</button></th>
+									<th><button v-on:click="shanchu(index)" class="layui-btn layui-btn-radius layui-btn-danger">删除大题</button></th>
+									<th></th>
 								</tr>
 								<tr>
 									<th>序号</th>
 									<th>试题类型</th>
 									<th>试题内容</th>
 									<th>标准答案</th>
-									<th  class="showbtn">分数<button>批量修改</button></th>
+									<th>分数</th>
+									<th>操作</th>
 								</tr>
 								<tr v-for="items,indexs in item.main">
 									<td>{{indexs+1}}</td>
-									<td>单选</td>
+									<td>{{item.type}}</td>
 									<td>{{items.tname}}</td>
-									<td>A</td>
-									<td><input type="text" value="3" /></td>
+									<td>{{items.answer}}</td>
+									<td><input type="text" v-bind:value="subjectmain[index].main[indexs].fenshu" v-model="subjectmain[index].main[indexs].fenshu" @blur="changefenshu(index,indexs,subjectmain[index].main[indexs].fenshu)"/></td>
+									<td><button class="layui-btn layui-btn-warm">查看</button><button class="layui-btn layui-btn-danger" v-on:click="deleteonetq(index,indexs)">删除</button></td>
 								</tr>
 							</table>
 						</div>
@@ -228,17 +237,27 @@
 		</div>
 	</body>
 	<script>
+		//获取到新增题目的题库编号
+		localStorage.setItem("kaoshiqbid",30);
+		//获取到当前试卷的编号
+		localStorage.setItem("kaoshitpid",5);
 		//显示四中方式的
 		var dateshow=[false,true,true];
 		//题目的显示
-		var subjectmain=[{titl:"1",type:"单选题",main:[{tname:"javam面向对象的特点",titllist:["A：继承","B:ff","C:fffdd","D:fffsdf"],fenshu:3},{tname:"javam面向对象的特点",titllist:["A：继承","B:ff","C:fffdd","D:fffsdf"],fenshu:3}]},
-		{titl:"2",type:"单选题",main:[{tname:"javam面向对象的特点",titllist:["A：继承","B:ff","C:fffdd","D:fffsdf"]}]}
-						]
+		var subjectmain=[{
+		    titl:"",
+			type:"",
+			numbers:-1,
+			allscore:0,
+			main:[]
+		}]
+		var dataobj={tqid:"",tpid:"",tqbigtitile:"",tqnum:"",qbid:"",tqscore:""}
 		var vueapps=new Vue({
 			el:"#apps",
 			data:{
 				dateshow:dateshow,
-				subjectmain:subjectmain
+				subjectmain:subjectmain,
+                scores:0
 			},
 			methods:{
 				kaoshimethod:function(str){
@@ -253,16 +272,164 @@
 				//创建大题
 				chuangjian:function(){
 					var i=this.subjectmain.length+1;
-					var obj={titl:i,type:"单选题",main:[]}
+					var obj={titl:i,type:"",numbers:-1,allscore:0,main:[]}
 					this.subjectmain.push(obj)
 				},
 				//删除大题
 				shanchu:function(k){
-					this.subjectmain.splice(k,1);
-					for(var j=0;j<this.subjectmain.length;j++){
-						this.subjectmain[j].titl=j+1;
+				    if(confirm("确定要删除大题吗？")){
+                        //获取到要删除的大题编号
+                        tqbigtitlel=subjectmain[k].titl;
+                        //页面中删除大题
+                        this.subjectmain.splice(k,1);
+                        for(var j=0;j<this.subjectmain.length;j++){
+                            this.subjectmain[j].titl=j+1;
+                        }
+                        //所有的题目序号改变
+                        var indexss=0;
+                        for (var i = 0; i < vueapps.subjectmain.length; i++) {
+                            for (var j = 0; j < vueapps.subjectmain[i].main.length; j++) {
+                                indexss+=1;
+                                vueapps.subjectmain[i].main[j].numberss=indexss;
+                            }
+                        }
+                        //数据库中删除大题
+                        /*将需要修改的题目对应的tqid和tqnum放入数组*/
+                        var tqids="";
+                        var tqnums="";
+                        var tqbigtitles=""
+                        for (var i = 0; i < vueapps.subjectmain.length; i++) {//对大题进行循环
+                            for (var j = 0; j < vueapps.subjectmain[i].main.length; j++) {//对内部进行循环
+                                tqids+=vueapps.subjectmain[i].main[j].tqid+",";
+                                tqbigtitles+=vueapps.subjectmain[i].titl+",";
+                                tqnums+=vueapps.subjectmain[i].main[j].numberss+",";
+                            }
+                        }
+                        /*数据处理完毕之后，传入指定的参数*/
+                        $.post("testpaperdeletebig.do",{
+                            tpid:localStorage.getItem("kaoshitpid"),
+                            tqbigtitle:tqbigtitlel,
+                            tqids:tqids,
+                            tqbigtitles:tqbigtitles,
+                            tqnums:tqnums
+                        },function(data){
+                            alert(data);
+                        })
 					}
-				}
+				},
+				//删除题目
+                deleteonetq:function(i,j){
+				    if(confirm("确定要删除吗？")){
+                        //获取到对应的数据
+                        //获取到对应的tqid
+                        var tqid=subjectmain[i].main[j].tqid;
+                        //页面中删除小题
+                        subjectmain[i].main.splice(j,1)
+                        subjectmain[i].numbers-=1;
+                        //所有的题目序号改变
+                        var indexss=0;
+                        for (var i = 0; i < vueapps.subjectmain.length; i++) {
+                            for (var j = 0; j < vueapps.subjectmain[i].main.length; j++) {
+                                indexss+=1;
+                                vueapps.subjectmain[i].main[j].numberss=indexss;
+                            }
+                        }
+                        //数据库中删除小题
+                        /*将需要修改的题目对应的tqid和tqnum放入数组*/
+                        var tqids="";
+                        var tqnums="";
+                        for (var i = 0; i < vueapps.subjectmain.length; i++) {//对大题进行循环
+                            for (var j = 0; j < vueapps.subjectmain[i].main.length; j++) {//对内部进行循环
+                                tqids+=vueapps.subjectmain[i].main[j].tqid+",";
+                                tqnums+=vueapps.subjectmain[i].main[j].numberss+",";
+                            }
+                        }
+                        /*数据处理完毕之后，传入指定的参数*/
+                        $.post("testpaperdelete.do",{
+                            tqid:tqid,
+                            tqids:tqids,
+                            tqnums:tqnums
+                        },function(data){
+                            alert(data);
+                        })
+					}
+				},
+				//分数的改变
+                changefenshu:function(i,j,x){
+				    //页面中显示的分数的修改
+				    vueapps.scores=0;
+				    var tqscore=parseFloat(x);
+                    subjectmain[i].main[j].fenshu=parseFloat(x);
+                    var tqid=subjectmain[i].main[j].tqid;
+                    for (var k = 0; k < subjectmain.length; k++) {
+                        subjectmain[k].allscore=0;
+                    }
+                    for (var i = 0; i < subjectmain.length; i++) {
+                        for (var j = 0; j < subjectmain[i].main.length; j++) {
+                            subjectmain[i].allscore+=subjectmain[i].main[j].fenshu;
+                        }
+                        vueapps.scores+=subjectmain[i].allscore;
+                    }
+					//数据库中对应的分数修改
+                    $.post("changescore.do",{
+                        tqid:tqid,//获取到当前分数对应的tqid
+                        tqscore:tqscore//修改后的分数
+                    },function(data){
+                        if(data!=null)
+                            console.log("分数修改成功");
+                    })
+				},
+				//从题库选择
+				ctqxz:function (index) {//index大题所对应的下标
+                    $.post("tikufindine.do", {
+                        qbid:localStorage.getItem("kaoshiqbid")
+                    }, function (data) {
+                        var maindata={tname:"",titllist:"",answer:"",fenshu:2,tqid:0};//往页面自带的对象中放数据
+                        maindata.tname=data.qbtext;
+                        maindata.titllist=data.qboptions;
+                        maindata.answer=data.qbanswer;
+                        subjectmain[index].allscore+=maindata.fenshu;
+                        vueapps.scores+=maindata.fenshu;
+                        subjectmain[index].main.push(maindata);
+                        subjectmain[index].numbers+=1;//成功后numbers加1
+						subjectmain[index].type=data.qbtype;
+                        var indexss=0;
+                        for (var i = 0; i < vueapps.subjectmain.length; i++) {
+                            for (var j = 0; j < vueapps.subjectmain[i].main.length; j++) {
+                                indexss+=1;
+                                vueapps.subjectmain[i].main[j].numberss=indexss;
+                            }
+                        }
+                        dataobj.tpid=localStorage.getItem("kaoshitpid");//哪张试卷
+                        dataobj.tqbigtitile=subjectmain[index].titl;//第几大题
+                        dataobj.tqnum=subjectmain[index].main[subjectmain[index].numbers].numberss;//题目序号
+                        dataobj.qbid=localStorage.getItem("kaoshiqbid");//所属题库题目的id
+                        dataobj.tqscore=subjectmain[index].main[subjectmain[index].numbers].fenshu;//该题对应大题的小题分数
+						/*将需要修改的题目对应的tqid和tqnum放入数组*/
+						var tqids="";
+						var tqnums="";
+                        for (var i = 0; i < vueapps.subjectmain.length; i++) {//对大题进行循环
+                            for (var j = 0; j < vueapps.subjectmain[i].main.length; j++) {//对内部进行循环
+								tqids+=vueapps.subjectmain[i].main[j].tqid+",";
+								tqnums+=vueapps.subjectmain[i].main[j].numberss+",";
+                            }
+                        }
+						/*数据处理完毕之后，往数据库中插入数据*/
+                        $.post("testpaperinsert.do",{
+                            tpid:dataobj.tpid,
+                            tqbigtitile:dataobj.tqbigtitile,
+                            tqnum:dataobj.tqnum,
+                            qbid:dataobj.qbid,
+                            tqscore:dataobj.tqscore,
+							tqids:tqids,
+                            tqnums:tqnums
+                        },function(data){
+                            dataobj.tqid=data;
+                            subjectmain[index].main[subjectmain[index].numbers].tqid=data;
+                        })
+                    })//post请求结束
+
+                }
 			}
 		})
 		//注意：选项卡 依赖 element 模块，否则无法进行功能性操作
@@ -285,7 +452,46 @@
 			console.log("fdf")
 			layer.close(layer.index);
 		})
-	</script>
+		//页面加载时从数据库读取数据
+        $.post("kaoshi1.do", {
+            tpid:localStorage.getItem("kaoshitpid")
+        }, function (data) {
+            var tqtitle=0;//记录大题,默认第一个大题
+            subjectmain[tqtitle].titl=1;
+            for (var i = 0; i < data.length; i++) {
+                var maindata={tname:"",titllist:"",answer:"",fenshu:0,tqid:0};
+                maindata.tname=data[i].qbtext;
+                maindata.titllist=data[i].qboptions;
+                maindata.answer=data[i].qbanswer;
+                maindata.fenshu=data[i].tqscore;
+                maindata.tqid=data[i].tqid;
+                if(i==0){//如果是第一大题，我往里面新增一个
+                    subjectmain[tqtitle].titl=data[i].tqbigtitle;
+                    subjectmain[tqtitle].type=data[i].qbtype;
+                    subjectmain[tqtitle].main.push(maindata);
+                    subjectmain[tqtitle].numbers+=1;
+                }else if(data[i].tqbigtitle==data[i-1].tqbigtitle){
+                    subjectmain[tqtitle].titl=data[i].tqbigtitle;
+                    subjectmain[tqtitle].type=data[i].qbtype;
+                    subjectmain[tqtitle].main.push(maindata);
+                    subjectmain[tqtitle].numbers+=1;
+				}else{
+                    tqtitle+=1;
+                    var subjectdata={titl:"",type:"", numbers:-1, allscore:0,main:[]};
+                    subjectdata.titl=data[i].tqbigtitle;
+					subjectdata.type=data[i].qbtype;
+                    subjectmain.push(subjectdata);
+                    subjectmain[tqtitle].main.push(maindata);
+                    subjectmain[tqtitle].numbers+=1;
+				}
+            }
+            for (var i = 0; i < subjectmain.length; i++) {
+                for (var j = 0; j < subjectmain[i].main.length; j++) {
+                    subjectmain[i].allscore+=subjectmain[i].main[j].fenshu;
+                }
+                vueapps.scores+=subjectmain[i].allscore;
+            }
+        })
 	</script>
 
 </html>

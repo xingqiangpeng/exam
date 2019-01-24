@@ -6,19 +6,18 @@
     <title></title>
 
     <link rel="stylesheet" type="text/css" href="js/layui/css/layui.css"/>
-    <script src="js/layui/layui.js"></script>
     <script src="js/vue/vue.min.js"></script>
     <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
     <style>
         #navul {
             float: left;
         }
-
         #center {
             float: left;
             width: 70%;
         }
     </style>
+    <script src="js/layui/layui.all.js"></script>
 </head>
 
 <body>
@@ -44,9 +43,8 @@
                 <td>试题题库管理</td>
                 <td>
                     <button class="layui-btn layui-btn-primary" id="chaxun">查询</button>
-                    <button class="layui-btn layui-btn-primary" v-on:click="bianji(index)">新增试题</button>
-                    <button class="layui-btn layui-btn-primary">快速新增</button>
-                    <button class="layui-btn layui-btn-primary">导入试题</button>
+                    <button class="layui-btn layui-btn-primary" v-on:click="addnew()">新增试题</button>
+                    <button class="layui-btn layui-btn-primary" v-on:click="href()">批量插入</button>
                     <button class="layui-btn layui-btn-primary">导出</button>
                     <button class="layui-btn layui-btn-primary" v-on:click="deleteall">批量删除</button>
                 </td>
@@ -55,16 +53,18 @@
         <table class="layui-table" id="chaxuns" style="display: none;">
             <tr>
                 <td>题目关键词</td>
-                <td><input type="text"/></td>
+                <td><input type="text" id="chaxunkey"/></td>
 
                 <td>题目类型</td>
                 <td>
                     <select id="cxtype">
+                        <option value="全部">全部</option>
                         <option value="单选题">单选题</option>
                         <option value="多选题">多选题</option>
                         <option value="判断题">判断题</option>
                         <option value="填空题">填空题</option>
                         <option value="问答题">问答题</option>
+                        <option value="程序题">程序题</option>
                     </select>
                 </td>
 
@@ -75,21 +75,21 @@
                 </td>
 
                 <td>
-                    <button class="layui-btn layui-btn-primary">查询</button>
-                    <button class="layui-btn layui-btn-primary">重置</button>
+                    <button class="layui-btn layui-btn-primary" v-on:click="chaxunin">查询</button>
+                    <button class="layui-btn layui-btn-primary" v-on:click="chongzhi">重置</button>
                 </td>
             </tr>
         </table>
         <table class="layui-table">
             <tr>
-                <th><input type="checkbox" v-model="selectall" v-on:click="checkall"/>全选</th>
-                <th>试题分类</th>
-                <th>题型</th>
-                <th>试题内容</th>
-                <th>标准答案</th>
-                <th>试题难度</th>
-                <th>创建时间</th>
-                <th>操作</th>
+                <th style="width: 90px"><input type="checkbox" v-model="selectall" v-on:click="checkall"/>全选</th>
+                <th style="width: 108px">试题分类</th>
+                <th style="width: 90px">题型</th>
+                <th style="width: 395px">试题内容</th>
+                <th style="width: 180px">标准答案</th>
+                <th style="width: 105px">试题难度</th>
+                <th style="width: 195px">创建时间</th>
+                <th style="width: 210px">操作</th>
             </tr>
             <tr v-for="item,index in pseons">
                 <td><input name="test" type="checkbox" v-model="item.check"/></td>
@@ -142,12 +142,32 @@
                     this.pseons.forEach(item => item.check = true);
                 }
             },
-            //编辑
-            bianji: function (i) {
-                vueshow.bainjishows = this.pseons[i];
-                console.log(this.pseons[i])
+            //批量插入跳转页面
+            href:function() {
+                window.location.href="shiticharu.html";
+            },
+            //新增试题
+            addnew: function () {
                 layer.open({
-                    title: '试题新增/编辑',
+                    title: '试题新增',
+                    maxmin: true,
+                    type: 2,
+                    content: 'shitixinzeng.html',
+                    area: ['1000px', '500px']
+                });
+            },
+            //编辑试题
+            bianji:function(i){
+                localStorage.setItem("bianjioneqbcreatetime", vueapp.pseons[i].qbcreatetime);
+                localStorage.setItem("bianjioneqbid", vueapp.pseons[i].qbid);
+                localStorage.setItem("bianjioneqboutline", vueapp.pseons[i].qboutline);
+                localStorage.setItem("bianjioneqbtype", vueapp.pseons[i].qbtype);
+                localStorage.setItem("bianjioneqbtext", vueapp.pseons[i].qbtext);
+                localStorage.setItem("bianjioneqboptions", vueapp.pseons[i].qboptions);
+                localStorage.setItem("bianjioneqbanswer", vueapp.pseons[i].qbanswer);
+                localStorage.setItem("bianjioneqbdifficulty", vueapp.pseons[i].qbdifficulty);
+                layer.open({
+                    title: '试题编辑',
                     maxmin: true,
                     type: 2,
                     content: 'shitibianji.html',
@@ -200,6 +220,26 @@
                         }
                     });
                 }
+            },
+            //查询功能
+            chaxunin:function () {
+                $.post("tikuchaxun.do",{
+                    qbtext:$("#chaxunkey").val(),
+                    qbtype:$("#cxtype").val(),
+                    starttime:$("#test1").val(),
+                    endtime:$("#test2").val()
+                },function(data){
+                    pseon = data;
+                    pseon.forEach(item => item.check = false);
+                    vueapp.pseons = pseon;
+                })
+            },
+            //重置
+            chongzhi:function(){
+                $("#chaxunkey").val("")
+                $("#cxtype").val("全部")
+                $("#test1").val("")
+                $("#test2").val("")
             }
         },
         watch: {
@@ -218,7 +258,6 @@
             }
         }
     });
-
     $.post("tiku.do", {}, function (data) {
         pseon = data;
         pseon.forEach(item => item.check = false);
@@ -281,6 +320,10 @@
         laydate = layui.laydate;
         laydate.render({
             elem: "#test1" //指定元素
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: "#test2" //指定元素
             ,type: 'datetime'
         });
     });

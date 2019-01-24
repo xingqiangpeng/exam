@@ -128,4 +128,19 @@ public class Testquestions {
     public int hashCode() {
         return Objects.hash(tqid, tpid, tqbigtitle, tqnum, qbid, tqscore, b1, b2, b3);
     }
+
+    @Override
+    public String toString() {
+        return "Testquestions{" +
+                "tqid=" + tqid +
+                ", tpid=" + tpid +
+                ", tqbigtitle='" + tqbigtitle + '\'' +
+                ", tqnum=" + tqnum +
+                ", qbid=" + qbid +
+                ", tqscore=" + tqscore +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
+    }
 }
