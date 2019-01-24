@@ -270,7 +270,7 @@
                 <p>1.将二维码发给考试</p>
                 <div id="qrid"></div>
                 <p>2.复制连接发给考生，打开连接参加考试</p>
-                <input type="text" id="kaoshenghttp"/>
+                <input type="text" id="kaoshenghttp" width="100" height="20"/>
             </div>
         </div>
     </div>
@@ -281,39 +281,38 @@
     <button id="guanbi">确定</button>
 </div>
 </body>
-<script>
-    //获取到当前试卷的编号******
-    localStorage.setItem("kaoshitpid",5);
-    localStorage.setItem("kaoshiqbid",-1);
-    $(function() {
-        var qrstr = "https://www.baidu.com/";
-        $('#qrid').qrcode({width: 280,height: 280,background:"#ffffff",text: qrstr});//指定二维码大小
-    });
-    // 添加表格行
-    function addrow() {
-        var tr = $("#tr");                                 //tr是你要克隆的表格行的id
-        var newtr = tr.clone();                            //克隆tr行
-        newtr.find(":input").each(function (i) {      //循环新克隆的newtr，在里边找到所有的input标签，
-            $(this).val("");                                    //给该标签的value赋值为空
-        });
-        var length = $("#table tr").length - 2; //获取id="table"表格中的行数,如果表格中有th择需要-1
-        var tab = $("#table tr:eq(" + length + ")");  //获取最后一行的位置
-        tab.after(newtr);                   //在id="tr"的表格行tr后插入克隆行newtr
-    }
+        <script>
+            //获取到当前试卷的编号******
+            $(function() {
+                var qrstr = "http://localhost:9999/kaoshi.html?id="+localStorage.getItem("kaoshitpid");
+                $('#qrid').qrcode({width: 280,height: 280,background:"#ffffff",text: qrstr});//指定二维码大小
+            });
 
-    // 删除表格行
-    function deleterow(node) {
-        console.log(node.parentNode.parentNode.rowIndex);
-        var length = node.parentNode.parentNode.rowIndex; //获取id="table"表格中的行数,如果表格中有th择需要-1
-        var tab = $("#table tr:eq(" + length + ")");  //获取指定的tr标签位置
-        if (length > 2) {
-            tab.remove();  //删除指定的tr标签
+        // 添加表格行
+        function addrow() {
+            var tr = $("#tr");                                 //tr是你要克隆的表格行的id
+            var newtr = tr.clone();                            //克隆tr行
+            newtr.find(":input").each(function (i) {      //循环新克隆的newtr，在里边找到所有的input标签，
+                $(this).val("");                                    //给该标签的value赋值为空
+            });
+            var length = $("#table tr").length - 2; //获取id="table"表格中的行数,如果表格中有th择需要-1
+            var tab = $("#table tr:eq(" + length + ")");  //获取最后一行的位置
+            tab.after(newtr);                   //在id="tr"的表格行tr后插入克隆行newtr
         }
-    }
 
-</script>
+        // 删除表格行
+        function deleterow(node) {
+            console.log(node.parentNode.parentNode.rowIndex);
+            var length = node.parentNode.parentNode.rowIndex; //获取id="table"表格中的行数,如果表格中有th择需要-1
+            var tab = $("#table tr:eq(" + length + ")");  //获取指定的tr标签位置
+            if (length > 2) {
+                tab.remove();  //删除指定的tr标签
+            }
+        }
+
+    </script>
 <script>
-    var statue=false;
+var statue=false;
     //显示四中方式的
     var dateshow = [false, true, true];
     //题目的显示
@@ -385,7 +384,8 @@
                         tqbigtitle:tqbigtitlel,
                         tqids:tqids,
                         tqbigtitles:tqbigtitles,
-                        tqnums:tqnums
+                        tqnums:tqnums,
+                        async:false
                     },function(data){
                         alert(data);
                     })
@@ -422,7 +422,8 @@
                     $.post("testpaperdelete.do",{
                         tqid:tqid,
                         tqids:tqids,
-                        tqnums:tqnums
+                        tqnums:tqnums,
+                        async:false
                     },function(data){
                         alert(data);
                     })
@@ -432,6 +433,37 @@
             chakanshiti:function(i,j){
                 var qbid=vueapps.subjectmain[i].main[j].qbid;
                 console.log(qbid);
+
+                $.ajax({
+                    url: 'chakanshiti.do',
+                    type: 'POST',
+                    dataType: "json",
+                    traditional:true,
+                    async: false,
+                    data: {
+                        qbid: qbid
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        localStorage.setItem("bianjioneqbcreatetime", data.qbcreatetime);
+                        localStorage.setItem("bianjioneqbid", data.qbid);
+                        localStorage.setItem("bianjioneqboutline", data.qboutline);
+                        localStorage.setItem("bianjioneqbtype", data.qbtype);
+                        localStorage.setItem("bianjioneqbtext", data.qbtext);
+                        localStorage.setItem("bianjioneqboptions", data.qboptions);
+                        localStorage.setItem("bianjioneqbanswer", data.qbanswer);
+                        localStorage.setItem("bianjioneqbdifficulty", data.qbdifficulty);
+                        layer.open({
+                            title: '试题详情',
+                            maxmin: true,
+                            type: 2,
+                            content: 'itemdetails.html',
+                            area: ['60%', '60%']
+                        });
+                    },
+                    error: function (data) {
+                    }
+                });
             },
             //分数的改变
             changefenshu:function(i,j,x){
@@ -452,7 +484,8 @@
                 //数据库中对应的分数修改
                 $.post("changescore.do",{
                     tqid:tqid,//获取到当前分数对应的tqid
-                    tqscore:tqscore//修改后的分数
+                    tqscore:tqscore,//修改后的分数
+                    async:false
                 },function(data){
                     if(data!=null)
                         console.log("分数修改成功");
@@ -502,56 +535,67 @@
             },
             //从题库选择
             singlequestions: function (index) {
-                    layer.open({
-                        title: '题库',
-                        maxmin: true,
-                        type: 2,
-                        content: 'singlequestions.html',
-                        // btn:['选择','关闭'],
-                        area: ['90%', '85%'],
-                        btn: ['选择', '选择并关闭', '取消'],
-                        yes: function (layero, index) {
-                            var newpsw = window[index.find('iframe')[0]['name']];
-                            //singlequestions.html界面的函数
-                            // newpsw.select();
-                            var arr=newpsw.selectquestion();
-                            if(arr.length==0){
-                                localStorage.setItem("kaoshiqbid",-1);
-                            }else
-                                localStorage.setItem("kaoshiqbid",parseInt(arr[0]));
-                            statue=true;
-                            console.log(arr);
-                        },
-                        btn2: function (layero, index) {
-                            var newpsw = window[index.find('iframe')[0]['name']];
-                            //singlequestions.html界面的函数
-                            var arr=newpsw.selectquestion();
-                            if(arr.length==0){
-                                localStorage.setItem("kaoshiqbid",-1);
-                            }else
-                                localStorage.setItem("kaoshiqbid",parseInt(arr[0]));
-                            statue=true;
-                            console.log(arr);
-                            var index = parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index);
-                        },
-                        btn3: function () {
-                            var index = parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index);
-                        },
-                        success: function (layero) {
-                            layero.find('.layui-layer-btn').css('text-align', 'center')
-                        },end:function(){
-                            /*************liujianghui*******************/
-                            if(statue&&localStorage.getItem("kaoshiqbid")!=-1){
+                layer.open({
+                    title: '题库',
+                    maxmin: true,
+                    type: 2,
+                    content: 'singlequestions.html',
+                    // btn:['选择','关闭'],
+                    area: ['90%', '85%'],
+                    btn: ['选择', '选择并关闭', '关闭'],
+                    arr:"",
+                    yes: function (layero, index) {
+                        var newpsw = window[index.find('iframe')[0]['name']];
+                        //singlequestions.html界面的函数
+                        // newpsw.select();
+                        arr=newpsw.selectquestion();
+                        /*if(arr.length==0){
+                            localStorage.setItem("kaoshiqbid",-1);
+                        }else
+                            localStorage.setItem("kaoshiqbid",parseInt(arr[0]));
+                        statue=true;
+                        console.log(arr);
+                        return arr;*/
+                    },
+                    btn2: function (layero, index) {
+                        var newpsw = window[index.find('iframe')[0]['name']];
+                        //singlequestions.html界面的函数
+                        arr=newpsw.selectquestion();
+                        /*if(arr.length==0){
+                            localStorage.setItem("kaoshiqbid",-1);
+                        }else
+                            localStorage.setItem("kaoshiqbid",parseInt(arr[0]));
+                        statue=true;
+                        console.log(arr);*/
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        // return arr;
+                    },
+                    btn3: function () {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    },
+                    success: function (layero) {
+                        layero.find('.layui-layer-btn').css('text-align', 'center')
+                    },end:function(){
+                        /*************liujianghui*******************/
+                        console.log(arr);
+                        // if(statue&&localStorage.getItem("kaoshiqbid")!=-1){
+                        if (arr.length>0){
+                            console.log("++++++++++++"+arr);
+                            for (var i=0;i<arr.length;i++){
+                                var qbid=arr[i];
+                                console.log(qbid+"-------------------");
                                 $.post("tikufindine.do", {
-                                    qbid:localStorage.getItem("kaoshiqbid")
+                                    qbid:qbid,
+                                    async:false
                                 }, function (data) {
+                                    console.log(data.qbid);
                                     var maindata={tname:"",titllist:"",answer:"",fenshu:2,tqid:0,qbid:0};//往页面自带的对象中放数据
                                     maindata.tname=data.qbtext;
                                     maindata.titllist=data.qboptions;
                                     maindata.answer=data.qbanswer;
-                                    maindata.qbid=localStorage.getItem("kaoshiqbid");
+                                    maindata.qbid=data.qbid;
                                     subjectmain[index].allscore+=maindata.fenshu;
                                     vueapps.scores+=maindata.fenshu;
                                     subjectmain[index].main.push(maindata);
@@ -567,8 +611,9 @@
                                     dataobj.tpid=localStorage.getItem("kaoshitpid");//哪张试卷
                                     dataobj.tqbigtitile=subjectmain[index].titl;//第几大题
                                     dataobj.tqnum=subjectmain[index].main[subjectmain[index].numbers].numberss;//题目序号
-                                    dataobj.qbid=localStorage.getItem("kaoshiqbid");//所属题库题目的id
+                                    dataobj.qbid=data.qbid;//所属题库题目的id
                                     dataobj.tqscore=subjectmain[index].main[subjectmain[index].numbers].fenshu;//该题对应大题的小题分数
+                                    console.log(dataobj.qbid);
                                     /*将需要修改的题目对应的tqid和tqnum放入数组*/
                                     var tqids="";
                                     var tqnums="";
@@ -586,27 +631,71 @@
                                         qbid:dataobj.qbid,
                                         tqscore:dataobj.tqscore,
                                         tqids:tqids,
-                                        tqnums:tqnums
+                                        tqnums:tqnums,
+                                        async:false
                                     },function(data){
                                         dataobj.tqid=data;
                                         subjectmain[index].main[subjectmain[index].numbers].tqid=data;
                                     })
                                 })//post请求结束
-                                statue=false;
                             }
                         }
-                    });
-            },
-            /*// 指定部门
-            dept: function () {
-                layer.open({
-                    title: '选择部门',
-                    maxmin: true,
-                    type: 2,
-                    content: 'examinee.html',
-                    area: ['1500px', '800px']
+                        // 清空arr中的数据
+                        arr.length=0;
+                        /*if(statue&&localStorage.getItem("kaoshiqbid")!=-1){
+                            $.post("tikufindine.do", {
+                                qbid:localStorage.getItem("kaoshiqbid")
+                            }, function (data) {
+                                var maindata={tname:"",titllist:"",answer:"",fenshu:2,tqid:0,qbid:0};//往页面自带的对象中放数据
+                                maindata.tname=data.qbtext;
+                                maindata.titllist=data.qboptions;
+                                maindata.answer=data.qbanswer;
+                                maindata.qbid=localStorage.getItem("kaoshiqbid");
+                                subjectmain[index].allscore+=maindata.fenshu;
+                                vueapps.scores+=maindata.fenshu;
+                                subjectmain[index].main.push(maindata);
+                                subjectmain[index].numbers+=1;//成功后numbers加1
+                                subjectmain[index].type=data.qbtype;
+                                var indexss=0;
+                                for (var i = 0; i < vueapps.subjectmain.length; i++) {
+                                    for (var j = 0; j < vueapps.subjectmain[i].main.length; j++) {
+                                        indexss+=1;
+                                        vueapps.subjectmain[i].main[j].numberss=indexss;
+                                    }
+                                }
+                                dataobj.tpid=localStorage.getItem("kaoshitpid");//哪张试卷
+                                dataobj.tqbigtitile=subjectmain[index].titl;//第几大题
+                                dataobj.tqnum=subjectmain[index].main[subjectmain[index].numbers].numberss;//题目序号
+                                dataobj.qbid=localStorage.getItem("kaoshiqbid");//所属题库题目的id
+                                dataobj.tqscore=subjectmain[index].main[subjectmain[index].numbers].fenshu;//该题对应大题的小题分数
+                                /!*将需要修改的题目对应的tqid和tqnum放入数组*!/
+                                var tqids="";
+                                var tqnums="";
+                                for (var i = 0; i < vueapps.subjectmain.length; i++) {//对大题进行循环
+                                    for (var j = 0; j < vueapps.subjectmain[i].main.length; j++) {//对内部进行循环
+                                        tqids+=vueapps.subjectmain[i].main[j].tqid+",";
+                                        tqnums+=vueapps.subjectmain[i].main[j].numberss+",";
+                                    }
+                                }
+                                /!*数据处理完毕之后，往数据库中插入数据*!/
+                                $.post("testpaperinsert.do",{
+                                    tpid:dataobj.tpid,
+                                    tqbigtitile:dataobj.tqbigtitile,
+                                    tqnum:dataobj.tqnum,
+                                    qbid:dataobj.qbid,
+                                    tqscore:dataobj.tqscore,
+                                    tqids:tqids,
+                                    tqnums:tqnums
+                                },function(data){
+                                    dataobj.tqid=data;
+                                    subjectmain[index].main[subjectmain[index].numbers].tqid=data;
+                                })
+                            })//post请求结束
+                            // statue=false;
+                        }*/
+                    }
                 });
-            },*/
+            },
         }
     })
 
@@ -696,7 +785,7 @@
         /**重点：ajax的type,url,dataType,data属性*/
         console.log($("#tpname").val());
         console.log($("#tpbeizhu").val());
-        var tpid="";
+        // var tpid=-1;
         $.ajax({
             async: false,
             cache: false,
@@ -711,12 +800,12 @@
                 tpstarttime: $("#tpstarttime").val(),
                 tpendtime: $("#tpendtime").val(),
                 tpdatitime: $("#tpdatitime").val(),
-                tpfabu:"未发布"
+                tpfabu:"未发布",
                 // tpid:tpid
             },
             success: function (data) {
-                // console.log(data.tpid);
-                // tpid=data.tpid;
+                console.log(data);
+                localStorage.setItem("kaoshitpid",data);
             }
         });
     });
@@ -728,10 +817,11 @@
         $("#issueli").addClass("layui-this");
         var http=$("#tpname").val();
         if (http){
-            $('#kaoshenghttp').val('http://localhost:9999/kaoshi.html?id='+http);
+            $('#kaoshenghttp').val('http://localhost:9999/kaoshi.html?id='+localStorage.getItem("kaoshitpid"));
         }else{
             $('#kaoshenghttp').val('');
         }
+
     });
     // 点击返回上一步跳到考试信息
     $("#toinformation").click(function () {

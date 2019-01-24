@@ -1,6 +1,5 @@
 package com.four.exam.controller;
 
-import com.four.exam.entity.Questionbank;
 import com.four.exam.entity.Student;
 import com.four.exam.entity.Testpaper;
 import com.four.exam.entity.Testquestions;
@@ -8,19 +7,14 @@ import com.four.exam.repository.QuestionbankRepository;
 import com.four.exam.repository.StudentRepository;
 import com.four.exam.repository.TestpaperRepository;
 import com.four.exam.repository.TestquestionsRepository;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -43,9 +37,8 @@ public class KaoshiController {
      */
     @ResponseBody
     @RequestMapping(value = "addtestpaper", method = RequestMethod.POST)
-    public Object test1(int tpid,String tpname,String tpbeizhu,String tptype,String tpwritemessage,String tpstarttime,String tpendtime,int tpdatitime,String tpfabu){
+    public int test1(/*int tpid,*/String tpname,String tpbeizhu,String tptype,String tpwritemessage,String tpstarttime,String tpendtime,int tpdatitime,String tpfabu){
         System.out.println("asdasd");
-        String id=tpid+"";
         Testpaper testpaper=new Testpaper();
         testpaper.setTpname(tpname);
         testpaper.setTpbeizhu(tpbeizhu);
@@ -55,38 +48,46 @@ public class KaoshiController {
         testpaper.setTpenddate(tpendtime);
         testpaper.setTpdatitime(tpdatitime);
         testpaper.setTpfabu(tpfabu);
-        if (id==null){
-            System.out.println(testpaperRepository.save(testpaper));
-            return testpaperRepository.save(testpaper);
-        }else{
+//        如果通过tpname查找的集合长度不为0意味着数据库中存在该字段名相同的数据，我们只需对齐进行更新即可，否则新增
+        if (testpaperRepository.findAllByTpname(tpname).size()!=0){
+            int tpid=testpaperRepository.findAllByTpname(tpname).get(0).getTpid();
             testpaper.setTpid(tpid);
-            System.out.println(testpaper.toString());
-            return testpaperRepository.save(testpaper);
+            testpaperRepository.save(testpaper);
+            return tpid;
+        }else{
+            testpaperRepository.save(testpaper);
+            int tpid=testpaperRepository.findAllByTpname(tpname).get(0).getTpid();
+            System.out.println(tpid);
+            testpaper.setTpid(tpid);
+            return tpid;
         }
     }
 
     @RequestMapping("singlequestionsselectbyqbid.do")
     public void singlequestionsselectbyqbid(Integer[] ids){
-        System.out.println("我进来了");
-        System.out.println(ids.toString());
-//        System.out.println(questionbankRepository.findAllById(ids[i]));
         for (int i = 0; i < ids.length; i++) {
-//            Iterable<Integer> iterable;
             System.out.println(ids[i]);
             System.out.println(questionbankRepository.findById(ids[i]));
-//            System.out.println(questionbankRepository.findAll());
         }
     }
+
     @RequestMapping("examineeselectbysid.do")
     public void examineeselectbysid(Integer[] ids){
         List<Student> list=new ArrayList<Student>();
-        System.out.println("我进来了");
         System.out.println(ids.toString());
         for (int i = 0; i < ids.length; i++) {
             System.out.println(ids[i]);
-//            list.add(studentRepository.findById(ids[i]));
             System.out.println(studentRepository.findById(ids[i]));
         }
+    }
+
+    /**
+     * 查看从题库拿到的题目的试题内容
+     * @param qbid
+     */
+    @RequestMapping("chakanshiti.do")
+    public Object chakanshiti(int qbid){
+        return questionbankRepository.findById(qbid);
     }
 
     /**
