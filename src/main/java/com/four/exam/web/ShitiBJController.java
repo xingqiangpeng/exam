@@ -1,4 +1,4 @@
-package com.four.exam.controller;
+package com.four.exam.web;
 
 import com.four.exam.entity.Questionbank;
 import com.four.exam.repository.QuestionbankRepository;

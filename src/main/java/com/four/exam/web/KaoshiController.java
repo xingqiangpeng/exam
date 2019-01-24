@@ -1,4 +1,4 @@
-package com.four.exam.controller;
+package com.four.exam.web;
 
 import com.four.exam.entity.Student;
 import com.four.exam.entity.Testpaper;
