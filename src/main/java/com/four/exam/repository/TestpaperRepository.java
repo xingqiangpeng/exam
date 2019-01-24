@@ -9,6 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
 
 public interface TestpaperRepository extends JpaRepository<Testpaper,Integer> {
     //查询考试进行中信息以及参加了考试的人数
@@ -32,4 +36,5 @@ public interface TestpaperRepository extends JpaRepository<Testpaper,Integer> {
     @Query("select s  from Stutestscore2 s  where s.tpid=:tpid")
     List<Stutestscore2> findsrcroBytpids(int tpid);
     Testpaper findByTpidAndTpfabuNot(int tpid,String tpfabu);
+    List<Testpaper> findAllByTpname(String tpname);
 }

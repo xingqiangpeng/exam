@@ -18,11 +18,11 @@
             </td>
             <td>所属分类</td>
             <td>
-                <input type="text" v-model="qboutline" id="qboutline"/>
+                <input type="text" v-model="qboutline" readonly="readonly" id="qboutline"/>
             </td>
             <td>试题难度</td>
             <td>
-                <select id="qbdifficulty" v-model="qbdifficulty">
+                <select id="qbdifficulty" v-model="qbdifficulty" disabled="disabled">
                     <option value="简单">简单</option>
                     <option value="中等">中等</option>
                     <option value="困难">困难</option>
@@ -33,7 +33,7 @@
         <tr>
             <td>试题内容</td>
             <td colspan="5">
-                <textarea name="reworkmes" style="width:80%;height:80px;resize: none" id="qbtext" v-model="qbtext"></textarea>
+                <textarea name="reworkmes" style="width:80%;height:80px;resize: none" readonly="readonly" id="qbtext" v-model="qbtext"></textarea>
             </td>
         </tr>
     </table>
@@ -47,29 +47,29 @@
             </tr>
             <tr v-for="item,index in data.list">
                 <td>
-                    <input type="radio" name="radios" v-bind:value="zifu[index]" v-model="danxuandaan">
+                    <input type="radio" name="radios" readonly="readonly" v-bind:value="zifu[index]" v-model="danxuandaan">
                 </td>
                 <td>
                     {{zifu[index]}}
                 </td>
                 <td>
-                    <input type="text" v-model="item.daan"/>
+                    <input type="text" readonly="readonly" v-model="item.daan"/>
                 </td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td colspan="3">
                     <button class="layui-btn" v-on:click="add">添加选项</button>
                     <button class="layui-btn layui-btn-danger" v-on:click="removet">删减选项</button>
                 </td>
-            </tr>
+            </tr>-->
         </table>
         <!--判断题-->
         <table  class="layui-table"  v-if="type=='判断题'">
             <tr>
                 <th>选项</th>
                 <th>
-                    <input type="radio" name="ra" value="正确" v-model="panduanti"/>正确
-                    <input type="radio" name="ra" value="错误" v-model="panduanti"/>错误
+                    <input type="radio" name="ra" value="正确" v-model="panduanti" readonly="readonly" />正确
+                    <input type="radio" name="ra" value="错误" v-model="panduanti" readonly="readonly"/>错误
                 </th>
             </tr>
         </table>
@@ -80,18 +80,18 @@
                 <th>选项内容</th>
             </tr>
             <tr  v-for="item,index in data.anlist">
-                <td><input type="checkbox" name="radioduoxuan" v-bind:value="zifu[index]" v-model="duoxuandaan"></td>
+                <td><input type="checkbox" name="radioduoxuan" v-bind:value="zifu[index]" v-model="duoxuandaan" onclick="return false;"></td>
                 <td>{{zifu[index]}}</td>
                 <td>
-                    <input type="text"  v-model="item.daans"/>
+                    <input type="text"  v-model="item.daans" readonly="readonly"/>
                 </td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td colspan="3">
                     <button class="layui-btn" v-on:click="add1">添加选项</button>
                     <button class="layui-btn layui-btn-danger" v-on:click="removet1">删减选项</button>
                 </td>
-            </tr>
+            </tr>-->
         </table>
         <!--填空题-->
         <table  class="layui-table"  v-if="type=='填空题'">
@@ -101,15 +101,15 @@
                     填空{{index+1}}答案
                 </td>
                 <td>
-                    <input type="text" v-model="item.tkdaan"/>
+                    <input type="text" v-model="item.tkdaan" readonly="readonly"/>
                 </td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td colspan="3">
                     <button class="layui-btn" v-on:click="add2">添加选项</button>
                     <button class="layui-btn layui-btn-danger" v-on:click="removet2">删减选项</button>
                 </td>
-            </tr>
+            </tr>-->
         </table>
         <!--问答题-->
         <table  class="layui-table"  v-if="type=='问答题'">
@@ -119,7 +119,7 @@
                     参考答案
                 </td>
                 <td>
-                    <textarea style="width: 450px;height: 80px;resize: none" id="wendati" v-model="wendatidaan"></textarea>
+                    <textarea style="width: 450px;height: 80px;resize: none" id="wendati" v-model="wendatidaan" readonly="readonly"></textarea>
                 </td>
             </tr>
         </table>
@@ -131,20 +131,20 @@
                     参考答案
                 </td>
                 <td>
-                    <textarea style="width: 450px;height: 80px;resize: none" id="chengxuti" v-model="wendatidaan"></textarea>
+                    <textarea style="width: 450px;height: 80px;resize: none" id="chengxuti" v-model="wendatidaan" readonly="readonly"></textarea>
                 </td>
             </tr>
         </table>
     </div>
 
-    <table  class="layui-table" id="chaxuns">
+    <!--<table  class="layui-table" id="chaxuns">
         <tr>
             <button class="layui-btn" v-on:click="sava">保存</button>
             <button class="layui-btn layui-btn-primary">保存并关闭</button>
             <button class="layui-btn layui-btn-primary">保存并新增</button>
             <button class="layui-btn layui-btn-primary">关闭</button>
         </tr>
-    </table>
+    </table>-->
 </div>
 </body>
 <script>
@@ -165,7 +165,7 @@
             duoxuandaan:[]
         },
         methods:{
-            add:function(){//单选题
+            /*add:function(){//单选题
                 var s={daan:""};
                 this.data.list.push(s);
                 console.log(this.data);
@@ -188,8 +188,8 @@
             },
             removet2:function(){
                 this.data.tklist.pop();
-            },
-            sava:function () {
+            },*/
+            /*sava:function () {
                 if(confirm("是否保存试题？")){
                     if($("#qbtype").val()=="单选题"){
                         var stroptions="";
@@ -306,7 +306,7 @@
                         })
                     }
                 }
-            }
+            }*/
         }
     })
     // var vuechaxuns=new Vue({

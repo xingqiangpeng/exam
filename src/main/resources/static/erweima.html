@@ -16,11 +16,12 @@
 	</body>
 	<script>
 		$(function() {
-					var qrstr = "http://www.people.com.cn/mediafile/pic/20170727/3/1862992322915870199.jpg;fdfdfddfsdf";
-					$('#qrid').qrcode({width: 280,height: 280,background:"#ffffff",text: qrstr});//指定二维码大小 
+					// var qrstr = "http://www.people.com.cn/mediafile/pic/20170727/3/1862992322915870199.jpg;fdfdfddfsdf";
+					var qrstr = "https://www.baidu.com/";
+					$('#qrid').qrcode({width: 280,height: 280,background:"#ffffff",text: qrstr});//指定二维码大小
 					});
 					
-					function toUtf8(str) {    
+					/*function toUtf8(str) {
     var out, i, len, c;    
     out = "";    
     len = str.length;    
@@ -38,7 +39,7 @@
         }    
     }    
     return out;    
-}
+} 
 	</script>
 
 </html>

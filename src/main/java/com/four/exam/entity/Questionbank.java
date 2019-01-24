@@ -152,4 +152,21 @@ public class Questionbank {
     public int hashCode() {
         return Objects.hash(qbid, qboutline, qbtype, qbtext, qboptions, qbanswer, qbdifficulty, qbcreatetime, b1, b2, b3);
     }
+
+    @Override
+    public String toString() {
+        return "Questionbank{" +
+                "qbid=" + qbid +
+                ", qboutline='" + qboutline + '\'' +
+                ", qbtype='" + qbtype + '\'' +
+                ", qbtext='" + qbtext + '\'' +
+                ", qboptions='" + qboptions + '\'' +
+                ", qbanswer='" + qbanswer + '\'' +
+                ", qbdifficulty='" + qbdifficulty + '\'' +
+                ", qbcreatetime='" + qbcreatetime + '\'' +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
+    }
 }

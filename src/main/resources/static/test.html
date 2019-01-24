@@ -1,37 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>Title</title>
     <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
-    <title>Insert title here</title>
 </head>
 <body>
-<form action="fileUpload" method="post" enctype="multipart/form-data">
-    <p>选择文件: <input type="file" name="fileName"/></p>
-    <p><input type="submit" value="提交"/></p>
-</form>
-<form enctype="multipart/form-data">
-    <input type="file" name="fileName"/>
-    <button  type="button" onclick="dd(this)">upload</button>
-</form>
+<table id="tableid">
+    <tbody id="tbody">
+    <tr>
+        <td><input type="number" value="1"/></td>
+        <!--<td><input type="number" id="" value="123321" /></td>-->
+        <!--<td><input type="text" id="" value="产品分类1" /></td>-->
+        <!--<td><input type="file" value="选择文件"/></td>-->
+        <td>
+            <select id="select">
+                <option value="文本">文本</option>
+                <option value="邮箱">邮箱</option>
+                <option value="手机号码">手机号码</option>
+                <option value="身份证">身份证</option>
+            </select>
+        </td>
+        <td>
+            <a href="JavaScript:;" class="delete">删除</a>
+        </td>
+    </tr>
 
-</body>
+    <tr>
+        <td>asdasd</td>
+        <!--<td><input type="file" value="选择文件"/></td>-->
+        <td>
+            <select>
+                <option value="文本">文本</option>
+                <option value="邮箱">邮箱</option>
+                <option value="手机号码">手机号码</option>
+                <option value="身份证">身份证</option>
+            </select>
+        </td>
+        <td>
+            <a href="javascript:;" class="delete">删除</a>
+        </td>
+    </tr>
+
+    <tr id="tabtr">
+        <td><input type="number" value="3"/></td>
+        <!--<td><input type="number" id="" value="123321" /></td>-->
+        <!--<td><input type="text" id="" value="产品分类3" /></td>-->
+        <td>
+            <select>
+                <option value="文本">文本</option>
+                <option value="邮箱">邮箱</option>
+                <option value="手机号码">手机号码</option>
+                <option value="身份证">身份证</option>
+            </select>
+        </td>
+        <td>
+            <a href="javascript:;" class="delete">删除</a>
+        </td>
+    </tr>
+
+
+    </tbody>
+</table>
+<a href="javascript:;" id="sent_button">更新</a>
+<input type="button" onclick="getJson()" value="提交">
+<br>
+<input type="button" onclick="addrow()" value="tianjia">
+<input type="button" onclick="deleterow()" value="shangchu">
 <script>
-    function dd(obj){
-        $.ajax({
-            url: '/fileUpload',
-            type: 'POST',
-            cache: false,
-            data: new FormData(obj.parentNode),
-            processData: false,
-            contentType: false,
-            success:function (data) {
-                alert(data)
-            }
-        }).done(function(res) {
-        }).fail(function(res) {});
+    // 添加表格行
+    function addrow(){
+        var tr = $("#tabtr");                                 //tabtr是你要克隆的表格行的id
+        var newtr = tr.clone();                            //克隆tr行
+        newtr.find(":input").each(function(i){      //循环新克隆的newtr，在里边找到所有的input标签，
+            $(this).val("");                                    //给该标签的value赋值为空
+        });
+        // newtr.find(":select").each(function(i){      //循环新克隆的newtr，在里边找到所有的input标签，
+        //     $(this).val("");                                    //给该标签的value赋值为空
+        // });
+        tr.after(newtr);                   //在id="tabtr"的表格行tr后插入克隆行newtr
+    }
+
+     // 删除表格行
+    function deleterow(){
+        var length=$("#tableid tr").length-1; //获取id="tab"表格中的行数,如果表格中有th择需要-1
+        var tab = $("#tableid tr:eq("+length+")");  //获取最后一行的位置
+        tab.remove();  //删除tab行
+    }
+
+    function getJson() {
+        var jsonStr="";
+        // var jsonStr = "{\"scientificProject\":[";
+        $('#tableid tbody').find('tr').each(function () {               //tableId 是table表格的id
+            // jsonStr += "{";
+            $(this).find('td').each(function () {
+                $(this).find('input').each(function () {                        //获取td中input的值
+                    if($(this).attr("value")) {                                    //myName是input标签的一个自定义属性
+                        // jsonStr +=$(this).attr("value")+":"+$(this).val()+"/";
+                        jsonStr +=$(this).val();
+                    }
+                });
+                $(this).find('select').each(function () {                        //获取td中input的值
+                    // alert(typeof $(this).find("option:selected").text());
+                    if($(this).find("option:selected").text()) {                                    //myName是input标签的一个自定义属性
+                        jsonStr +=":"+$(this).find("option:selected").text()+"/";
+                    }
+                });
+                // jsonStr+="/";
+            })
+        })
+        // jsonStr += "},";
+        jsonStr = jsonStr.substring(0,jsonStr.length-1);
+        // jsonStr = jsonStr.substring(0,jsonStr.length - 1);
+        // jsonStr += "]}";
+
+    console.log(jsonStr);
+        alert(jsonStr);
+        // return jsonStr;
     }
 
 
+
+   /* var array = [];
+    var head = $("th");
+    $(" tr").each(function () {
+        var json = {};
+        $(this).find("td").each(function (i) {
+            json[head.eq(i).html()] = $(this).html();
+        });
+        array.push(json);
+    });
+    console.log(array);*/
+
 </script>
+</body>
+
 </html>
