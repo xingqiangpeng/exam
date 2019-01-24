@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" />
+    <link rel="stylesheet" href="layDate-v5.0.9/layDate-v5.0.9/laydate/theme/default/laydate.css">
+    <script src="js/layui/layui.js"></script>
+    <script src="js/vue/vue.min.js"></script>
+<style>
+    .layui-table{
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+    <div id="total">
+        <div id="button">
+            <table class="layui-table">
+                <tr>
+                    <td>系统自动阅卷题</td>
+                    <td><button class="layui-btn layui-btn-warm" onclick="xuanon()" >获取分数</button></td>
+                    <td>分数:&nbsp;&nbsp;&nbsp<input type="text" id="fen1" ></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="app">
+        <div v-if="type=='安排考试'">
+            <div v-for="item,index in data">
+                <div v-if="item.qbtype=='问答题'">
+                    <h4>问答题,题目：{{item.qbtext}}</h4>
+                    <table>
+                        <tr>
+                            <th>考生答案</th>
+                            <th>参考答案</th>
+                            <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
+                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>{{item.lstpanswer}}</td>
+                            <td>{{item.qboptions}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div v-if="item.qbtype=='程序题'">
+                    <h4>程序题,题目：{{item.qbtext}}</h4>
+                    <table>
+                        <tr>
+                            <th>考生答案</th>
+                            <th>参考答案</th>
+                            <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
+                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a :href="['/download.do?filename='+item.lstpanswer]">下载考试答案</a>
+                            </td>
+                            <td>{{item.qboptions}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            <div v-for="item,index in data">
+                <div v-if="item.qbtype=='问答题'">
+                    <h4>问答题,题目：{{item.qbtext}}</h4>
+                    <table>
+                        <tr>
+                            <th>考生答案</th>
+                            <th>参考答案</th>
+                            <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
+                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>{{item.stpanswer}}</td>
+                            <td>{{item.qboptions}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div v-if="item.qbtype=='程序题'">
+                    <h4>程序题,题目：{{item.qbtext}}</h4>
+                    <table>
+                        <tr>
+                            <th>考生答案</th>
+                            <th>参考答案</th>
+                            <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
+                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a :href="['/download.do?filename='+item.stpanswer]">下载考试答案</a>
+                            </td>
+                            <td>{{item.qboptions}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <button @click="chafenshu">查分数</button>
+    </div>
+</body>
+<script>
+    //学生账号
+    var pjnumber=localStorage.getItem("snumber");
+    //试卷id
+    var pjshiid=localStorage.getItem("shijuanid");
+    //考试类型
+    var type=localStorage.getItem("type");
+    function xuanon() {
+        if(type=="安排考试"){
+            $.post("xuanon.do",{pjnumber:pjnumber,pjshiid:pjshiid},function(data){
+                $("#fen1").val(data);
+            });
+        }
+        else{
+            var sname=localStorage.getItem("sname");
+            $.post("noxuan.do",{sname:sname,pjshiid:pjshiid},function(data){
+                $("#fen1").val(data);
+            });
+        }
+
+    }
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            data: [],
+            type: type
+        },
+        methods: {
+            keydowns: function (i) {
+                if (this.data[i].stpscore > this.data[i].tqscore) {
+                    this.data[i].stpscore = this.data[i].tqscore;
+                }
+            },
+            manfen: function (i) {
+                this.data[i].stpscore = this.data[i].tqscore;
+            },
+            xiazai: function (i) {
+                $.post("../download.do", {filename: vue.data[i].stpanswer}, function (data) {
+                });
+            },
+            chafenshu:function () {
+                var data=this.data.filter(item=>item.qbtype=="程序题"||item.qbtype=="问答题");
+                console.log(data)
+                if(type=='安排考试'){
+                    $.post("../updateBysnumber2.do", {data:JSON.stringify(data)}, function (data) {
+                        alert(data)
+                    });
+                }else{
+                    $.post("../updateBysnumber.do", {data:JSON.stringify(data)}, function (data) {
+                        alert(data)
+                    });
+                }
+            }
+        }
+    });
+    if(type=='安排考试'){
+        $.post("../findbynames2.do", {snumber: pjnumber, id: pjshiid}, function (data) {
+            data.forEach(item => item.stpscore = "");
+            vue.data = data;
+            console.log(data)
+        });
+    }else{
+        $.post("../findbynames.do", {name: sname, id: pjshiid}, function (data) {
+            data.forEach(item => item.stpscore = "");
+            vue.data = data;
+            console.log(data)
+        });
+    }
+</script>
+</html>

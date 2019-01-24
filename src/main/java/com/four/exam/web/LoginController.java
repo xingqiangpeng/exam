@@ -24,4 +24,8 @@ public class LoginController {
 
 
     }
+    @RequestMapping("shuju.do")
+    public String shuju(){
+        return  userRepository.countShi()+":"+ userRepository.countTi();
+    }
 }

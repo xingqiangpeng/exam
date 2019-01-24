@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>试卷评分</title>
+    <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" />
+    <link rel="stylesheet" href="layDate-v5.0.9/layDate-v5.0.9/laydate/theme/default/laydate.css">
+    <script src="js/layui/layui.all.js"></script>
+    <script src="js/vue/vue.min.js"></script>
+    <script>
+        var indexs;
+    </script>
+</head>
+<body>
+<div id="pfcenter">
+    <div id="loginstudnet">
+
+        <table class="layui-table">
+            <caption style="color: darkorange;font-size: 35px;"><strong>{{lostr1}}</strong></caption>
+            <tr>
+                <th>账号</th>
+                <th>姓名</th>
+                <th>所属部门</th>
+                <th>及格分数</th>
+                <th>成绩</th>
+                <th>是否通过</th>
+                <th>考试方式</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="items,index in logdata1">
+                <td>{{items.snumber}}</td>
+                <td>{{items.sname}}</td>
+                <td>{{items.sdep}}</td>
+                <td>{{items.tpscore}}</td>
+                <td>{{items.stsscore}}</td>
+                <td>{{items.state}}</td>
+                <td>{{items.tptype}}</td>
+                <td>{{items.yuejuan}}</td>
+                <td>
+                    <button class="layui-btn layui-btn-warm" v-on:click="logyue(index)">阅卷</button>
+                    <button class="layui-btn layui-btn-danger" v-on:click="delyue(index)">删除</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="nologin">
+        <table class="layui-table">
+            <caption style="color: darkorange;font-size: 35px;"><strong>{{str1}}</strong></caption>
+            <tr>
+                <th v-for="items,index in data1">{{items}}</th>
+                <th>及格分数</th>
+                <th>成绩</th>
+                <th>是否通过</th>
+                <th>考试方式</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="items,index in data2">
+                <td v-for="items1,index1 in items.tpwritemessage">{{items1}}</td>
+                <td>{{items.tpscore}}</td>
+                <td>{{items.stsscore}}</td>
+                <td>{{items.state}}</td>
+                <td>{{items.tptype}}</td>
+                <td>{{items.yuejuan}}</td>
+                <td>
+                    <button class="layui-btn layui-btn-warm" v-on:click="nologin(index)">阅卷</button>
+                    <button class="layui-btn layui-btn-danger">删除</button>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="shijuan" ></div>
+</div>
+
+</body>
+<script>
+    //进入每张试卷的评分界面，将字段信息添加到th中
+    $(function () {
+       var shijuanid= localStorage.getItem("shijuanid");
+       $.post("selectpf.do",{sjid:shijuanid},function(data){
+           pfvue1.str1=data.tpname;
+           pfvue2.lostr1=data.tpname;
+           if(data.tptype!="安排考试")
+           {
+               $("#nologin").css("display","block");
+               $("#loginstudnet").css("display","none");
+               //对试卷信息进行截取
+                var str=[];
+                var str1=[];
+                str=data.tpwritemessage.split("/");
+                for (var i in str)
+                {
+                    var str2=str[i].split(":");
+                    str1.push(str2[0]);
+                }
+                pfvue1.data1=str1;
+               $.post("selfindall.do",{sjid:shijuanid},function(data){
+
+                   for (var i in data)
+                   {
+                       if(data[i].stsscore==null)
+                       {
+                           data[i].stsscore=0;
+                           data[i].yuejuan="未阅卷";
+                       }
+                       else {
+                           data[i].yuejuan="已阅卷";
+                       }
+                       if(data[i].stsscore<data[i].tpscore)
+                       {
+                           data[i].state="未通过";
+                       }
+                       else{
+                           data[i].state="已通过";
+                       }
+                       var pstr=[];
+                       var pstr1=[];
+                       pstr=data[i].tpwritemessage.split("/");
+                       for (var j in pstr)
+                       {
+                           var pstr2=pstr[j].split(":");
+                           pstr1.push(pstr2[1]);
+                           data[i].tpwritemessage=pstr1;
+
+                       }
+
+                   }
+                   pfvue1.data2=data;
+
+               });
+           }
+           else {
+               $("#nologin").css("display","none");
+               $("#loginstudnet").css("display","block");
+               $.post("selfindloginall.do",{sjid:shijuanid},function(data){
+                   for(var i in data)
+                   {
+
+                       if(data[i].stsscore==null)
+                       {
+                           data[i].stsscore=0;
+                           data[i].yuejuan="未阅卷";
+                       }
+                       else {
+                           data[i].yuejuan="已阅卷";
+                       }
+                       if(data[i].stsscore<data[i].tpscore)
+                       {
+                           data[i].state="未通过";
+                       }
+                       else{
+                           data[i].state="已通过";
+                       }
+                   }
+                   pfvue2.logdata1=data
+
+               });
+           }
+
+
+       });
+
+    });
+</script>
+<script>
+    var pfvue1=new Vue({
+        el:"#nologin",
+        data:{
+            data1:[],
+            data2:[],
+            data3:[],
+            str1:""
+            //
+        },
+        methods:{
+            nologin:function(index){
+                localStorage.setItem("sname",pfvue1.data2[index].tpwritemessage[0]);
+                localStorage.setItem("type","非安排考试");
+                window.location.href="pijuans.html";
+            }
+        }
+    });
+    var pfvue2=new Vue({
+        el:"#loginstudnet",
+        data:{
+            logdata1:[],
+            lostr1:""
+            //
+        },
+        methods:{
+            logyue:function (index) {
+
+                localStorage.setItem("snumber",pfvue2.logdata1[index].snumber);
+                localStorage.setItem("type","安排考试");
+                window.location.href="pijuans.html";
+            },
+        }
+
+    });
+</script>
+<script>
+    layui.use(['element','layer','laydate'], function() {
+        var element = layui.element;
+        var layer = layui.layer;
+        var laydate = layui.laydate;
+    });
+</script>
+</html>

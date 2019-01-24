@@ -137,7 +137,7 @@
                                             <td><a href="#">导出试卷</a></td>
                                         </tr>
                                         <tr>
-                                            <td><a href="#">人工评分</a></td>
+                                            <td><a href="#" v-on:click="chuanzhi(index)">人工评分</a></td>
                                         </tr>
                                         <tr>
                                             <td><a href="#" v-on:click="shanchu(index)">删除考试</a></td>
@@ -265,13 +265,17 @@
             },
             quanbu:function () {
                 $.post("../findallstestpaperdata.do", {}, function (data) {
-                    console.log(data)
                     vueap.data = data;
                 });
             },
             chakanchengji:function (i) {
                 localStorage.setItem("testpaper",JSON.stringify(this.data[i]));
                 window.top.vue.change("score/kaoshiqingk.html");
+            },
+            chuanzhi:function (i) {
+                localStorage.setItem("shijuanid",this.data[i].tpid);
+                window.location.href="pinfen.html";
+
             }
         }
     });

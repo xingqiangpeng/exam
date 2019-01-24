@@ -47,5 +47,14 @@ public class ExamApplicationTests {
         String str="ffasdfsd/ninin.txt";
         System.out.println(str.substring(str.indexOf("/")+1,str.length()));
     }
+
+    @Test
+    public void ss(){
+        String str="asdasdasd";
+        for (int i = 0; i < str.split("").length; i++) {
+            System.out.println(str.split("")[i]);
+        }
+
+    }
 }
 
