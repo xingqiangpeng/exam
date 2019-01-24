@@ -36,14 +36,16 @@ public class UploadController {
             return "false";
         }
     }
-    @RequestMapping("download")
-    public String downLoad(HttpServletResponse response) throws FileNotFoundException {
-        String filename="使用PageHelper实现分页.pdf";
+    @RequestMapping("download.do")
+    public String downLoad(HttpServletResponse response,String filename) throws FileNotFoundException {
+        System.out.println(filename);
         File path1 = new File(ResourceUtils.getURL("classpath:").getPath());
-        File file = new File(path1.getAbsolutePath(),"upload/在线考试系统.doc");
+        File file = new File(path1.getAbsolutePath(),"upload/"+filename);
+        String str= filename.substring(filename.indexOf("/")+1,filename.length());
+        System.out.println(str);
         if(file.exists()){ //判断文件父目录是否存在
             response.setContentType("application/force-download");
-            response.setHeader("Content-Disposition", "attachment;fileName=" + filename);
+            response.setHeader("Content-Disposition", "attachment;fileName=" +str);
 
             byte[] buffer = new byte[1024];
             FileInputStream fis = null; //文件输入流

@@ -601,7 +601,7 @@
             contentType: false,
             success:function (data) {
                 vue.datalist[x].list[y].answer=data;
-                obj.parentNode.getElementsByTagName("span")[0].innerHTML="提交成功";
+                obj.parentNode.getElementsByTagName("span")[0].innerHTML=data;
             }
         }).done(function(res) {
         }).fail(function(res) {});

@@ -43,7 +43,9 @@ public class ExamApplicationTests {
         stutestpaper.setTqnum(1);
         stutestpaper.setStpanswer("fdf");
         stutestpaper.setStpscore(0);
-        System.out.println(stutestpaperRepository.save(stutestpaper));
+//        System.out.println(stutestpaperRepository.findBynames(3,"邓欢"));
+        String str="ffasdfsd/ninin.txt";
+        System.out.println(str.substring(str.indexOf("/")+1,str.length()));
     }
 }
 

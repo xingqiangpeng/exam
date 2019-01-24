@@ -7,7 +7,7 @@ values('考试名称2','考试备注2','口令登录','姓名:姓名/口令:1212
 insert into testpaper(tpname,tpbeizhu,tptype,tpwritemessage,tpscore,tpstartdate,tpenddate,tpdatitime,tpfabu)
 values('考试名称3','考试备注3','免登陆考试+口令登录','姓名:文本/手机号码:手机号码/邮箱:邮箱/身份证号码:身份证/口令:121214','100','201901181630','201901191630','120','未发布');
 insert into testpaper(tpname,tpbeizhu,tptype,tpwritemessage,tpscore,tpstartdate,tpenddate,tpdatitime,tpfabu)
-values('考试名称4','考试备注4','安排考试','sdep:弘诚科技/java1809;snumber:777777/sname:邢强鹏','70','201901191630','201901201630','160','未发布');
+values('考试名称4','考试备注4','安排考试','sdep:弘诚科技/java1809;snumber:777777','70','201901191630','201901201630','160','未发布');
 select * from testpaper;
 
 --user系统使用用户注册
@@ -95,24 +95,21 @@ insert into loginstutestpaper(snumber,tpid,tqnum,lstpanswer,lstpgetscore) values
 insert into loginstutestpaper(snumber,tpid,tqnum,lstpanswer,lstpgetscore) values(101010,4,4,'孙尚香/去中路',0.0);
 select * from loginstutestpaper;
 
-
-
-
 --stutestpaper 考生-试卷表-免登录
-insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('傅正鹏','姓名:傅正鹏/口令:121214',3,1,'C',2.0);
-insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('傅正鹏','姓名:傅正鹏/口令:121214',3,2,'ABD',1.0);
+insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('傅正鹏','姓名:傅正鹏/口令:121214',3,1,'C',0.0);
+insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('傅正鹏','姓名:傅正鹏/口令:121214',3,2,'ABD',0.0);
 insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('傅正鹏','姓名:傅正鹏/口令:121214',3,3,'BC',0.0);
-insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('傅正鹏','姓名:傅正鹏/口令:121214',3,4,'朱恒/孙尚香/去中路',3.0);
+insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('傅正鹏','姓名:傅正鹏/口令:121214',3,4,'朱恒/孙尚香/去中路',0.0);
 
-insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('黄芪','姓名:傅正鹏/口令:121214',3,1,'C',2.0);
-insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('黄芪','姓名:傅正鹏/口令:121214',3,2,'ABD',1.0);
+insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('黄芪','姓名:傅正鹏/口令:121214',3,1,'C',0.0);
+insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('黄芪','姓名:傅正鹏/口令:121214',3,2,'ABD',0.0);
 insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('黄芪','姓名:傅正鹏/口令:121214',3,3,'BC',0.0);
-insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('黄芪','姓名:傅正鹏/口令:121214',3,4,'朱恒/孙尚香/去中路',3.0);
+insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('黄芪','姓名:傅正鹏/口令:121214',3,4,'朱恒/孙尚香/去中路',0.0);
 
-insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('真假诚','姓名:真假诚/口令:121214',2,1,'C',2.0);
-insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('真假诚','姓名:真假诚/口令:121214',2,2,'ABD',1.0);
+insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('真假诚','姓名:真假诚/口令:121214',2,1,'C',0.0);
+insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('真假诚','姓名:真假诚/口令:121214',2,2,'ABD',0.0);
 insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('真假诚','姓名:真假诚/口令:121214',2,3,'BC',0.0);
-insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('真假诚','姓名:真假诚/口令:121214',2,4,'朱恒/孙尚香/去中路',3.0);
+insert into stutestpaper(sname,tpwritemessage,tpid,tqnum,stpanswer,stpscore) values('真假诚','姓名:真假诚/口令:121214',2,4,'朱恒/孙尚香/去中路',0.0);
 select * from stutestpaper;
 --免登录考试的成绩表
 insert into stutestscore2(information,tpid,stsscore) values('姓名:傅正鹏/口令:121214',1,8);
