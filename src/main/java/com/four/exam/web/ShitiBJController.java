@@ -1,4 +1,4 @@
-package com.four.exam.controller;
+package com.four.exam.web;
 
 import com.four.exam.entity.Questionbank;
 import com.four.exam.repository.QuestionbankRepository;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Optional;
 
 @RestController
 public class ShitiBJController {

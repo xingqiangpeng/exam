@@ -1,7 +1,6 @@
-package com.four.exam.controller;
+package com.four.exam.web;
 
 import com.four.exam.entity.Testquestions;
-import com.four.exam.repository.QuestionbankRepository;
 import com.four.exam.repository.TestquestionsRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

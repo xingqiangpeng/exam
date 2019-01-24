@@ -1,4 +1,4 @@
-package com.four.exam.controller;
+package com.four.exam.web;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
