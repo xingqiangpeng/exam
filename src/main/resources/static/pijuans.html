@@ -26,7 +26,85 @@
             </table>
         </div>
     </div>
-
+    <div id="app">
+        <div v-if="type=='安排考试'">
+            <div v-for="item,index in data">
+                <div v-if="item.qbtype=='问答题'">
+                    <h4>问答题,题目：{{item.qbtext}}</h4>
+                    <table>
+                        <tr>
+                            <th>考生答案</th>
+                            <th>参考答案</th>
+                            <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
+                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>{{item.lstpanswer}}</td>
+                            <td>{{item.qboptions}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div v-if="item.qbtype=='程序题'">
+                    <h4>程序题,题目：{{item.qbtext}}</h4>
+                    <table>
+                        <tr>
+                            <th>考生答案</th>
+                            <th>参考答案</th>
+                            <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
+                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a :href="['/download.do?filename='+item.lstpanswer]">下载考试答案</a>
+                            </td>
+                            <td>{{item.qboptions}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            <div v-for="item,index in data">
+                <div v-if="item.qbtype=='问答题'">
+                    <h4>问答题,题目：{{item.qbtext}}</h4>
+                    <table>
+                        <tr>
+                            <th>考生答案</th>
+                            <th>参考答案</th>
+                            <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
+                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>{{item.stpanswer}}</td>
+                            <td>{{item.qboptions}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div v-if="item.qbtype=='程序题'">
+                    <h4>程序题,题目：{{item.qbtext}}</h4>
+                    <table>
+                        <tr>
+                            <th>考生答案</th>
+                            <th>参考答案</th>
+                            <th><input type="text" @keyup="keydowns(index)" v-model="item.stpscore"/>
+                                <button @click="manfen(index)">满分{{item.tqscore}}分</button>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a :href="['/download.do?filename='+item.stpanswer]">下载考试答案</a>
+                            </td>
+                            <td>{{item.qboptions}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <button @click="chafenshu">查分数</button>
+    </div>
 </body>
 <script>
     //学生账号
@@ -49,6 +127,52 @@
         }
 
     }
-
+    var vue = new Vue({
+        el: "#app",
+        data: {
+            data: [],
+            type: type
+        },
+        methods: {
+            keydowns: function (i) {
+                if (this.data[i].stpscore > this.data[i].tqscore) {
+                    this.data[i].stpscore = this.data[i].tqscore;
+                }
+            },
+            manfen: function (i) {
+                this.data[i].stpscore = this.data[i].tqscore;
+            },
+            xiazai: function (i) {
+                $.post("../download.do", {filename: vue.data[i].stpanswer}, function (data) {
+                });
+            },
+            chafenshu:function () {
+                var data=this.data.filter(item=>item.qbtype=="程序题"||item.qbtype=="问答题");
+                console.log(data)
+                if(type=='安排考试'){
+                    $.post("../updateBysnumber2.do", {data:JSON.stringify(data)}, function (data) {
+                        alert(data)
+                    });
+                }else{
+                    $.post("../updateBysnumber.do", {data:JSON.stringify(data)}, function (data) {
+                        alert(data)
+                    });
+                }
+            }
+        }
+    });
+    if(type=='安排考试'){
+        $.post("../findbynames2.do", {snumber: pjnumber, id: pjshiid}, function (data) {
+            data.forEach(item => item.stpscore = "");
+            vue.data = data;
+            console.log(data)
+        });
+    }else{
+        $.post("../findbynames.do", {name: sname, id: pjshiid}, function (data) {
+            data.forEach(item => item.stpscore = "");
+            vue.data = data;
+            console.log(data)
+        });
+    }
 </script>
 </html>

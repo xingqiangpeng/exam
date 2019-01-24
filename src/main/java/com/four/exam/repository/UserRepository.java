@@ -14,4 +14,8 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Modifying
     @Query("update User u set u.userpwd=?1 where u.uid=?2")
     int updateUser(String userpwd,int uid);
+    @Query(value = "select count(*) from testpaper",nativeQuery = true)
+    int countShi();
+    @Query(value = "select count(*) from Questionbank",nativeQuery = true)
+    int countTi();
 }
