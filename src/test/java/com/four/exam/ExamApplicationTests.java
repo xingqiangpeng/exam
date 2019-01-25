@@ -12,6 +12,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 @Transactional
 @RunWith(SpringRunner.class)
@@ -56,5 +59,6 @@ public class ExamApplicationTests {
         }
 
     }
+
 }
 

@@ -17,11 +17,13 @@ import java.util.List;
 import java.util.Map;
 
 public interface StutestpaperRepository extends JpaRepository<Stutestpaper,Integer> {
+    //非登录考生的查询方式
     @Query(value = "select * from (select s.stpid,s.sname,s.stpanswer,s1.* from Stutestpaper s left outer join (select t.tpid,t.tqnum,t.tqscore,q.qbtype,q.qbtext,q.qbanswer,q.qboptions from Testquestions t left outer join questionbank q on t.qbid=q.qbid  where tpid=?) \n" +
             "s1 on s.tpid=s1.tpid and s.tqnum=s1.tqnum where s.sname=?) u CROSS JOIN (select tpname from testpaper where tpid=?) r",nativeQuery = true)
     List<Map<String,Object>> findBynames(int tpid,String sname,int id);
-    @Query(value = "select * from (select s.lstpid,s.snumber,s.lstpanswer,s1.*  from loginstutestpaper s left outer join (select t.tpid,t.tqnum,t.tqscore,q.qbtype,q.qbtext,q.qbanswer,q.qboptions from Testquestions t left outer join questionbank q on t.qbid=q.qbid  where tpid=?) \n" +
-            "s1 on s.tpid=s1.tpid and s.tqnum=s1.tqnum where s.snumber=?) u CROSS JOIN (select tpname from testpaper where tpid=?) r",nativeQuery = true)
+    //登录考生的查询方式
+    @Query(value = "select * from (select s.lstpid,s.snumber,s.lstpanswer,s1.*  from loginstutestpaper s left outer join (select t.tpid,t.tqnum,t.tqscore,q.qbtype,q.qbtext,q.qbanswer,q.qboptions,t.tqbigtitle from Testquestions t left outer join questionbank q on t.qbid=q.qbid  where tpid=4) \n" +
+            "s1 on s.tpid=s1.tpid and s.tqnum=s1.tqnum where s.snumber='777777') u CROSS JOIN (select tpname from testpaper where tpid=4) r order by tqbigtitle ",nativeQuery = true)
     List<Map<String,Object>> findBynames2(int tpid,String snumber,int id);
     @Modifying
     @Query("update Stutestpaper set stpscore=?1 where stpid=?2")
@@ -47,6 +49,5 @@ public interface StutestpaperRepository extends JpaRepository<Stutestpaper,Integ
    //找到非安排考生的答题
    List<Stutestpaper> findAllBySnameAndTpid(String sname, int tpid);
 
-
-
+   List<Stutestpaper> findByTpidOrderByTqnumAsc(int tpid);
 }

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../js/layui/css/layui.css"/>
+    <script src="../js/layui/layui.js"></script>
+    <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+    <script src="../js/echarts.js"></script>
+    <script>
+        var objsss=JSON.parse(localStorage.getItem("testpaper"));
+        var type=objsss.tptype;
+    </script>
+</head>
+<body>
+<div id="app"></div>
+<div id="main" style="width: 600px;height:400px;"></div>
+</body>
+<script>
+    if (type == "安排考试") {
+        $.post("../../findbttpid1.do", {tpid: 4}, function (data) {
+            var datas=sorts(data)
+        });
+    } else {
+        $.post("../../findbttpid2.do", {tpid: 2}, function (data) {
+            var datas=sorts1(data)
+            dds(datas)
+        });
+    }
+
+    function sorts(data) {
+        var name = [];
+        var jigelv = null;
+        for (var i = 0; i < data.length; i++) {
+            var obj = new Object();
+            var flage = true;
+            for (var j = 0; j < name.length; j++) {
+                if (name[j].snumber == data[i].snumber) {
+                    flage = false;
+                    break;
+                }
+            }
+            if (flage) {
+                obj.snumber = data[i].snumber;
+                obj.list = []
+                name.push(obj);
+            }
+        }
+        for (var i = 0; i < data.length; i++) {
+            for (var j = 0; j < name.length; j++) {
+                if (data[i].snumber == name[j].snumber) {
+                    name[j].list.push(data[i])
+                }
+            }
+        }
+        for (var i = 0; i < name.length; i++) {
+            jigelv = new Array(name[i].list.length);
+            for (var j = 0; j < jigelv.length; j++) {
+                jigelv[j] = 0;
+            }
+        }
+        for (var i = 0; i < name.length; i++) {
+            for (var j = 0; j < name[i].list.length; j++) {
+                if (name[i].list[j].lstpgetscore != 0) {
+                    jigelv[j] += 1;
+                }
+            }
+        }
+        for (var i = 0; i < jigelv.length; i++) {
+            jigelv[i] = jigelv[i] / name.length;
+        }
+        return jigelv;
+    }
+
+    function sorts1(data) {
+        var name = [];
+        var jigelv = null;
+        for (var i = 0; i < data.length; i++) {
+            var obj = new Object();
+            var flage = true;
+            for (var j = 0; j < name.length; j++) {
+                if (name[j].sname == data[i].sname) {
+                    flage = false;
+                    break;
+                }
+            }
+            if (flage) {
+                obj.sname = data[i].sname;
+                obj.list = []
+                name.push(obj);
+            }
+        }
+        for (var i = 0; i < data.length; i++) {
+            for (var j = 0; j < name.length; j++) {
+                if (data[i].sname == name[j].sname) {
+                    name[j].list.push(data[i])
+                }
+            }
+        }
+        for (var i = 0; i < name.length; i++) {
+            jigelv = new Array(name[i].list.length);
+            for (var j = 0; j < jigelv.length; j++) {
+                jigelv[j] = 0;
+            }
+        }
+        for (var i = 0; i < name.length; i++) {
+            for (var j = 0; j < name[i].list.length; j++) {
+                if (name[i].list[j].stpscore != 0) {
+                    jigelv[j] += 1;
+                }
+            }
+        }
+        for (var i = 0; i < jigelv.length; i++) {
+            jigelv[i] = jigelv[i] / name.length;
+        }
+        return jigelv;
+    }
+
+    function dds(datas) {
+        
+        var myChart = echarts.init(document.getElementById('main'));
+        option = {
+            title: {
+                text: '堆叠区域图'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data: ['邮件营销']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一', '周二', '周三', '周四']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '邮件营销',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {},
+                    data: datas
+                }
+            ]
+        };
+        myChart.setOption(option);
+    }
+</script>
+</html>

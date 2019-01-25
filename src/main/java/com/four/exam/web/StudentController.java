@@ -49,7 +49,6 @@ public class StudentController {
     public  void inserintostudent(String stu){
         System.out.println(stu);
         Student student = JSONObject.parseObject(stu, Student.class);
-        //JSONObject jsonObject = JSON.parseObject(stu);
         studentRepository.save(student);
         System.out.println(student);
     }

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../js/layui/css/layui.css"/>
+    <script src="../js/layui/layui.js"></script>
+    <script src="../js/vue/vue.min.js"></script>
+    <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+</head>
+<script>
+    var objsss=JSON.parse(localStorage.getItem("testpaper"));
+    var type=objsss.tptype;
+</script>
+<body>
+<div id="app">
+    <table class="layui-table">
+        <tr>
+            <th v-for="item in data">第{{item.dati}}大题，共{{item.cd}}小题，总分：{{item.sum}}分</th>
+        </tr>
+        <tr>
+            <th v-for="item in data">得分：{{item.sums}}分</th>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    var vueapp=new Vue({
+        el:"#app",
+        data:{
+        data:[]
+        }
+    });
+    if(type=="安排考试"){
+        $.post("../../findbtsumber.do", {snumber:localStorage.getItem("snumber")}, function (data) {
+            vueapp.data =sorts(data);
+        });
+    }else{
+        $.post("../../findbtsname.do", {sname:localStorage.getItem("sname")}, function (data) {
+            vueapp.data =sorts(data);
+        });
+    }
+    function sorts(data) {
+        var name = [];
+        for (var i = 0; i < data.length; i++) {
+            var obj=new Object();
+            var flage=true;
+            for (var j = 0; j < name.length; j++) {
+                if(name[j].dati==data[i].tqbigtitle){
+                    flage=false;
+                    break;
+                }
+            }
+            if(flage){
+                obj.dati=data[i].tqbigtitle;
+                obj.list=[]
+                name.push(obj);
+            }
+        }
+        for (var i = 0; i < data.length; i++) {
+            for (var j = 0; j < name.length; j++) {
+                if(data[i].tqbigtitle==name[j].dati){
+                    name[j].list.push(data[i])
+                }
+            }
+        }
+
+        if(type=="安排考试"){
+            for (var i = 0; i < name.length; i++) {
+                name[i].sum=0;
+                name[i].sums=0;
+                name[i].cd=name[i].list.length;
+                for (var j = 0; j < name[i].list.length; j++) {
+                    name[i].sum=eval(name[i].sum+"+"+name[i].list[j].tqscore)
+                    name[i].sums=eval(name[i].sums+"+"+name[i].list[j].lstpgetscore)
+                }
+            }
+        }else{
+            for (var i = 0; i < name.length; i++) {
+                name[i].sum=0;
+                name[i].sums=0;
+                name[i].cd=name[i].list.length;
+                for (var j = 0; j < name[i].list.length; j++) {
+                    name[i].sum=eval(name[i].sum+"+"+name[i].list[j].tqscore)
+                    name[i].sums=eval(name[i].sums+"+"+name[i].list[j].stpscore)
+                }
+            }
+        }
+        return name;
+    }
+</script>
+</html>
