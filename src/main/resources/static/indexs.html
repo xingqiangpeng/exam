@@ -471,7 +471,6 @@
 
             } else if (data[i].qbtpye == "填空题") {
                 data[i].answer = [];
-                console.log(data[i].qboptions)
                 for (var j = 0; j < data[i].qboptions; j++) {
                     var obj = new Object();
                     obj.content = ""
@@ -516,13 +515,13 @@
             name[i].sum=sum;
             name[i].sizes=name[i].list.length;
         }
-        console.log(obj)
+
         for (var i = 0; i < name.length; i++) {
             for (var j = 0; j < name[i].list.length; j++) {
                 name[i].list[j].tpname=objp.tpname;
             }
         }
-        console.log(name)
+
         return name;
     }
 
@@ -560,7 +559,7 @@
                     arr.push(object)
                 }
             };
-            console.log(arr)
+
             $.post("../saveallstutest.do", {data:JSON.stringify(arr)}, function (data) {
                 localStorage.clear();
                 alert("提交成功")
@@ -583,7 +582,6 @@
                     arr.push(object)
                 }
             };
-            console.log(arr)
             $.post("../saveallloginstutest.do", {data:JSON.stringify(arr)}, function (data) {
                 localStorage.clear();
                 alert("提交成功")
@@ -606,6 +604,5 @@
         }).done(function(res) {
         }).fail(function(res) {});
     }
-    console.log(objp)
 </script>
 </html>

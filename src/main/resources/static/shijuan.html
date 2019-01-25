@@ -220,7 +220,6 @@
                 $.post("../updatetestpaperdata.do", {
                     name1:JSON.stringify(vueapps.data)
                 }, function (data) {
-                    console.log(data)
                     if(data>0){
                         alert("修改成功")
                     }else{
@@ -298,7 +297,6 @@
     });
     $.post("../testpaperdata.do", {}, function (data) {
         vueap.data = data;
-        console.log(JSON.stringify(data) )
     });
     layui.use(['element','layer','laydate'], function() {
         var element = layui.element;

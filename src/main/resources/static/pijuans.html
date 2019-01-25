@@ -13,6 +13,9 @@
         text-align: center;
     }
 </style>
+    <script>
+        var sum;
+    </script>
 </head>
 <body>
     <div id="total">
@@ -103,9 +106,42 @@
                 </div>
             </div>
         </div>
-        <button @click="chafenshu"   class="layui-btn layui-btn-warm">插入分数</button>
+        <button @click="chafenshu"   class="layui-btn layui-btn-warm">插入分数</button><br>
+       试卷总分：&nbsp;&nbsp;<input type="text" width="60px" id="inp2"> &nbsp;<button onclick="huoqu()" class="layui-btn layui-btn-warm" >获取总分</button>
+        <button onclick="huoqu1()" class="layui-btn layui-btn-warm" >插入总分</button>
+        <button onclick="huoqu2()" class="layui-btn layui-btn-danger" >返回评卷</button>
     </div>
 </body>
+<script>
+    function huoqu() {
+        sum=0;
+        for(var i in vue.data)
+        {
+            sum=eval(vue.data[i].stpscore+"+"+sum);
+        }
+        //
+        // vue.data.forEach(item=>sum+=item.stpscore);
+        var fen1=$("#fen1").val();
+        sum=eval(sum+"+"+fen1);
+        $("#inp2").val(sum);
+
+    }
+    function huoqu1() {
+        if(type=="安排考试"){
+            $.post("ancha.do",{pjnumber:pjnumber,pjshiid:pjshiid,sum:sum},function(data){
+                confirm(data)
+            });
+        }else{
+            var sname=localStorage.getItem("sname");
+            $.post("noancha.do",{sname:sname,pjshiid:pjshiid,sum:sum},function(data){
+                confirm(data)
+            });
+        }
+    }
+    function huoqu2() {
+        window.location.href="pinfen.html"
+    }
+</script>
 <script>
     //学生账号
     var pjnumber=localStorage.getItem("snumber");
@@ -149,8 +185,7 @@
             chafenshu:function () {
                 var data=this.data.filter(item=>item.qbtype=="程序题"||item.qbtype=="问答题");
                 //程序问答题的总分
-                /*var sum=0;
-                vue.data.forEach(item=>sum+=item.stpscore);*/
+
                 if(type=='安排考试'){
                     $.post("../updateBysnumber2.do", {data:JSON.stringify(data)}, function (data) {
                         alert(data)
@@ -170,6 +205,7 @@
             console.log(data)
         });
     }else{
+        var sname=localStorage.getItem("sname");
         $.post("../findbynames.do", {name: sname, id: pjshiid}, function (data) {
             data.forEach(item => item.stpscore = "");
             vue.data = data;

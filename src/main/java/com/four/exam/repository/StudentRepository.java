@@ -12,5 +12,6 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
     List<Student> findBySnameLike(String str);
     List<Student> findBySnameLikeAndScreatdateBetween(String str1,String str2,String str3);
     List<Student> findBySnumberAndSpassword(String snumber,String spassword);
+    List<Student> findBySnumber(String snumber);
 
 }

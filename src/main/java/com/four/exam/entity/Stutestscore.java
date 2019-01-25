@@ -101,6 +101,19 @@ public class Stutestscore {
     }
 
     @Override
+    public String toString() {
+        return "Stutestscore{" +
+                "stsid=" + stsid +
+                ", sid=" + sid +
+                ", tpid=" + tpid +
+                ", stsscore=" + stsscore +
+                ", b1='" + b1 + '\'' +
+                ", b2='" + b2 + '\'' +
+                ", b3='" + b3 + '\'' +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(stsid, sid, tpid, stsscore, b1, b2, b3);
     }
