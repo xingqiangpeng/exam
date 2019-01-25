@@ -159,9 +159,6 @@
 			<table  class="layui-table" id="chaxuns">
 				<tr>
 					<button class="layui-btn" v-on:click="sava">保存</button>
-					<button class="layui-btn layui-btn-primary">保存并关闭</button>
-					<button class="layui-btn layui-btn-primary">保存并新增</button>
-					<button class="layui-btn layui-btn-primary">关闭</button>
 				</tr>
 			</table>
 		</div>
@@ -170,6 +167,7 @@
 		var zifu=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 		var data={list:[{daan:"答案1"},{daan:"答案2"}],anlist:[{daans:"答案1"},{daans:"答案2"}],tklist:[{tkdaan:"答案1"},{tkdaan:"答案2"}]}
         var cxtanswer="";
+
 		var vueapp=new Vue({
 			el:"#app",
 			data:{
@@ -207,32 +205,58 @@
                     this.data.tklist.pop();
                 },
 				sava:function () {
-				    if(confirm("是否添加试题？")){
+				    var statue=true;
+				    //判断是否所有的属性都填写完整
+					if($("#qboutline").val()==""){
+					    alert("所属分类不能为空！");
+					}else if($("#qbtext").val()==""){
+					    alert("试题内容不能为空！")
+					}else  if(confirm("是否添加试题？")){
                         if($("#qbtype").val()=="单选题"){
-                            var stroptions="";
-                            var s1=this.data.list;
-                            for (var i = 0; i < s1.length; i++) {
-                                stroptions=stroptions+zifu[i]+":"+s1[i].daan;
-                                if (i<s1.length-1)  stroptions+="/";
-                            }
-                            $.post("tikuxinzeng.do", {
-                                qboutline:$("#qboutline").val(),
-                                qbtype:$("#qbtype").val(),
-                                qbtext:$("#qbtext").val(),
-                                qboptions:stroptions,
-                                qbanswer:$("input[name='radios']:checked").val(),
-                                qbdifficulty:$("#qbdifficulty").val()
-                            }, function (data) {
-                                if(data!=null)
-                                    alert("添加成功");
-                            })
+                            if($("input[name='radios']:checked").val()==null){
+                                alert("单选题必须选择答案！")
+							} else{
+                                var stroptions="";
+                                var s1=this.data.list;
+                                for (var i = 0; i < s1.length; i++) {
+                                    if(s1[i].daan==""){
+                                        alert("答案不能为空！");
+                                        statue=false;
+                                        break;
+									}else{
+                                        stroptions=stroptions+zifu[i]+":"+s1[i].daan;
+                                        if (i<s1.length-1)  stroptions+="/";
+									}
+                                }
+                                if(statue){
+                                    $.post("tikuxinzeng.do", {
+                                        qboutline:$("#qboutline").val(),
+                                        qbtype:$("#qbtype").val(),
+                                        qbtext:$("#qbtext").val(),
+                                        qboptions:stroptions,
+                                        qbanswer:$("input[name='radios']:checked").val(),
+                                        qbdifficulty:$("#qbdifficulty").val(),
+                                        async: false,
+                                    }, function (data) {
+                                        if(data!=null)
+                                            alert("添加成功");
+                                    })
+								}
+
+							}
                         }
                         if($("#qbtype").val()=="多选题"){
                             var stroptions="";
                             var s1=this.data.anlist;
                             for (var i = 0; i < s1.length; i++) {
+                                if(s1[i].daans==""){
+                                    alert("答案不能为空！");
+                                    statue=false;
+                                    break;
+                                }else{
                                 stroptions=stroptions+zifu[i]+":"+s1[i].daans;
                                 if (i<s1.length-1)  stroptions+="/";
+                                }
                             }
                             console.log(stroptions);
                             var stranswer="";
@@ -240,43 +264,61 @@
                             for (var i = 0; i < s2.length; i++) {
                                 stranswer=stranswer+s2[i]._value;
                             }
-                            $.post("tikuxinzeng.do", {
-                                qboutline:$("#qboutline").val(),
-                                qbtype:$("#qbtype").val(),
-                                qbtext:$("#qbtext").val(),
-                                qboptions:stroptions,
-                                qbanswer:stranswer,
-                                qbdifficulty:$("#qbdifficulty").val()
-                            }, function (data) {
-                                if(data!=null)
-                                    alert("添加成功");
-                            })
+                            if(statue){
+                                if(stranswer.length==0){
+                                    alert("多选题至少要有一个答案！");
+                                }else {
+                                    $.post("tikuxinzeng.do", {
+                                        qboutline: $("#qboutline").val(),
+                                        qbtype: $("#qbtype").val(),
+                                        qbtext: $("#qbtext").val(),
+                                        qboptions: stroptions,
+                                        qbanswer: stranswer,
+                                        qbdifficulty: $("#qbdifficulty").val(),
+                                        async: false,
+                                    }, function (data) {
+                                        if (data != null)
+                                            alert("添加成功");
+                                    })
+                                }
+							}
                         }
                         if($("#qbtype").val()=="判断题"){
-                            $.post("tikuxinzeng.do", {
-                                qboutline:$("#qboutline").val(),
-                                qbtype:$("#qbtype").val(),
-                                qbtext:$("#qbtext").val(),
-                                qboptions:"正确/错误",
-                                qbanswer:$("input[name='ra']:checked").val(),
-                                qbdifficulty:$("#qbdifficulty").val()
-                            }, function (data) {
-                                if(data!=null)
-                                    alert("添加成功");
-                            })
+                            if($("input[name='ra']:checked").val()==null){
+                                alert("判断题必须选择答案！");
+							}else{
+                                $.post("tikuxinzeng.do", {
+                                    qboutline:$("#qboutline").val(),
+                                    qbtype:$("#qbtype").val(),
+                                    qbtext:$("#qbtext").val(),
+                                    qboptions:"正确/错误",
+                                    qbanswer:$("input[name='ra']:checked").val(),
+                                    qbdifficulty:$("#qbdifficulty").val(),
+                                    async: false,
+                                }, function (data) {
+                                    if(data!=null)
+                                        alert("添加成功");
+                                })
+							}
+
                         }
                         if($("#qbtype").val()=="问答题"){
-                            $.post("tikuxinzeng.do", {
-                                qboutline:$("#qboutline").val(),
-                                qbtype:$("#qbtype").val(),
-                                qbtext:$("#qbtext").val(),
-                                qboptions:"请填写答案",
-                                qbanswer:$("#wendati").val(),
-                                qbdifficulty:$("#qbdifficulty").val()
-                            }, function (data) {
-                                if(data!=null)
-                                    alert("添加成功");
-                            })
+                            if($("#wendati").val()==""){
+                                alert("问答题答案不能为空！");
+							}else{
+                                $.post("tikuxinzeng.do", {
+                                    qboutline:$("#qboutline").val(),
+                                    qbtype:$("#qbtype").val(),
+                                    qbtext:$("#qbtext").val(),
+                                    qboptions:"请填写答案",
+                                    qbanswer:$("#wendati").val(),
+                                    qbdifficulty:$("#qbdifficulty").val(),
+                                    async: false,
+                                }, function (data) {
+                                    if(data!=null)
+                                        alert("添加成功");
+                                })
+							}
                         }
                         if($("#qbtype").val()=="程序题"){
                             $.post("tikuxinzeng.do", {
@@ -285,7 +327,8 @@
                                 qbtext:$("#qbtext").val(),
                                 qboptions:"文件上传",
                                 qbanswer:cxtanswer,
-                                qbdifficulty:$("#qbdifficulty").val()
+                                qbdifficulty:$("#qbdifficulty").val(),
+                                async: false,
                             }, function (data) {
                                 if(data!=null)
                                     alert("添加成功");
@@ -295,8 +338,12 @@
                             var tkanswer="";
                             var s2=this.data.tklist;
                             for (var i = 0; i < s2.length; i++) {
-                                tkanswer=tkanswer+s2[i].tkdaan;
-                                if (i<s2.length-1)  tkanswer+="/";
+                                if(s2[i].tkdaan==""){
+
+								}else{
+                                    tkanswer=tkanswer+s2[i].tkdaan;
+                                    if (i<s2.length-1)  tkanswer+="/";
+								}
                             }
                             $.post("tikuxinzeng.do", {
                                 qboutline:$("#qboutline").val(),
@@ -304,7 +351,8 @@
                                 qbtext:$("#qbtext").val(),
                                 qboptions:data.tklist.length,
                                 qbanswer:tkanswer,
-                                qbdifficulty:$("#qbdifficulty").val()
+                                qbdifficulty:$("#qbdifficulty").val(),
+                                async: false,
                             }, function (data) {
                                 if(data!=null)
                                     alert("添加成功");

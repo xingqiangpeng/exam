@@ -119,7 +119,7 @@
                                 <div class="shows activeshow">
                                     <table class="tdhi">
                                         <tr>
-                                            <td><a href="#">编辑考试</a></td>
+                                            <td><a href="#" v-on:click="changeexam(index)">编辑考试</a></td>
                                         </tr>
                                         <tr>
                                             <td><a href="#">打开考试链接</a></td>
@@ -134,7 +134,7 @@
                                             <td><a href="#">查看发布信息</a></td>
                                         </tr>
                                         <tr>
-                                            <td><a href="#" v-on:click="daochushijuan(index)">导出试卷</a></td>
+                                            <td><a href="#">导出试卷</a></td>
                                         </tr>
                                         <tr>
                                             <td><a href="#" v-on:click="chuanzhi(index)">人工评分</a></td>
@@ -149,7 +149,7 @@
                                             <td><a href="#">成绩统计</a></td>
                                         </tr>
                                         <tr>
-                                            <td><a href="#" v-on:click="daantongji(index)">答案统计</a></td>
+                                            <td><a href="#">答案统计</a></td>
                                         </tr>
                                         <tr>
                                             <td><a href="#">查看考试反馈</a></td>
@@ -220,6 +220,7 @@
                 $.post("../updatetestpaperdata.do", {
                     name1:JSON.stringify(vueapps.data)
                 }, function (data) {
+                    console.log(data)
                     if(data>0){
                         alert("修改成功")
                     }else{
@@ -288,6 +289,10 @@
                 $.post("../word.do", {tpid:vueap.data[i].tpid}, function (data) {
                     alert(data)
             });
+            },
+            changeexam:function (i) {
+                localStorage.setItem("kaoshitpid",this.data[i].tpid);
+                window.top.vue.change("kaoshi.html");
             }
         }
     });
@@ -310,6 +315,7 @@
     });
     $.post("../testpaperdata.do", {}, function (data) {
         vueap.data = data;
+        console.log(JSON.stringify(data) )
     });
     layui.use(['element','layer','laydate'], function() {
         var element = layui.element;
