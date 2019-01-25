@@ -199,22 +199,5 @@ public class Testpaper {
         return Objects.hash(tpid, tpname, tpbeizhu, tptype, tpwritemessage, tpscore, tpstartdate, tpenddate, tpdatitime, tpfabu, b1, b2, b3);
     }
 
-    @Override
-    public String toString() {
-        return "Testpaper{" +
-                "tpid=" + tpid +
-                ", tpname='" + tpname + '\'' +
-                ", tpbeizhu='" + tpbeizhu + '\'' +
-                ", tptype='" + tptype + '\'' +
-                ", tpwritemessage='" + tpwritemessage + '\'' +
-                ", tpscore=" + tpscore +
-                ", tpstartdate='" + tpstartdate + '\'' +
-                ", tpenddate='" + tpenddate + '\'' +
-                ", tpdatitime=" + tpdatitime +
-                ", tpfabu='" + tpfabu + '\'' +
-                ", b1='" + b1 + '\'' +
-                ", b2='" + b2 + '\'' +
-                ", b3='" + b3 + '\'' +
-                '}';
-    }
+
 }

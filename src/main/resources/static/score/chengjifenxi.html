@@ -18,11 +18,12 @@
 </body>
 <script>
     if (type == "安排考试") {
-        $.post("../../findbttpid1.do", {tpid: 4}, function (data) {
+        $.post("../../findbttpid1.do", {tpid: objsss.tpid}, function (data) {
             var datas=sorts(data)
+            dds(datas)
         });
     } else {
-        $.post("../../findbttpid2.do", {tpid: 2}, function (data) {
+        $.post("../../findbttpid2.do", {tpid: objsss.tpid}, function (data) {
             var datas=sorts1(data)
             dds(datas)
         });
@@ -117,11 +118,14 @@
     }
 
     function dds(datas) {
-        
+        var arr=[];
+        for (var i = 0; i < datas.length; i++) {
+            arr[i]=i;
+        }
         var myChart = echarts.init(document.getElementById('main'));
         option = {
             title: {
-                text: '堆叠区域图'
+                text: '答案统计折线图'
             },
             tooltip: {
                 trigger: 'axis',
@@ -133,7 +137,7 @@
                 }
             },
             legend: {
-                data: ['邮件营销']
+                data: ['答案统计']
             },
             toolbox: {
                 feature: {
@@ -150,7 +154,7 @@
                 {
                     type: 'category',
                     boundaryGap: false,
-                    data: ['周一', '周二', '周三', '周四']
+                    data: arr
                 }
             ],
             yAxis: [
@@ -160,7 +164,7 @@
             ],
             series: [
                 {
-                    name: '邮件营销',
+                    name: '成绩统计',
                     type: 'line',
                     stack: '总量',
                     areaStyle: {},
