@@ -66,6 +66,7 @@ public class StutestpaperController {
     }
     @RequestMapping("findbynames2.do")
     public Object findbynames2(String snumber,String id){
+        System.out.println(snumber+","+id);
         return stutestpaperRepository.findBynames2(Integer.parseInt(id),snumber,Integer.parseInt(id));
     }
     @RequestMapping("updateBysnumber.do")

@@ -530,7 +530,12 @@
         for(var i=0;i<vue.datalist.length;i++){
             for(var j=0;j<vue.datalist[i].list.length;j++){
                 if(vue.datalist[i].list[j].qbtpye=="多选题"){
-                    vue.datalist[i].list[j].answer=vue.datalist[i].list[j].answer.join("");
+                    var stranser="";
+                    for (var k = 0; k < vue.datalist[i].list[j].answer.length; k++) {
+                        stranser+=vue.datalist[i].list[j].answer[k];
+                        console.log(vue.datalist[i].list[j].answer[k])
+                    }
+                    vue.datalist[i].list[j].answer=stranser;
                 }
                 if(vue.datalist[i].list[j].qbtpye=="填空题"){
                     var str="";

@@ -169,6 +169,7 @@
     });
     if(type=='安排考试'){
         var sname=localStorage.getItem("sname");
+        console.log(pjnumber+pjshiid);
         $.post("../findbynames2.do", {snumber: pjnumber, id: pjshiid}, function (data) {
             data.forEach(item => item.stpscore = "");
             vue.data = data;

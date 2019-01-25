@@ -22,8 +22,8 @@ public interface StutestpaperRepository extends JpaRepository<Stutestpaper,Integ
             "s1 on s.tpid=s1.tpid and s.tqnum=s1.tqnum where s.sname=?) u CROSS JOIN (select tpname from testpaper where tpid=?) r",nativeQuery = true)
     List<Map<String,Object>> findBynames(int tpid,String sname,int id);
     //登录考生的查询方式
-    @Query(value = "select * from (select s.lstpid,s.snumber,s.lstpanswer,s1.*  from loginstutestpaper s left outer join (select t.tpid,t.tqnum,t.tqscore,q.qbtype,q.qbtext,q.qbanswer,q.qboptions,t.tqbigtitle from Testquestions t left outer join questionbank q on t.qbid=q.qbid  where tpid=4) \n" +
-            "s1 on s.tpid=s1.tpid and s.tqnum=s1.tqnum where s.snumber='777777') u CROSS JOIN (select tpname from testpaper where tpid=4) r order by tqbigtitle ",nativeQuery = true)
+    @Query(value = "select * from (select s.lstpid,s.snumber,s.lstpanswer,s1.*  from loginstutestpaper s left outer join (select t.tpid,t.tqnum,t.tqscore,q.qbtype,q.qbtext,q.qbanswer,q.qboptions,t.tqbigtitle from Testquestions t left outer join questionbank q on t.qbid=q.qbid  where tpid=?) \n" +
+            "s1 on s.tpid=s1.tpid and s.tqnum=s1.tqnum where s.snumber=?) u CROSS JOIN (select tpname from testpaper where tpid=?) r order by tqbigtitle ",nativeQuery = true)
     List<Map<String,Object>> findBynames2(int tpid,String snumber,int id);
     @Modifying
     @Query("update Stutestpaper set stpscore=?1 where stpid=?2")

@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface TestpaperRepository extends JpaRepository<Testpaper,Integer> {
     //查询考试进行中信息以及参加了考试的人数
-    @Query(value = "select t.*,s.sums from Testpaper t left outer join (select tpid,count(*) sums from stutestscore group by tpid) s on t.tpid=s.tpid   where t.tpfabu in ('未发布','发布中') ",nativeQuery = true)
+    @Query(value = "select t.*,s.sums from Testpaper t left outer join (select tpid,count(*) sums from stutestscore group by tpid) s on t.tpid=s.tpid   where t.tpfabu in ('未发布','发布中','已发布') ",nativeQuery = true)
     List<Map<String,Object>> findbytpfabu1();
     //根据id删除试卷表对应的题目表
     @Modifying
@@ -38,8 +38,9 @@ public interface TestpaperRepository extends JpaRepository<Testpaper,Integer> {
     List<Stutestscore2> findsrcroBytpids(int tpid);
     Testpaper findByTpidAndTpfabuNot(int tpid,String tpfabu);
 
-    @Query(value = "select a.*,t1.tpname from (select t.tpid,t.tqbigtitle,t.tqnum,q.qbtext,q.qboptions,q.qbtype from testquestions t left outer join questionbank q on t.qbid=q.qbid where t.tpid=?) a,testpaper t1 where t1.tpid=a.tpid",nativeQuery = true)
+    @Query(value = "select a.*,t1.tpname from (select t.tpid,t.tqbigtitle,t.tqnum,q.qbtext,q.qboptions,q.qbtype from testquestions t left outer join questionbank q on t.qbid=q.qbid where t.tpid=?) a,testpaper t1 where t1.tpid=a.tpid order by a.tqnum",nativeQuery = true)
     List<Map<String,Object>> findTestpaersContent(int tpid);
+
     List<Testpaper> findAllByTpname(String tpname);
 
     @Transactional
