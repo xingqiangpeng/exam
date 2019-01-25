@@ -6,6 +6,7 @@ import com.four.exam.entity.Student;
 import com.four.exam.entity.Testpaper;
 import com.four.exam.repository.StudentRepository;
 import com.four.exam.repository.TestpaperRepository;
+import com.four.exam.utils.Word;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,7 +63,9 @@ public class TestpaperController {
 
     //查看安排考试的学生
     @RequestMapping("findsrcroBytpid.do")
-    public Object findsrcroBytpid(String tpid) {return testpaperRepository.findsrcroBytpid(Integer.parseInt(tpid));}
+    public Object findsrcroBytpid(String tpid) {
+        System.out.println(tpid);
+        return testpaperRepository.findsrcroBytpid(Integer.parseInt(tpid));}
 
     //查看非安排考试的学生
     @RequestMapping("findsrcroBytpids.do")
@@ -117,4 +120,13 @@ public class TestpaperController {
         return testpaperRepository.findById(new Integer(sjid));
     }
 
+    @RequestMapping("word.do")
+    public String word(String tpid){
+        try{
+            Word.testSimpleWrite(testpaperRepository.findTestpaersContent(Integer.parseInt(tpid)));
+            return "导出成功";
+        }catch (Exception e){
+            return "导出错误";
+        }
+    }
 }

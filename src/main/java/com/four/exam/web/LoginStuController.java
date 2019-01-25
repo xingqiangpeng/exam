@@ -7,6 +7,7 @@ import com.four.exam.entity.Stutestpaper;
 import com.four.exam.repository.LoginstutestpaperRepository;
 import com.four.exam.repository.StutestpaperRepository;
 import com.four.exam.repository.TestquestionsRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -207,5 +208,21 @@ public class LoginStuController {
             }
         }
     }
+    @RequestMapping("findbtsumber.do")
+    public Object findbtsumber(String snumber){
+        return loginstutestpaperRepository.findBySnumber(snumber);
+    }
+    @RequestMapping("findbtsname.do")
+    public Object findbtsname(String sname){
+        return loginstutestpaperRepository.findBysname(sname);
+    }
 
+    @RequestMapping("findbttpid1.do")
+    public Object findbttpid1(String tpid){
+        return loginstutestpaperRepository.findByTpidOrderByTqnumAsc(Integer.parseInt(tpid));
+    }
+    @RequestMapping("findbttpid2.do")
+    public Object findbttpid2(String tpid){
+        return stutestpaperRepository.findByTpidOrderByTqnumAsc(Integer.parseInt(tpid));
+    }
 }

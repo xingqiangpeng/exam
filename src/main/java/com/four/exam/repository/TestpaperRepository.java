@@ -25,11 +25,14 @@ public interface TestpaperRepository extends JpaRepository<Testpaper,Integer> {
     List<Testpaper> findAlls();
     //根据试卷id查看学生的考试总得分一有安排的
     @Modifying
-    @Query(value = "select s.stsid,s.tpid,s.stsscore,u.* from Stutestscore s left outer join Student u on s.sid=u.sid where s.tpid=? and ",nativeQuery = true)
+    @Query(value = "select s.stsid,s.tpid,s.stsscore,u.* from Stutestscore s left outer join Student u on s.sid=u.sid where s.tpid=? ",nativeQuery = true)
     List<Map<String,Object>> findsrcroBytpid(int tpid);
     //根据试卷id查看学生的考试总得分二没有安排的
     @Modifying
     @Query("select s  from Stutestscore2 s  where s.tpid=:tpid")
     List<Stutestscore2> findsrcroBytpids(int tpid);
     Testpaper findByTpidAndTpfabuNot(int tpid,String tpfabu);
+
+    @Query(value = "select a.*,t1.tpname from (select t.tpid,t.tqbigtitle,t.tqnum,q.qbtext,q.qboptions,q.qbtype from testquestions t left outer join questionbank q on t.qbid=q.qbid where t.tpid=?) a,testpaper t1 where t1.tpid=a.tpid",nativeQuery = true)
+    List<Map<String,Object>> findTestpaersContent(int tpid);
 }

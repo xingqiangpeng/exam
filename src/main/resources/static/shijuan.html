@@ -134,7 +134,7 @@
                                             <td><a href="#">查看发布信息</a></td>
                                         </tr>
                                         <tr>
-                                            <td><a href="#">导出试卷</a></td>
+                                            <td><a href="#" v-on:click="daochushijuan(index)">导出试卷</a></td>
                                         </tr>
                                         <tr>
                                             <td><a href="#" v-on:click="chuanzhi(index)">人工评分</a></td>
@@ -149,7 +149,7 @@
                                             <td><a href="#">成绩统计</a></td>
                                         </tr>
                                         <tr>
-                                            <td><a href="#">答案统计</a></td>
+                                            <td><a href="#" v-on:click="daantongji(index)">答案统计</a></td>
                                         </tr>
                                         <tr>
                                             <td><a href="#">查看考试反馈</a></td>
@@ -220,7 +220,6 @@
                 $.post("../updatetestpaperdata.do", {
                     name1:JSON.stringify(vueapps.data)
                 }, function (data) {
-                    console.log(data)
                     if(data>0){
                         alert("修改成功")
                     }else{
@@ -276,6 +275,19 @@
                 localStorage.setItem("shijuanid",this.data[i].tpid);
                 window.location.href="pinfen.html";
 
+            },
+            daantongji:function(i){
+                localStorage.setItem("testpaper",JSON.stringify(this.data[i]));
+                layer.open({
+                    area: ['800px', '600px'],
+                    type: 2,
+                    content: 'score/chengjifenxi.html' //这里content是一个普通的String
+                });
+            },
+            daochushijuan:function(i){
+                $.post("../word.do", {tpid:vueap.data[i].tpid}, function (data) {
+                    alert(data)
+            });
             }
         }
     });
@@ -298,7 +310,6 @@
     });
     $.post("../testpaperdata.do", {}, function (data) {
         vueap.data = data;
-        console.log(JSON.stringify(data) )
     });
     layui.use(['element','layer','laydate'], function() {
         var element = layui.element;

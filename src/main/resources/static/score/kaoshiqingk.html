@@ -4,18 +4,18 @@
 		<meta charset="UTF-8">
 		<title>学生考试得分情况</title>
 		<link rel="stylesheet" type="text/css" href="../js/layui/css/layui.css"/>
-		<script src="../js/layui/layui.js"></script>
+		<script src="../js/layui/layui.all.js"></script>
 		<script src="../js/vue/vue.min.js"></script>
         <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
 	</head>
 	<body>
 		<div id="app">
             <div>
-                <table>
+                <table  class="layui-table">
                     <tr>
                         <td>姓名：</td>
                         <td><input type="text"  v-model="xingming"/> </td>
-                        <td><button v-on:click="chaxun">查询</button></td>
+                        <td><button v-on:click="chaxun" class="layui-btn layui-btn-warm">查询</button></td>
                     </tr>
                 </table>
             </div>
@@ -35,8 +35,8 @@
                     <td>{{item.sdep}}</td>
                     <td>{{item.stsscore}}</td>
                     <td>
-                        <button>查看详情</button>
-                        <button>以往考试走势图</button>
+                        <button class="layui-btn layui-btn-warm" v-on:click="chakanxq(index)">查看详情</button>
+                        <button class="layui-btn layui-btn-warm">以往考试走势图</button>
                     </td>
 				</tr>
 			</table>
@@ -52,8 +52,8 @@
                     <td v-for="iteme in name">{{item[iteme]}}</td>
                     <td>{{item.stsscore}}</td>
                     <td>
-                        <button>查看详情</button>
-                        <button>以往考试走势图</button>
+                        <button class="layui-btn layui-btn-warm" v-on:click="chakanxq(index)">查看详情</button>
+                        <button class="layui-btn layui-btn-warm">以往考试走势图</button>
                     </td>
                 </tr>
             </table>
@@ -62,6 +62,7 @@
 	</body>
 	
 	<script>
+
 		var vueapp=new Vue({
 			el:"#app",
 			data:{
@@ -72,7 +73,20 @@
 			},
             methods:{
                 chaxun:function () {
-                    alert(this.xingming)
+                },
+                chakanxq:function (i) {
+                    // window.top.vue.change("score/index.html");
+                    if(obj.tptype=="安排考试"){
+                        localStorage.setItem("snumber",this.data[i].snumber)
+                    }else{
+                        var sname=this.data[i].information.split("/")[0].split(":")[1];
+                        localStorage.setItem("sname",sname)
+                    }
+                    layer.open({
+                        area: ['1000px', '300px'],
+                        type: 2,
+                        content: 'index.html' //这里content是一个普通的String
+                    });
                 }
             }
 		});
@@ -100,4 +114,19 @@
             });
         }
 	</script>
+    <script>
+        layui.use(['element','layer','laydate'], function() {
+            var element = layui.element;
+            var layer = layui.layer;
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: "#datatim1" //指定元素
+                ,type: 'datetime'
+            });
+            laydate.render({
+                elem: "#datatim2" //指定元素
+                ,type: 'datetime'
+            });
+        });
+    </script>
 </html>
