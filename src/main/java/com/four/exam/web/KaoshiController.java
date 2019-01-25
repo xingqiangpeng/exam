@@ -34,6 +34,7 @@ public class KaoshiController {
 
     /**
      * 通过@RequestBody接收参数
+     * 添加考试试卷
      */
     @ResponseBody
     @RequestMapping(value = "addtestpaper", method = RequestMethod.POST)
@@ -63,6 +64,26 @@ public class KaoshiController {
         }
     }
 
+    /**
+     *
+     * @param tpid
+     * @param tpscore
+     * @param tpfabu
+     * @return
+     * 更新考试试卷表中的及格分数和发布状态
+     */
+    @ResponseBody
+    @RequestMapping(value = "updatetestpaper", method = RequestMethod.POST)
+    public int test1(int tpid,int tpscore,String tpfabu) {
+        System.out.println("+++++++++++++++++++++");
+        System.out.println(testpaperRepository.updateTpscoreAndTpfabuByTpid(tpid,tpscore,tpfabu));
+        return testpaperRepository.updateTpscoreAndTpfabuByTpid(tpid,tpscore,tpfabu);
+    }
+
+    /**
+     * 通过题库里面题目编号拿到题目信息
+     * @param ids
+     */
     @RequestMapping("singlequestionsselectbyqbid.do")
     public void singlequestionsselectbyqbid(Integer[] ids){
         for (int i = 0; i < ids.length; i++) {
@@ -71,6 +92,10 @@ public class KaoshiController {
         }
     }
 
+    /**
+     * 拿到指定的学生信息
+     * @param ids
+     */
     @RequestMapping("examineeselectbysid.do")
     public void examineeselectbysid(Integer[] ids){
         List<Student> list=new ArrayList<Student>();

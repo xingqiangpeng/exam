@@ -108,7 +108,7 @@ public class UploadController {
         System.out.println(filename);
         File path1 = new File(ResourceUtils.getURL("classpath:").getPath());
         File file = new File(path1.getAbsolutePath(),"chengxuti/"+filename);
-        String str= filename.substring(filename.indexOf("/")+1,filename.length());
+        String str= filename;
         System.out.println(str);
         if(file.exists()){ //判断文件父目录是否存在
             response.setContentType("application/force-download");

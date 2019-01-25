@@ -128,7 +128,7 @@
             <tr>
                 <td>正确答案</td>
                 <td>
-                    参考答案啊啊啊
+                    参考答案
                 </td>
                 <td>
                     <div class="test_content_nr_main">
@@ -163,7 +163,6 @@
 <script>
     var zifu=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
     var data={list:[],anlist:[],tklist:[]}
-    var cxtanswer=""
     var cxtdaan=localStorage.getItem("bianjioneqbanswer")
     var vueapp=new Vue({
         el:"#app",
@@ -291,7 +290,7 @@
                             qbtype:$("#qbtype").val(),
                             qbtext:$("#qbtext").val(),
                             qboptions:"文件上传",
-                            qbanswer:cxtanswer,
+                            qbanswer:localStorage.getItem("bianjioneqbanswer"),
                             qbdifficulty:$("#qbdifficulty").val(),
                             qbcreatetime:localStorage.getItem("bianjioneqbcreatetime")
                         }, function (data) {
@@ -382,7 +381,7 @@
             success:function (data) {
                 obj.parentNode.getElementsByTagName("span")[0].innerHTML=data;
                 if(data!="false"){
-                    cxtanswer=data;
+                    localStorage.setItem("bianjioneqbanswer",data);
                 }
             }
         }).done(function(res) {
