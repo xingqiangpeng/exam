@@ -44,7 +44,7 @@
 			<div style="width: 700px;height: 400px;float: left;" class="btns">
 				<button class="layui-btn layui-btn-normal" v-on:click="changes('kaoshi.html')">创建考试</button>
 				<button class="layui-btn" v-on:click="changestotiku('tiku.html')">试题库</button>
-				<button class="layui-btn layui-btn-warm">考试分析</button>
+				<button class="layui-btn layui-btn-warm" onclick="jinru()">考试分析</button>
 			</div>
 		</div>
 		<div id="app1" class="clearfloat">
@@ -95,4 +95,9 @@
 		});
 		
 	</script>
+<script>
+	function jinru(){
+		window.location.href="testfenxi.html";
+    }
+</script>
 </html>

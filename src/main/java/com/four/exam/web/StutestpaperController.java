@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.four.exam.entity.Loginstutestpaper;
 import com.four.exam.entity.Stutestpaper;
-import com.four.exam.entity.Testpaper;
 import com.four.exam.repository.LoginstutestpaperRepository;
 import com.four.exam.repository.StutestpaperRepository;
 import com.four.exam.repository.Stutestscore2Repository;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,9 +108,13 @@ public class StutestpaperController {
     }
     @RequestMapping("selfindloginall.do")
     public Object selfindloginall(String sjid){
+        //找到所有这张试卷的安排的考生
         List<Map<String, Object>> maps = stutestpaperRepository.selFindAllLogin(new Integer(sjid));
+        //定义一个集合装数据
         List<Map<String, Object>> selfindall2=new ArrayList<>();
+
         for (int i = 0; i < maps.size(); i++) {
+            //获取到学生的id
             Object object=maps.get(i).get("sid");
             int sid=new Integer(object.toString());
             if(stutestscoreRepository.findBySidAndTpid(sid,new Integer(sjid)).size()==0){
@@ -122,11 +124,11 @@ public class StutestpaperController {
                 List<Map<String, Object>> maps1 = stutestpaperRepository.selFindScoreLogin(new Integer(sjid), sid);
                 for (int i1 = 0; i1 < maps1.size(); i1++) {
                     selfindall2.add(maps1.get(i1));
+
                 }
             }
-
-
         }
+
         return selfindall2;
     }
 

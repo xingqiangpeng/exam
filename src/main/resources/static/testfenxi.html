@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>考试分析</title>
+    <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+    <link rel="stylesheet" type="text/css" href="js/layui/css/layui.css" />
+    <link rel="stylesheet" href="layDate-v5.0.9/layDate-v5.0.9/laydate/theme/default/laydate.css">
+    <script src="js/layui/layui.js"></script>
+    <script src="js/vue/vue.min.js"></script>
+    <style>
+        .span1{
+            font-size: 15px;
+            line-height: 45px;
+
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="tit1" style="border: 1px solid #E6E9EE;width:1800px;height: 45px;margin: auto">
+            &nbsp;&nbsp;<img src="images/shu.png" height="16" width="16"/><span class="span1">考试分析</span>
+        </div>
+        <div id="shij1">
+            <table class="layui-table">
+                <tr>
+                    <th>考试名称</th>
+                    <th>开始时间/结束时间</th>
+                    <th>考试类型</th>
+                    <th>答题时间(分钟)</th>
+                    <th>及格分数</th>
+                    <th>参加人数</th>
+                    <th>通过人数</th>
+                    <th>平均分</th>
+                    <th>最高分</th>
+                    <th>最低分</th>
+                </tr>
+                <tr v-for="item,index in data">
+                    <td>{{item.tpname}}</td>
+                    <td>{{item.tpstartdate}}/{{item.tpenddate}}</td>
+                    <td>{{item.tptype}}</td>
+                    <td>{{item.tpdatitime}}</td>
+                    <td>{{item.tpscore}}</td>
+                    <td>{{item.counts}}</td>
+                    <td>{{item.pnum}}</td>
+                    <td>{{item.avgs}}</td>
+                    <td>{{item.maxs}}</td>
+                    <td>{{item.mins}}</td>
+
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    var vueapp = new Vue({
+        el: "#shij1",
+        data: {
+            data: []
+        }
+    });
+</script>
+<script>
+        $.post("finall.do",{},function(data){
+            for(var i in data){
+                console.log(data[i])
+            }
+            vueapp.data=data;
+        });
+</script>
+</html>

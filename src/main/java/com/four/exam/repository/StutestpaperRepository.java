@@ -35,19 +35,26 @@ public interface StutestpaperRepository extends JpaRepository<Stutestpaper,Integ
     @Modifying
    // @Query("select new map(e.empno as empno,e.ename as ename,e.job as job,e.sal as sal,d.dname as dname,d.loc as loc) from Emp e,Dept d where e.deptno=d.deptno and d.deptno=:deptno")
     //找到不是安排考试试卷的学生
-    @Query("select new map(st.tpwritemessage as tpwritemessage,tp.tptype as tptype,tp.tpscore as tpscore) from Stutestpaper st,Testpaper tp where st.tpid=tp.tpid and st.tpid=?1 group by st.sname")
+    @Query(value = "select  st.tpwritemessage, sname,tptype, tpscore from Stutestpaper st,Testpaper tp where st.tpid=tp.tpid and st.tpid=? group by st.sname",nativeQuery = true)
     List<Map<String,Object>> selFindAll(Integer tpid);
     //找到不是安排考试试卷的学生的总分
-    @Query("select new map(st.tpwritemessage as tpwritemessage,tp.tptype as tptype,sc.stsscore as stsscore,tp.tpscore as tpscore) from Stutestpaper st,Testpaper tp,Stutestscore2 sc where st.tpid=tp.tpid and st.tpid=sc.tpid and st.tpwritemessage=sc.information and st.tpid=?1 and sc.information=?2 group by st.sname")
+    @Query(value = "select h.tpwritemessage,sname,tptype, stsscore, tpscore,h.tpid from (select  st.tpwritemessage, sname,tptype, tpscore,tp.tpid from Stutestpaper st,Testpaper tp where st.tpid=tp.tpid  group by st.sname ) h,Stutestscore2 sc where h.tpwritemessage=sc.information and h.tpid=? and sc.information=?",nativeQuery = true)
     List<Map<String,Object>> selFindScore(Integer tpid,String information);
     //找到安排考试试卷的学生
-    @Query("select new map(s.sid as sid,st.snumber as snumber,s.sname as sname,s.sdep as sdep,tp.tptype as tptype,tp.tpscore as tpscore) from Loginstutestpaper st,Testpaper tp,Student s where st.tpid=tp.tpid and s.snumber=st.snumber and st.tpid=?1 group by st.snumber")
+
+    @Query(value = "select h.sid ,snumber,sname,sdep, tptype, tpscore from(select sid,s.snumber,sname,sdep,tpid from student s,LoginStuTestPaper l where s.snumber=l.snumber group by snumber) h,testpaper ts where h.tpid=ts.tpid and h.tpid=?",nativeQuery = true)
     List<Map<String,Object>> selFindAllLogin(Integer tpid);
+
     //找到安排考试试卷的学生的总分
-   @Query("select new map(s.sid as sid,st.snumber as snumber,s.sname as sname,s.sdep as sdep,tp.tptype as tptype,tp.tpscore as tpscore,stu.stsscore as stsscore) from Loginstutestpaper st,Testpaper tp,Student s,Stutestscore stu where st.tpid=tp.tpid  and s.snumber=st.snumber   and st.tpid=?1 and s.sid=?2 group by st.snumber")
+   @Query(value = " select h.sid,snumber,sname,sdep,tptype,tpscore,stsscore from(select sid,s.snumber,sname,sdep,tpid from student s,LoginStuTestPaper l where s.snumber=l.snumber group by snumber) h,testpaper ts, stutestscore sc where h.tpid=ts.tpid and sc.sid=h.sid and h.tpid=? and h.sid=? ",nativeQuery = true)
    List<Map<String,Object>> selFindScoreLogin(Integer tpid,Integer sid);
    //找到非安排考生的答题
    List<Stutestpaper> findAllBySnameAndTpid(String sname, int tpid);
 
    List<Stutestpaper> findByTpidOrderByTqnumAsc(int tpid);
+    //找到指定姓名的学生信息
+    @Query(value = " select sname,tpwritemessage from stutestpaper where sname=?",nativeQuery = true)
+    List<Map<String,Object>> selFindMessage(String sname);
+
+
 }

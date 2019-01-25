@@ -136,6 +136,10 @@
                $("#nologin").css("display","none");
                $("#loginstudnet").css("display","block");
                $.post("selfindloginall.do",{sjid:shijuanid},function(data){
+                   for (var i in data)
+                   {
+                       console.log(data[i])
+                   }
                    for(var i in data)
                    {
 
@@ -178,6 +182,7 @@
         methods:{
             nologin:function(index){
                 localStorage.setItem("sname",pfvue1.data2[index].tpwritemessage[0]);
+                localStorage.setItem("sname",pfvue1.data2[index].tpwritemessage[0]);
                 localStorage.setItem("type","非安排考试");
                 window.location.href="pijuans.html";
             }
@@ -193,9 +198,10 @@
         methods:{
             logyue:function (index) {
 
+
                 localStorage.setItem("snumber",pfvue2.logdata1[index].snumber);
                 localStorage.setItem("type","安排考试");
-                window.location.href="pijuans.html";
+               window.location.href="pijuans.html";
             },
         }
 

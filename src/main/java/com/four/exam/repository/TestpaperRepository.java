@@ -5,6 +5,7 @@ import com.four.exam.entity.Testpaper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 
+@Transactional
 public interface TestpaperRepository extends JpaRepository<Testpaper,Integer> {
     //查询考试进行中信息以及参加了考试的人数
     @Query(value = "select t.*,s.sums from Testpaper t left outer join (select tpid,count(*) sums from stutestscore group by tpid) s on t.tpid=s.tpid   where t.tpfabu in ('未发布','发布中','已发布') ",nativeQuery = true)
@@ -47,4 +49,17 @@ public interface TestpaperRepository extends JpaRepository<Testpaper,Integer> {
     @Modifying
     @Query(value = "update Testpaper set tpscore=:tpscore,tpfabu=:tpfabu where tpid=:tpid")
     int updateTpscoreAndTpfabuByTpid(int tpid,int tpscore,String tpfabu);
+    //找到安排考试试卷的总体信息
+    @Modifying
+    @Query(value = "select t.tpid,tpname,tptype,tpscore,tpstartdate,tpenddate,tpdatitime,max(stsscore) as maxs,min(stsscore) as mins, count(*) as counts,avg(stsscore) as avgs from testpaper t,stutestscore s where t.tpid=s.tpid group by s.tpid",nativeQuery = true)
+    List<Map<String,Object>> findLoginMessage();
+    //找到非安排考试试卷的总体信息
+    @Modifying
+    @Query(value = "select t.tpid,tpname,tptype,tpscore,tpstartdate,tpenddate,tpdatitime,max(stsscore) as maxs,min(stsscore) as mins,count(*) as counts,avg(stsscore) as avgs from testpaper t,stutestscore2 s where t.tpid=s.tpid group by s.tpid",nativeQuery = true)
+    List<Map<String,Object>> findMianMessage();
+
+    //获得所有试卷
+    @Modifying
+    @Query(value = "select t.tpid,tpname,tptype,tpscore,tpstartdate,tpenddate,tpdatitime from testpaper t",nativeQuery = true)
+    List<Map<String,Object>> findAllMessage();
 }
