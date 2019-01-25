@@ -205,7 +205,8 @@
             <div id="app1">
                 <div>
                     <button v-on:click="chuangjian" class="layui-btn layui-btn-normal">创建试题大题</button>
-                    <span>共<label class="redfont">{{subjectmain.length}}</label>道大题，共<label class="redfont">{{scores}}</label>分</span>
+                    <span>共<label class="redfont">{{subjectmain.length}}</label>道大题，共<label class="redfont">{{scores}}</label>分</span>&emsp;&emsp;&emsp;
+                    考试及格分数:<input type="text" id="tpscore" placeholder="请输入考试及格分数！"/>
                 </div>
                 <div>
                     <table class="layui-table" v-for="item,index in subjectmain">
@@ -270,7 +271,7 @@
                 <p>1.将二维码发给考试</p>
                 <div id="qrid"></div>
                 <p>2.复制连接发给考生，打开连接参加考试</p>
-                <input type="text" id="kaoshenghttp" width="100" height="20"/>
+                <input type="text" id="kaoshenghttp" style="width: 250px;height: 30px" readonly="readonly"/>
             </div>
         </div>
     </div>
@@ -283,10 +284,11 @@
 </body>
         <script>
             //获取到当前试卷的编号******
-            $(function() {
-                var qrstr = "http://localhost:9999/kaoshi.html?id="+localStorage.getItem("kaoshitpid");
+            /*$(function() {
+                var qrstr = "http://localhost:9999/kaishi.html?id="+localStorage.getItem("kaoshitpid");
                 $('#qrid').qrcode({width: 280,height: 280,background:"#ffffff",text: qrstr});//指定二维码大小
-            });
+                $('#qrid').html("");
+            });*/
 
         // 添加表格行
         function addrow() {
@@ -350,7 +352,11 @@ var statue=false;
             },
             //删除大题
             shanchu: function (k) {
+                //获取到当前大题的总分
+                var scores=subjectmain[k].allscore;
                 if(confirm("确定要删除大题吗？")){
+                    //总分的改变
+                    vueapps.scores-=scores;
                     //获取到要删除的大题编号
                     tqbigtitlel=subjectmain[k].titl;
                     //页面中删除大题
@@ -393,10 +399,17 @@ var statue=false;
             },
             //删除题目
             deleteonetq:function(i,j){
+                //获取到当前小题的分数
+                var score=subjectmain[i].main[j].fenshu;
                 if(confirm("确定要删除吗？")){
+                    //当前大题的分数改变
+                    subjectmain[i].allscore-=score;
+                    //总分的改变
+                    vueapps.scores-=score;
                     //获取到对应的数据
                     //获取到对应的tqid
                     var tqid=subjectmain[i].main[j].tqid;
+                    console.log(tqid)
                     //页面中删除小题
                     subjectmain[i].main.splice(j,1)
                     subjectmain[i].numbers-=1;
@@ -721,12 +734,8 @@ var statue=false;
     })
     // 点击保存去设计试卷跳到设计试卷
     $("#todesign").click(function () {
-        $("#informationli").removeClass("layui-this");
-        $("#informationdiv").removeClass("layui-show");
-        $("#designdiv").addClass("layui-show");
-        $("#designli").addClass("layui-this");
-        console.log(typeof $("input[name='tptype']:checked").val());
-        console.log($("input[name='tptype']:checked").val());
+        // console.log(typeof $("input[name='tptype']:checked").val());
+        // console.log($("input[name='tptype']:checked").val());
 
         var jsonStr = "";                                    //设置考生需要填写的信息
         // 判断参加的方式为那种方式
@@ -773,7 +782,6 @@ var statue=false;
             })
             jsonStr += "口令:" + $("#command").val();
         }
-
         if ("安排考试" == $("input[name='tptype']:checked").val()) {
             $('#kaoshengtable').find('tr').each(function () {
                 jsonStr += "sdep:"+$(this).find("td:eq(2)").text()+";snumber:"+$(this).find("td:eq(1)").text()+";"
@@ -785,43 +793,117 @@ var statue=false;
         /**重点：ajax的type,url,dataType,data属性*/
         console.log($("#tpname").val());
         console.log($("#tpbeizhu").val());
-        // var tpid=-1;
-        $.ajax({
-            async: false,
-            cache: false,
-            type: 'POST',
-            url: 'addtestpaper',
-            dataType: "json",
-            data: {
-                tpname: $("#tpname").val(),
-                tpbeizhu: $("#tpbeizhu").val(),
-                tptype: $("input[name='tptype']:checked").val(),
-                tpwritemessage: jsonStr,
-                tpstarttime: $("#tpstarttime").val(),
-                tpendtime: $("#tpendtime").val(),
-                tpdatitime: $("#tpdatitime").val(),
-                tpfabu:"未发布",
-                // tpid:tpid
-            },
-            success: function (data) {
-                console.log(data);
-                localStorage.setItem("kaoshitpid",data);
-            }
-        });
+        var flags=1;
+        var timer1=$("#tpstarttime").val().trim();
+        var timer2=$("#tpendtime").val().trim();
+        var tpdatitime=$("#tpdatitime").val().trim();
+        var tpname=$("#tpname").val().trim();
+        if (tpname == null || timer1 ==" ") {
+            confirm("请输入考试名称！")
+            flags = 0;
+        }
+        if (timer1 == null || timer1 ==" ") {
+            confirm("请输入考试开始时间！")
+            flags = 0;
+        }
+        if (timer2 == null || timer2=="") {
+            confirm("请输入考试结束时间！")
+            flags = 0;
+        }
+        if (timer1 > timer2) {
+            confirm("考试开始时间必须考试结束时间！");
+            flags = 0;
+        }
+        console.log(tpdatitime);
+        console.log("tpdatitime:"+isNaN(tpdatitime));
+        if (tpdatitime==" "||tpdatitime==null){
+            confirm("请输入答题时长！")
+            flags = 0;
+        }
+       /* if (isNaN(tpdatitime)){
+            confirm("您输入的答题时长有误，请重新输入！")
+            flags = 0;
+        }*/
+        if (flags==1){
+            $.ajax({
+                async: false,
+                cache: false,
+                type: 'POST',
+                url: 'addtestpaper',
+                dataType: "json",
+                data: {
+                    tpname: $("#tpname").val(),
+                    tpbeizhu: $("#tpbeizhu").val(),
+                    tptype: $("input[name='tptype']:checked").val(),
+                    tpwritemessage: jsonStr,
+                    tpstarttime: $("#tpstarttime").val(),
+                    tpendtime: $("#tpendtime").val(),
+                    tpdatitime: $("#tpdatitime").val(),
+                    tpfabu:"未发布",
+                },
+                success: function (data) {
+                    console.log(data);
+                    localStorage.setItem("kaoshitpid",data);
+                }
+            });
+            $("#informationli").removeClass("layui-this");
+            $("#informationdiv").removeClass("layui-show");
+            $("#designdiv").addClass("layui-show");
+            $("#designli").addClass("layui-this");
+        }
     });
     // 点击完成设计去发布考试跳到发布试卷
     $("#toissue").click(function () {
-        $("#designli").removeClass("layui-this");
-        $("#designdiv").removeClass("layui-show");
-        $("#issuediv").addClass("layui-show");
-        $("#issueli").addClass("layui-this");
-        var http=$("#tpname").val();
-        if (http){
-            $('#kaoshenghttp').val('http://localhost:9999/kaoshi.html?id='+localStorage.getItem("kaoshitpid"));
+        // var tpscore="";
+        var tpid=localStorage.getItem("kaoshitpid");
+        console.log(vueapps.scores);
+        console.log($("#tpscore").val());
+        console.log("tpid:"+tpid);
+        // if ($("#tpscore").val()<vueapps.scores){
+        //     var tpscore=$("#tpscore").val()+"/"+vueapps.scores;
+        var fal=0;
+        if(tpid>0&&$("#tpscore").val()<vueapps.scores&&$("#tpscore").val()>0){
+            $.ajax({
+                async: false,
+                cache: false,
+                type: 'POST',
+                url: 'updatetestpaper',
+                dataType: "json",
+                data: {
+                    tpid:tpid,
+                    tpscore: $("#tpscore").val(),
+                    tpfabu:"已发布",
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data>0){
+                        fal=1;
+                    }
+                }
+            });
+        }else if(tpid<0){
+            confirm("请输入试卷信息！");
         }else{
-            $('#kaoshenghttp').val('');
+            confirm("请重新输入考试及格分数！");
         }
+        console.log("fal:"+fal);
+        // 请求成功才能跳到发布试卷页面
+        if(fal==1){
+            $("#designli").removeClass("layui-this");
+            $("#designdiv").removeClass("layui-show");
+            $("#issuediv").addClass("layui-show");
+            $("#issueli").addClass("layui-this");
 
+            $('#qrid').html("");
+            // var http=$("#tpname").val();
+            if (tpid){
+                var qrstr = "http://localhost:9999/kaishi.html?id="+tpid;
+                $('#qrid').qrcode({width: 280,height: 280,background:"#ffffff",text: qrstr});//指定二维码大小
+                $('#kaoshenghttp').val('http://localhost:9999/kaishi.html?id='+tpid);
+            }else{
+                $('#kaoshenghttp').val('');
+            }
+        }
     });
     // 点击返回上一步跳到考试信息
     $("#toinformation").click(function () {
@@ -842,6 +924,7 @@ var statue=false;
             , type: 'datetime'
         });
     });
+
     //页面加载时从数据库读取数据
     $.post("kaoshi1.do", {
         tpid:localStorage.getItem("kaoshitpid")
@@ -883,5 +966,9 @@ var statue=false;
             vueapps.scores+=subjectmain[i].allscore;
         }
     })
+        console.log($("#designdiv").hasClass("layui-show"));
+    if($("#designdiv").hasClass("layui-show")&&$("#designli").hasClass("layui-this")){
+        console.log("我是设计设计试卷页面")
+    }
 </script>
 </html>

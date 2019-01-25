@@ -69,7 +69,7 @@
                                                 <ul>
 
                                                     <li class="option" v-for="item1,index1 in items.qboptions">
-                                                        <input type="radio" class="radioOrCheck" name="answer1"
+                                                        <input type="radio" class="radioOrCheck" :name="['answer1_'+index+'_'+indexs+'_']"
                                                                :id="['answer_'+index+'_'+indexs+'_'+index1]"
                                                                v-model="items.answer" :value="zifu[index1]"
                                                         />
@@ -522,7 +522,7 @@
                 name[i].list[j].tpname=objp.tpname;
             }
         }
-        console.log(name)
+        console.log(name[0].list[0])
         return name;
     }
 

@@ -138,12 +138,24 @@
 							参考答案
 						</td>
 						<td>
-							<textarea style="width: 450px;height: 80px;resize: none" id="chengxuti"></textarea>
+							<div class="test_content_nr_main">
+								<ul class="optionss">
+									<li>
+										<form>
+										</form>
+										<form enctype="multipart/form-data">
+											<input type="text" name="tpname" style="display: none;">
+											<input type="file" name="fileName" style="width: 200px !important;"/>
+											<button  type="button" :onclick="['dd(this)']">上传文件</button>
+											<span>还未上传文件</span>
+										</form>
+									</li>
+								</ul>
+							</div>
 						</td>
 					</tr>
 				</table>
 			</div>
-
 			<table  class="layui-table" id="chaxuns">
 				<tr>
 					<button class="layui-btn" v-on:click="sava">保存</button>
@@ -157,6 +169,7 @@
 	<script>
 		var zifu=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 		var data={list:[{daan:"答案1"},{daan:"答案2"}],anlist:[{daans:"答案1"},{daans:"答案2"}],tklist:[{tkdaan:"答案1"},{tkdaan:"答案2"}]}
+        var cxtanswer="";
 		var vueapp=new Vue({
 			el:"#app",
 			data:{
@@ -271,7 +284,7 @@
                                 qbtype:$("#qbtype").val(),
                                 qbtext:$("#qbtext").val(),
                                 qboptions:"文件上传",
-                                qbanswer:$("#chengxuti").val(),
+                                qbanswer:cxtanswer,
                                 qbdifficulty:$("#qbdifficulty").val()
                             }, function (data) {
                                 if(data!=null)
@@ -310,5 +323,22 @@
 			var element = layui.element;
 			var layer = layui.layer;
 		});
+        function dd(obj){
+            $.ajax({
+                url: '/cxtfileUpload',
+                type: 'POST',
+                cache: false,
+                data: new FormData(obj.parentNode),
+                processData: false,
+                contentType: false,
+                success:function (data) {
+                    obj.parentNode.getElementsByTagName("span")[0].innerHTML=data;
+                    if(data!="false"){
+                        cxtanswer=data;
+                    }
+                }
+            }).done(function(res) {
+            }).fail(function(res) {});
+        }
 	</script>
 </html>

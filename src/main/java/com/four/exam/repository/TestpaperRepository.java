@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,4 +41,9 @@ public interface TestpaperRepository extends JpaRepository<Testpaper,Integer> {
     @Query(value = "select a.*,t1.tpname from (select t.tpid,t.tqbigtitle,t.tqnum,q.qbtext,q.qboptions,q.qbtype from testquestions t left outer join questionbank q on t.qbid=q.qbid where t.tpid=?) a,testpaper t1 where t1.tpid=a.tpid",nativeQuery = true)
     List<Map<String,Object>> findTestpaersContent(int tpid);
     List<Testpaper> findAllByTpname(String tpname);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Testpaper set tpscore=:tpscore,tpfabu=:tpfabu where tpid=:tpid")
+    int updateTpscoreAndTpfabuByTpid(int tpid,int tpscore,String tpfabu);
 }

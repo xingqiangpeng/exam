@@ -60,7 +60,7 @@
                                 <a :href="['/download.do?filename='+item.lstpanswer]" tabindex="_blank"   class="layui-btn layui-btn-warm">下载考试答案</a>
                             </td>
                             <td>
-                                <a :href="['/download.do?filename='+item.qbanswer]" tabindex="_blank"   class="layui-btn layui-btn-warm">下载参考答案</a>
+                                <a :href="['/cxtdownload.do?filename='+item.qbanswer]" tabindex="_blank"  class="layui-btn layui-btn-warm">下载参考答案</a>
                             </td>
                         </tr>
                     </table>
@@ -99,7 +99,9 @@
                             <td>
                                 <a :href="['/download.do?filename='+item.stpanswer]"   class="layui-btn layui-btn-warm">下载考试答案</a>
                             </td>
-                            <td><a :href="['/download.do?filename='+item.qbanswer]"   class="layui-btn layui-btn-warm">下载参考答案</a></td>
+                            <td>
+                                <a :href="['/cxtdownload.do?filename='+item.qbanswer]"   class="layui-btn layui-btn-warm">下载参考答案</a>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -166,17 +168,22 @@
         }
     });
     if(type=='安排考试'){
+        var sname=localStorage.getItem("sname");
         $.post("../findbynames2.do", {snumber: pjnumber, id: pjshiid}, function (data) {
             data.forEach(item => item.stpscore = "");
             vue.data = data;
-            console.log(data)
+            console.log("fdfdf222")
+            console.log(data);
         });
     }else{
+        var sname=localStorage.getItem("sname");
         $.post("../findbynames.do", {name: sname, id: pjshiid}, function (data) {
             data.forEach(item => item.stpscore = "");
             vue.data = data;
+            console.log("fdfdf1111")
             console.log(data)
         });
     }
+
 </script>
 </html>

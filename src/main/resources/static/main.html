@@ -43,7 +43,7 @@
 			</div>
 			<div style="width: 700px;height: 400px;float: left;" class="btns">
 				<button class="layui-btn layui-btn-normal" v-on:click="changes('kaoshi.html')">创建考试</button>
-				<button class="layui-btn">试题库</button>
+				<button class="layui-btn" v-on:click="changestotiku('tiku.html')">试题库</button>
 				<button class="layui-btn layui-btn-warm">考试分析</button>
 			</div>
 		</div>
@@ -81,8 +81,13 @@
 			},
 			methods:{
 				changes:function(str){
+                    localStorage.setItem("kaoshitpid",-1);
 					window.top.vue.change(str);
-				}
+				},
+                changestotiku:function(str){
+				    console.log("进入试题库")
+                    window.top.vue.change(str);
+                }
 			}
 		})
 		layui.use('element', function(){
